@@ -91,6 +91,24 @@ We define an explicitly typed version of relaxIx to avoid ambiguity issues:
 > sendEOI pic ix  = outb pic (0x60 `or` ixToBit ix)
 
 -------------------
+Managing the Keyboard:
+
+We assume that the output is connected to interrupt 1 on PIC1:
+
+> export keyboardIRQ :: IRQ
+> keyboardIRQ         = PIC1 [ ix=ix1 ]
+
+I believe that per OSdev setting up a keyboard and/or PS/2
+controller is a way more involved process, but we can worry
+about that later and just enable IRQ directly for now.
+
+> export startKeyboard :: Proc Unit
+> startKeyboard = enableIRQ keyboardIRQ
+
+> export readKey :: Proc Word
+> readKey = inb (port 0x60)
+
+-------------------
 Managing the Programable Interval Timer:
 
 We assume that the output from an 8253 timer is connected to
