@@ -18,6 +18,12 @@ struct Coord / 2
   | col :: Stored (Ix 80)  {- offset=1 -} ]
   aligned 1
 
+struct GameObject / 10
+  [ width :: Stored (Bit 32)  {- offset=0 -}
+  | height :: Stored (Bit 32)  {- offset=4 -}
+  | currentPos :: Coord  {- offset=8 -} ]
+  aligned 4
+
 bitdata IA32Flags /32
   = IA32Flags [ B00_0000_0000 | id :: Bit 1 | vip :: Bit 1 | vif :: Bit 1 | ac :: Bit 1 | vm :: Bit 1 | rf :: Bit 1 | B0 | nt :: Bit 1 | iopl :: Ix 4 | ovf :: Bit 1 | df :: Bit 1 | ifl :: Bit 1 | tf :: Bit 1 | sf :: Bit 1 | zf :: Bit 1 | B0 | af :: Bit 1 | B0 | pf :: Bit 1 | B1 | cf :: Bit 1 ]
     -- predIA32Flags(x :: Bit 32) = true
@@ -81,8 +87,8 @@ users <- area (Array 2 Context) aligned 4
 
 -----------------------------------------
 -- not recursive
-b1011 :: [] >>= [Unit]
-b1011[] =
+b1024 :: [] >>= [Unit]
+b1024[] =
   t0 <- load1((current))
   t1 <- flagToWord((t0))
   t2 <- mul((t1, 72))
@@ -93,12 +99,12 @@ b1011[] =
 -- not recursive
 entrypoint yield :: [] >>= [Unit]
 yield[] =
-  b1011[]
+  b1024[]
 
 -----------------------------------------
 -- not recursive
-b2569 :: [Bit 32] >>= [Unit]
-b2569[t0] =
+b2593 :: [Bit 32] >>= [Unit]
+b2593[t0] =
   outb((1016, t0))
 
 -----------------------------------------
@@ -107,13 +113,13 @@ b258 :: [Bit 32] >>= [Unit]
 b258[t0] =
   t1 <- inb((1021))
   t2 <- and((t1, 96))
-  b1206[t2, 0, t0]
-b1206 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b1206[t0, t1, t2] =
+  b1212[t2, 0, t0]
+b1212 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b1212[t0, t1, t2] =
   t3 <- primEq((t0, t1))
   if t3
     then b258[t2]
-    else b2569[t2]
+    else b2593[t2]
 
 -----------------------------------------
 -- not recursive
@@ -134,8 +140,8 @@ b295[] =
 
 -----------------------------------------
 -- recursive
-b1212 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b1212[t0, t1, t2, t3] =
+b1218 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b1218[t0, t1, t2, t3] =
   t4 <- mul((t3, 160))
   t5 <- mul((t0, 2))
   t6 <- add((t4, t5))
@@ -146,13 +152,13 @@ b1212[t0, t1, t2, t3] =
   t11 <- add((t0, 1))
   t12 <- primUle((t11, t1))
   if t12
-    then b1212[t11, t1, t2, t3]
+    then b1218[t11, t1, t2, t3]
     else b295[]
 
 -----------------------------------------
 -- recursive
-b1214 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b1214[t0, t1, t2, t3] =
+b1220 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b1220[t0, t1, t2, t3] =
   t4 <- mul((t3, 160))
   t5 <- mul((t0, 2))
   t6 <- add((t4, t5))
@@ -165,24 +171,24 @@ b1214[t0, t1, t2, t3] =
   t13 <- add((t0, 1))
   t14 <- primUle((t13, t1))
   if t14
-    then b1214[t13, t1, t2, t3]
+    then b1220[t13, t1, t2, t3]
     else b295[]
 
 -----------------------------------------
 -- recursive
-b3896 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3896[t0, t1, t2, t3, t4, t5] =
-  t6 <- b1214[t4, t3, t1, t0]
+b3921 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3921[t0, t1, t2, t3, t4, t5] =
+  t6 <- b1220[t4, t3, t1, t0]
   t7 <- add((t0, 1))
   t8 <- primUle((t7, t2))
   if t8
-    then b3896[t7, t0, t2, t3, t4, t5]
-    else b1212[t4, t3, t5, t2]
+    then b3921[t7, t0, t2, t3, t4, t5]
+    else b1218[t4, t3, t5, t2]
 
 -----------------------------------------
 -- not recursive
-b1431 :: [] >>= [Unit]
-b1431[] =
+b1440 :: [] >>= [Unit]
+b1440[] =
   t0 <- load8((console))
   t1 <- add((console, 1))
   t2 <- load8((t1))
@@ -195,20 +201,20 @@ b1431[] =
   t9 <- add((t0, 1))
   t10 <- primUle((t9, t4))
   if t10
-    then b3896[t9, t0, t4, t6, t2, t8]
-    else b1212[t2, t6, t8, t4]
+    then b3921[t9, t0, t4, t6, t2, t8]
+    else b1218[t2, t6, t8, t4]
 
 -----------------------------------------
 -- not recursive
-b3905 :: [Bit 32] >>= [Unit]
-b3905[t0] =
+b3930 :: [Bit 32] >>= [Unit]
+b3930[t0] =
   t1 <- add((console, 4))
   store8((t1, t0))
 
 -----------------------------------------
 -- not recursive
-b1429 :: [Bit 32] >>= [Unit]
-b1429[t0] =
+b1438 :: [Bit 32] >>= [Unit]
+b1438[t0] =
   t1 <- add((console, 1))
   t2 <- add((console, 5))
   t3 <- load8((t1))
@@ -218,20 +224,20 @@ b1429[t0] =
   t7 <- add((t0, 1))
   t8 <- primUle((t7, t6))
   if t8
-    then b3905[t7]
-    else b1431[]
+    then b3930[t7]
+    else b1440[]
 
 -----------------------------------------
 -- not recursive
-b3909 :: [Bit 32] >>= [Unit]
-b3909[t0] =
+b3934 :: [Bit 32] >>= [Unit]
+b3934[t0] =
   t1 <- add((console, 5))
   store8((t1, t0))
 
 -----------------------------------------
 -- not recursive
-b1434 :: [Bit 32, Bit 32] >>= [Unit]
-b1434[t0, t1] =
+b1443 :: [Bit 32, Bit 32] >>= [Unit]
+b1443[t0, t1] =
   t2 <- add((console, 5))
   t3 <- load8((t2))
   t4 <- add((console, 6))
@@ -249,44 +255,44 @@ b1434[t0, t1] =
   t16 <- add((t3, 1))
   t17 <- primUle((t16, t15))
   if t17
-    then b3909[t16]
-    else b1429[t1]
+    then b3934[t16]
+    else b1438[t1]
 
 -----------------------------------------
 -- not recursive
-b1432 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b1432[t0, t1, t2] =
+b1441 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b1441[t0, t1, t2] =
   t3 <- primEq((t0, t1))
   if t3
-    then b1429[t2]
-    else b1434[t0, t2]
+    then b1438[t2]
+    else b1443[t0, t2]
 
 -----------------------------------------
 -- not recursive
-b1427 :: [Bit 32] >>= [Unit]
-b1427[t0] =
+b1436 :: [Bit 32] >>= [Unit]
+b1436[t0] =
   t1 <- add((console, 4))
   t2 <- load8((t1))
   t3 <- primEq((t0, 13))
   if t3
-    then b1429[t2]
-    else b1432[t0, 10, t2]
+    then b1438[t2]
+    else b1441[t0, 10, t2]
 
 -----------------------------------------
 -- not recursive
-b1730 :: [Bit 32, Bit 32] >>= [Unit]
-b1730[t0, t1] =
-  t2 <- b1427[t0]
+b1739 :: [Bit 32, Bit 32] >>= [Unit]
+b1739[t0, t1] =
+  t2 <- b1436[t0]
   returnTo((t1))
 
 -----------------------------------------
 -- not recursive
-b1729 :: [Bit 32, Bit 32] >>= [Unit]
-b1729[t0, t1] =
+b1738 :: [Bit 32, Bit 32] >>= [Unit]
+b1738[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, 13]
-  t5 <- b1427[t0]
+  t4 <- b1212[t3, 0, 13]
+  t5 <- b1436[t0]
   returnTo((t1))
 
 -----------------------------------------
@@ -301,11 +307,11 @@ kputc[] =
   t5 <- load32((t4))
   t6 <- inb((1021))
   t7 <- and((t6, 96))
-  t8 <- b1206[t7, 0, t5]
+  t8 <- b1212[t7, 0, t5]
   t9 <- primEq((t5, 10))
   if t9
-    then b1729[t5, t3]
-    else b1730[t5, t3]
+    then b1738[t5, t3]
+    else b1739[t5, t3]
 
 -----------------------------------------
 -- not recursive
@@ -313,8 +319,8 @@ external keyb_layout :: Bit 32
 
 -----------------------------------------
 -- not recursive
-keyDown :: Bit 32
-keyDown <- area (Stored (Bit 8)) aligned 1
+keyUp :: Bit 32
+keyUp <- area (Stored (Bit 8)) aligned 1
 
 -----------------------------------------
 -- not recursive
@@ -323,16 +329,45 @@ b888[t0] =
   t1 <- and((t0, 127))
   t2 <- add((keyb_layout, t1))
   t3 <- load8((t2))
+  t4 <- store8((keyUp, t3))
+  t5 <- load1((current))
+  t6 <- flagToWord((t5))
+  t7 <- mul((t6, 72))
+  t8 <- add((users, t7))
+  returnTo((t8))
+
+-----------------------------------------
+-- not recursive
+b890 :: [Bit 32] >>= [Unit]
+b890[t0] =
+  t1 <- lshr((t0, 7))
+  t2 <- primEq((t1, 1))
+  if t2
+    then b888[t0]
+    else b1024[]
+
+-----------------------------------------
+-- not recursive
+keyDown :: Bit 32
+keyDown <- area (Stored (Bit 8)) aligned 1
+
+-----------------------------------------
+-- not recursive
+b891 :: [Bit 32] >>= [Unit]
+b891[t0] =
+  t1 <- and((t0, 127))
+  t2 <- add((keyb_layout, t1))
+  t3 <- load8((t2))
   t4 <- load16((753702))
   t5 <- and((t4, 65280))
   t6 <- or((t5, t3))
   t7 <- store16((753702, t6))
   t8 <- store8((keyDown, t3))
-  t9 <- load1((current))
-  t10 <- flagToWord((t9))
-  t11 <- mul((t10, 72))
-  t12 <- add((users, t11))
-  returnTo((t12))
+  t9 <- lshr((t0, 7))
+  t10 <- primEq((t9, 1))
+  if t10
+    then b888[t0]
+    else b1024[]
 
 -----------------------------------------
 -- not recursive
@@ -349,8 +384,8 @@ keyboardInterrupt[] =
   t8 <- lshr((t7, 7))
   t9 <- primEq((t8, 0))
   if t9
-    then b888[t7]
-    else b1011[]
+    then b891[t7]
+    else b890[t7]
 
 -----------------------------------------
 -- not recursive
@@ -359,26 +394,78 @@ ticks <- area (Stored (Bit 32)) aligned 4
 
 -----------------------------------------
 -- not recursive
-b918 :: [Bit 32] >>= [Bit 32]
-b918[t0] =
+b922 :: [Bit 32] >>= [Bit 32]
+b922[t0] =
   t1 <- add((t0, 87))
   and((t1, 255))
 
 -----------------------------------------
 -- not recursive
-b917 :: [Bit 32] >>= [Bit 32]
-b917[t0] =
+b921 :: [Bit 32] >>= [Bit 32]
+b921[t0] =
   t1 <- add((t0, 48))
   and((t1, 255))
 
 -----------------------------------------
 -- not recursive
-b1242 :: [Bit 32, Bit 32] >>= [Bit 32]
-b1242[t0, t1] =
+b1248 :: [Bit 32, Bit 32] >>= [Bit 32]
+b1248[t0, t1] =
   t2 <- primUle((t0, t1))
   if t2
-    then b917[t0]
-    else b918[t0]
+    then b921[t0]
+    else b922[t0]
+
+-----------------------------------------
+-- recursive
+b1279 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b1279[t0, t1, t2, t3] =
+  t4 <- mul((t3, 160))
+  t5 <- mul((t0, 2))
+  t6 <- add((t4, t5))
+  t7 <- add((t6, 753664))
+  t8 <- shl((t2, 8))
+  t9 <- or((t8, 32))
+  t10 <- store16((t7, t9))
+  t11 <- add((t0, 1))
+  t12 <- primUle((t11, t1))
+  if t12
+    then b1279[t11, t1, t2, t3]
+    else b295[]
+
+-----------------------------------------
+-- recursive
+b1281 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b1281[t0, t1, t2, t3, t4] =
+  t5 <- b1279[t4, t3, t2, t0]
+  t6 <- add((t0, 1))
+  t7 <- primUle((t6, t1))
+  if t7
+    then b1281[t6, t1, t2, t3, t4]
+    else b295[]
+
+-----------------------------------------
+-- not recursive
+b1007 :: [] >>= [Unit]
+b1007[] =
+  t0 <- load8((console))
+  t1 <- add((console, 1))
+  t2 <- load8((t1))
+  t3 <- add((console, 4))
+  t4 <- store8((t3, t0))
+  t5 <- add((console, 5))
+  t6 <- store8((t5, t2))
+  t7 <- add((console, 2))
+  t8 <- load8((t7))
+  t9 <- add((console, 3))
+  t10 <- load8((t9))
+  t11 <- add((console, 6))
+  t12 <- load8((t11))
+  b1281[t0, t8, t12, t10, t2]
+
+-----------------------------------------
+-- not recursive
+ball :: Bit 32
+ball <- area GameObject aligned 4
 
 -----------------------------------------
 -- not recursive
@@ -392,8 +479,8 @@ spinpos <- area (Stored (Ix 4)) aligned 1
 
 -----------------------------------------
 -- not recursive
-b1604 :: [] >>= [Unit]
-b1604[] =
+b1613 :: [] >>= [Unit]
+b1613[] =
   t0 <- load8((spinpos))
   t1 <- add((spinner, t0))
   t2 <- load8((t1))
@@ -412,18 +499,18 @@ b1604[] =
 
 -----------------------------------------
 -- not recursive
-b2290 :: [] >>= [Unit]
-b2290[] =
+b2302 :: [] >>= [Unit]
+b2302[] =
   t0 <- store1((current, flag0))
-  b1604[]
+  b1613[]
 
 -----------------------------------------
 -- not recursive
-b3939 :: [Bit 32] >>= [Unit]
-b3939[t0] =
+b3974 :: [Bit 32] >>= [Unit]
+b3974[t0] =
   t1 <- wordToFlag((t0))
   t2 <- store1((current, t1))
-  b1604[]
+  b1613[]
 
 -----------------------------------------
 -- not recursive
@@ -434,8 +521,8 @@ b880[] =
   t2 <- add((t1, 1))
   t3 <- primUle((t2, 1))
   if t3
-    then b3939[t2]
-    else b2290[]
+    then b3974[t2]
+    else b2302[]
 
 -----------------------------------------
 -- not recursive
@@ -445,7 +532,7 @@ b882[t0] =
   t2 <- primEq((t1, 0))
   if t2
     then b880[]
-    else b1011[]
+    else b1024[]
 
 -----------------------------------------
 -- not recursive
@@ -471,111 +558,121 @@ dir <- area (Stored Bool) aligned 1
 
 -----------------------------------------
 -- not recursive
-b1272 :: [Bit 32, Bit 32] >>= [Unit]
-b1272[t0, t1] =
+b1278 :: [Bit 32, Bit 32] >>= [Unit]
+b1278[t0, t1] =
   t2 <- b829[t0, 124]
   t3 <- store1((dir, flag1))
   t4 <- and((t1, 15))
   t5 <- primEq((t4, 0))
   if t5
     then b880[]
-    else b1011[]
+    else b1024[]
 
 -----------------------------------------
 -- not recursive
-b3944 :: [Bit 32, Bit 32] >>= [Unit]
-b3944[t0, t1] =
+b3979 :: [Bit 32, Bit 32] >>= [Unit]
+b3979[t0, t1] =
   t2 <- b829[t0, 60]
   t3 <- store8((pos, t0))
   t4 <- and((t1, 15))
   t5 <- primEq((t4, 0))
   if t5
     then b880[]
-    else b1011[]
+    else b1024[]
 
 -----------------------------------------
 -- not recursive
-b3946 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3946[t0, t1, t2, t3] =
+b3981 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3981[t0, t1, t2, t3] =
   t4 <- sub((t2, t0))
   t5 <- primSle((t1, t4))
   if t5
-    then b3944[t4, t3]
-    else b1272[t2, t3]
+    then b3979[t4, t3]
+    else b1278[t2, t3]
 
 -----------------------------------------
 -- not recursive
-b1269 :: [Bit 32, Bit 32] >>= [Unit]
-b1269[t0, t1] =
+b1275 :: [Bit 32, Bit 32] >>= [Unit]
+b1275[t0, t1] =
   t2 <- b829[t0, 124]
   t3 <- store1((dir, flag0))
   t4 <- and((t1, 15))
   t5 <- primEq((t4, 0))
   if t5
     then b880[]
-    else b1011[]
+    else b1024[]
 
 -----------------------------------------
 -- not recursive
-b3949 :: [Bit 32, Bit 32] >>= [Unit]
-b3949[t0, t1] =
+b3984 :: [Bit 32, Bit 32] >>= [Unit]
+b3984[t0, t1] =
   t2 <- b829[t0, 62]
   t3 <- store8((pos, t0))
   t4 <- and((t1, 15))
   t5 <- primEq((t4, 0))
   if t5
     then b880[]
-    else b1011[]
+    else b1024[]
 
 -----------------------------------------
 -- not recursive
-b3951 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3951[t0, t1, t2, t3] =
+b3986 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3986[t0, t1, t2, t3] =
   t4 <- add((t1, t0))
   t5 <- primUle((t4, t2))
   if t5
-    then b3949[t4, t3]
-    else b1269[t1, t3]
+    then b3984[t4, t3]
+    else b1275[t1, t3]
 
 -----------------------------------------
 -- not recursive
-b1266 :: [Bit 32] >>= [Unit]
-b1266[t0] =
+b1272 :: [Bit 32] >>= [Unit]
+b1272[t0] =
   t1 <- load8((pos))
   t2 <- b829[t1, 32]
   t3 <- load1((dir))
   if t3
-    then b3951[1, t1, 68, t0]
-    else b3946[1, 46, t1, t0]
+    then b3986[1, t1, 68, t0]
+    else b3981[1, 46, t1, t0]
 
 -----------------------------------------
 -- not recursive
-b1608 :: [Bit 32] >>= [Unit]
-b1608[t0] =
-  t1 <- and((t0, 3))
-  t2 <- primEq((t1, 0))
-  if t2
-    then b1266[t0]
+b1617 :: [Bit 32] >>= [Unit]
+b1617[t0] =
+  t1 <- b1007[]
+  t2 <- add((ball, 8))
+  t3 <- load8((t2))
+  t4 <- add((ball, 9))
+  t5 <- load8((t4))
+  t6 <- mul((t3, 160))
+  t7 <- mul((t5, 2))
+  t8 <- add((t6, t7))
+  t9 <- add((t8, 753664))
+  t10 <- store16((t9, 28704))
+  t11 <- and((t0, 3))
+  t12 <- primEq((t11, 0))
+  if t12
+    then b1272[t0]
     else b882[t0]
 
 -----------------------------------------
 -- recursive
-b3954 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3954[t0, t1, t2] =
+b3989 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3989[t0, t1, t2] =
   t3 <- lshr((t1, 4))
   t4 <- mul((t0, 2))
   t5 <- add((t4, 753664))
   t6 <- load16((t5))
   t7 <- and((t3, 15))
-  t8 <- b1242[t7, 9]
+  t8 <- b1248[t7, 9]
   t9 <- and((t6, 65280))
   t10 <- or((t9, t8))
   t11 <- store16((t5, t10))
   t12 <- add((t0, -1))
   t13 <- primSle((70, t12))
   if t13
-    then b3954[t12, t3, t2]
-    else b1608[t2]
+    then b3989[t12, t3, t2]
+    else b1617[t2]
 
 -----------------------------------------
 -- not recursive
@@ -593,18 +690,18 @@ timerInterrupt[] =
   t9 <- store32((ticks, t8))
   t10 <- load16((753818))
   t11 <- and((t7, 15))
-  t12 <- b1242[t11, 9]
+  t12 <- b1248[t11, 9]
   t13 <- and((t10, 65280))
   t14 <- or((t13, t12))
   t15 <- store16((753818, t14))
   t16 <- lshr((t7, 4))
   t17 <- load16((753816))
   t18 <- and((t16, 15))
-  t19 <- b1242[t18, 9]
+  t19 <- b1248[t18, 9]
   t20 <- and((t17, 65280))
   t21 <- or((t20, t19))
   t22 <- store16((753816, t21))
-  b3954[75, t16, t7]
+  b3989[75, t16, t7]
 
 -----------------------------------------
 -- not recursive
@@ -618,132 +715,132 @@ itoaBuf <- area (Array 32 (Stored (Bit 8))) aligned 1
 
 -----------------------------------------
 -- not recursive
-b1424 :: [Bit 32] >>= [Unit]
-b1424[t0] =
+b1433 :: [Bit 32] >>= [Unit]
+b1433[t0] =
   t1 <- inb((1021))
   t2 <- and((t1, 96))
-  t3 <- b1206[t2, 0, 13]
+  t3 <- b1212[t2, 0, 13]
   t4 <- add((console, 4))
   t5 <- load8((t4))
   t6 <- primEq((t0, 13))
   if t6
-    then b1429[t5]
-    else b1432[t0, 10, t5]
+    then b1438[t5]
+    else b1441[t0, 10, t5]
 
 -----------------------------------------
 -- not recursive
-b1436 :: [Bit 32] >>= [Unit]
-b1436[t0] =
+b1445 :: [Bit 32] >>= [Unit]
+b1445[t0] =
   t1 <- inb((1021))
   t2 <- and((t1, 96))
-  t3 <- b1206[t2, 0, t0]
+  t3 <- b1212[t2, 0, t0]
   t4 <- primEq((t0, 10))
   if t4
-    then b1424[t0]
-    else b1427[t0]
+    then b1433[t0]
+    else b1436[t0]
 
 -----------------------------------------
 -- not recursive
-b2061 :: [] >>= [Unit]
-b2061[] =
+b2070 :: [] >>= [Unit]
+b2070[] =
   t0 <- load8((itoaBuf))
-  t1 <- b1436[t0]
+  t1 <- b1445[t0]
   return Unit
 
 -----------------------------------------
 -- recursive
-b3920 :: [Bit 32, Bit 32] >>= [Unit]
-b3920[t0, t1] =
-  t2 <- b1436[t1]
-  b3918[1, t0, 0, t1]
-b3918 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3918[t0, t1, t2, t3] =
+b3945 :: [Bit 32, Bit 32] >>= [Unit]
+b3945[t0, t1] =
+  t2 <- b1445[t1]
+  b3943[1, t0, 0, t1]
+b3943 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3943[t0, t1, t2, t3] =
   t4 <- add((t1, t0))
   t5 <- primUle((t4, t2))
   if t5
-    then b3920[t4, t3]
+    then b3945[t4, t3]
     else b295[]
 
 -----------------------------------------
 -- not recursive
-b3927 :: [Bit 32, Bit 32] >>= [Unit]
-b3927[t0, t1] =
-  t2 <- b1436[t1]
-  t3 <- b3918[1, t0, 0, t1]
+b3952 :: [Bit 32, Bit 32] >>= [Unit]
+b3952[t0, t1] =
+  t2 <- b1445[t1]
+  t3 <- b3943[1, t0, 0, t1]
   t4 <- load8((itoaBuf))
-  t5 <- b1436[t4]
+  t5 <- b1445[t4]
   return Unit
 
 -----------------------------------------
 -- not recursive
-b3925 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3925[t0, t1, t2] =
+b3950 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3950[t0, t1, t2] =
   t3 <- add((t1, t0))
   t4 <- primUle((t3, t1))
   if t4
-    then b3927[t3, t2]
-    else b2061[]
+    then b3952[t3, t2]
+    else b2070[]
 
 -----------------------------------------
 -- recursive
-b2001 :: [Bit 32] >>= [Unit]
-b2001[t0] =
+b2010 :: [Bit 32] >>= [Unit]
+b2010[t0] =
   t1 <- add((itoaBuf, t0))
   t2 <- load8((t1))
-  t3 <- b1436[t2]
+  t3 <- b1445[t2]
   t4 <- add((t0, -1))
   t5 <- primSle((0, t4))
   if t5
-    then b2001[t4]
+    then b2010[t4]
     else b295[]
 
 -----------------------------------------
 -- not recursive
-b2004 :: [Bit 32, Bit 32] >>= [Unit]
-b2004[t0, t1] =
-  t2 <- b3918[1, t1, 0, t0]
-  b2001[t1]
+b2013 :: [Bit 32, Bit 32] >>= [Unit]
+b2013[t0, t1] =
+  t2 <- b3943[1, t1, 0, t0]
+  b2010[t1]
 
 -----------------------------------------
 -- recursive
-b3931 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3931[t0, t1, t2, t3] =
+b3956 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3956[t0, t1, t2, t3] =
   t4 <- lshr((t1, 4))
   t5 <- primEq((t4, 0))
   if t5
-    then b2004[t3, t2]
-    else b2003[t4, t0, t3]
-b2003 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2003[t0, t1, t2] =
+    then b2013[t3, t2]
+    else b2012[t4, t0, t3]
+b2012 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2012[t0, t1, t2] =
   t3 <- add((itoaBuf, t1))
   t4 <- and((t0, 15))
-  t5 <- b1242[t4, 9]
+  t5 <- b1248[t4, 9]
   t6 <- store8((t3, t5))
   t7 <- add((t1, 1))
   t8 <- primUle((t7, 31))
   if t8
-    then b3931[t7, t0, t1, t2]
-    else b2004[t2, t1]
+    then b3956[t7, t0, t1, t2]
+    else b2013[t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3936 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3936[t0, t1, t2] =
+b3961 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3961[t0, t1, t2] =
   t3 <- lshr((t1, 4))
   t4 <- primEq((t3, 0))
   if t4
-    then b3925[1, 0, t2]
-    else b2003[t3, t0, t2]
+    then b3950[1, 0, t2]
+    else b2012[t3, t0, t2]
 
 -----------------------------------------
 -- not recursive
-b3934 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3934[t0, t1, t2, t3, t4] =
+b3959 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3959[t0, t1, t2, t3, t4] =
   t5 <- add((t1, t0))
   t6 <- primUle((t5, t2))
   if t6
-    then b3936[t5, t3, t4]
-    else b3925[1, 0, t4]
+    then b3961[t5, t3, t4]
+    else b3950[1, 0, t4]
 
 -----------------------------------------
 -- not recursive
@@ -757,154 +854,154 @@ str56 <- "\n"
 
 -----------------------------------------
 -- recursive
-b3781 :: [Bit 32, Bit 32] >>= [Unit]
-b3781[t0, t1] =
-  t2 <- b1427[t0]
-  b2906[t1]
-b3780 :: [Bit 32, Bit 32] >>= [Unit]
-b3780[t0, t1] =
+b3806 :: [Bit 32, Bit 32] >>= [Unit]
+b3806[t0, t1] =
+  t2 <- b1436[t0]
+  b2931[t1]
+b3805 :: [Bit 32, Bit 32] >>= [Unit]
+b3805[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, 13]
-  t5 <- b1427[t0]
-  b2906[t1]
-b2906 :: [Bit 32] >>= [Unit]
-b2906[t0] =
+  t4 <- b1212[t3, 0, 13]
+  t5 <- b1436[t0]
+  b2931[t1]
+b2931 :: [Bit 32] >>= [Unit]
+b2931[t0] =
   t1 <- load8((t0))
   t2 <- primEq((t1, 0))
   if t2
     then b295[]
-    else b2908[t1, t0]
-b2908 :: [Bit 32, Bit 32] >>= [Unit]
-b2908[t0, t1] =
+    else b2933[t1, t0]
+b2933 :: [Bit 32, Bit 32] >>= [Unit]
+b2933[t0, t1] =
   t2 <- add((t1, 1))
-  b2915[t0, t2]
-b2915 :: [Bit 32, Bit 32] >>= [Unit]
-b2915[t0, t1] =
+  b2940[t0, t2]
+b2940 :: [Bit 32, Bit 32] >>= [Unit]
+b2940[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, t0]
+  t4 <- b1212[t3, 0, t0]
   t5 <- primEq((t0, 10))
   if t5
-    then b3780[t0, t1]
-    else b3781[t0, t1]
+    then b3805[t0, t1]
+    else b3806[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b2918 :: [Bit 32] >>= [Unit]
-b2918[t0] =
+b2943 :: [Bit 32] >>= [Unit]
+b2943[t0] =
   t1 <- add((str56, 1))
-  b2915[t0, t1]
+  b2940[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b1346 :: [Bit 32] >>= [Unit]
-b1346[t0] =
+b1355 :: [Bit 32] >>= [Unit]
+b1355[t0] =
   t1 <- and((t0, 15))
-  t2 <- b1242[t1, 9]
+  t2 <- b1248[t1, 9]
   t3 <- store8((itoaBuf, t2))
-  t4 <- b3934[1, 0, 31, t0, 32]
+  t4 <- b3959[1, 0, 31, t0, 32]
   t5 <- load8((str56))
   t6 <- primEq((t5, 0))
   if t6
     then b295[]
-    else b2918[t5]
+    else b2943[t5]
 
 -----------------------------------------
 -- recursive
-b2928 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2928[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b2919[t1, t2]
-b2926 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2926[t0, t1, t2] =
+b2953 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2953[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b2944[t1, t2]
+b2951 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2951[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b2919[t1, t2]
-b2919 :: [Bit 32, Bit 32] >>= [Unit]
-b2919[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b2944[t1, t2]
+b2944 :: [Bit 32, Bit 32] >>= [Unit]
+b2944[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1346[t1]
-    else b2921[t2, t0, t1]
-b2921 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2921[t0, t1, t2] =
+    then b1355[t1]
+    else b2946[t2, t0, t1]
+b2946 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2946[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b2923[t0, t3, t2]
-b2923 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2923[t0, t1, t2] =
+  b2948[t0, t3, t2]
+b2948 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2948[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b2926[t0, t1, t2]
-    else b2928[t0, t1, t2]
+    then b2951[t0, t1, t2]
+    else b2953[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b2931 :: [Bit 32, Bit 32] >>= [Unit]
-b2931[t0, t1] =
+b2956 :: [Bit 32, Bit 32] >>= [Unit]
+b2956[t0, t1] =
   t2 <- add((str55, 1))
-  b2923[t0, t2, t1]
+  b2948[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b1350 :: [Bit 32, Bit 32] >>= [Unit]
-b1350[t0, t1] =
+b1359 :: [Bit 32, Bit 32] >>= [Unit]
+b1359[t0, t1] =
   t2 <- and((t0, 15))
-  t3 <- b1242[t2, 9]
+  t3 <- b1248[t2, 9]
   t4 <- store8((itoaBuf, t3))
-  t5 <- b3934[1, 0, 31, t0, 32]
+  t5 <- b3959[1, 0, 31, t0, 32]
   t6 <- load8((str55))
   t7 <- primEq((t6, 0))
   if t7
-    then b1346[t1]
-    else b2931[t6, t1]
+    then b1355[t1]
+    else b2956[t6, t1]
 
 -----------------------------------------
 -- recursive
-b2941 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2941[t0, t1, t2, t3] =
-  t4 <- b1427[t0]
-  b2932[t1, t2, t3]
-b2939 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2939[t0, t1, t2, t3] =
+b2966 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2966[t0, t1, t2, t3] =
+  t4 <- b1436[t0]
+  b2957[t1, t2, t3]
+b2964 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2964[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, 13]
-  t7 <- b1427[t0]
-  b2932[t1, t2, t3]
-b2932 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2932[t0, t1, t2] =
+  t6 <- b1212[t5, 0, 13]
+  t7 <- b1436[t0]
+  b2957[t1, t2, t3]
+b2957 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2957[t0, t1, t2] =
   t3 <- load8((t0))
   t4 <- primEq((t3, 0))
   if t4
-    then b1350[t2, t1]
-    else b2934[t3, t0, t1, t2]
-b2934 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2934[t0, t1, t2, t3] =
+    then b1359[t2, t1]
+    else b2959[t3, t0, t1, t2]
+b2959 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2959[t0, t1, t2, t3] =
   t4 <- add((t1, 1))
-  b2936[t0, t4, t3, t2]
-b2936 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2936[t0, t1, t2, t3] =
+  b2961[t0, t4, t3, t2]
+b2961 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2961[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, t0]
+  t6 <- b1212[t5, 0, t0]
   t7 <- primEq((t0, 10))
   if t7
-    then b2939[t0, t1, t3, t2]
-    else b2941[t0, t1, t3, t2]
+    then b2964[t0, t1, t3, t2]
+    else b2966[t0, t1, t3, t2]
 
 -----------------------------------------
 -- not recursive
-b2944 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2944[t0, t1, t2] =
+b2969 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2969[t0, t1, t2] =
   t3 <- add((str54, 1))
-  b2936[t0, t3, t2, t1]
+  b2961[t0, t3, t2, t1]
 
 -----------------------------------------
 -- not recursive
@@ -913,66 +1010,35 @@ unhandled[t0, t1] =
   t2 <- load8((str54))
   t3 <- primEq((t2, 0))
   if t3
-    then b1350[t0, t1]
-    else b2944[t2, t1, t0]
+    then b1359[t0, t1]
+    else b2969[t2, t1, t0]
 
 -----------------------------------------
 -- not recursive
-s208 :: Unit
-s208 <-
+s212 :: Unit
+s212 <-
   Unit()
 
 -----------------------------------------
 -- not recursive
-b2224 :: [] >>= [Unit]
-b2224[] =
-  return s208
+b2234 :: [] >>= [Unit]
+b2234[] =
+  return s212
 
 -----------------------------------------
 -- recursive
-b2554 :: [Bit 32, Bit 32] >>= [Unit]
-b2554[t0, t1] =
+b2578 :: [Bit 32, Bit 32] >>= [Unit]
+b2578[t0, t1] =
   t2 <- store8((t0, 0))
   t3 <- add((t1, 1))
   t4 <- add((t0, 1))
-  b2553[t4, t3]
-b2553 :: [Bit 32, Bit 32] >>= [Unit]
-b2553[t0, t1] =
+  b2577[t4, t3]
+b2577 :: [Bit 32, Bit 32] >>= [Unit]
+b2577[t0, t1] =
   t2 <- primUlt((t1, 32))
   if t2
-    then b2554[t0, t1]
-    else b2224[]
-
------------------------------------------
--- recursive
-b1280 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b1280[t0, t1, t2, t3] =
-  t4 <- mul((t3, 160))
-  t5 <- mul((t0, 2))
-  t6 <- add((t4, t5))
-  t7 <- add((t6, 753664))
-  t8 <- shl((t2, 8))
-  t9 <- or((t8, 32))
-  t10 <- store16((t7, t9))
-  t11 <- add((t0, 1))
-  t12 <- primUle((t11, t1))
-  if t12
-    then b1280[t11, t1, t2, t3]
-    else b295[]
-
------------------------------------------
--- recursive
-b1282 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b1282[t0, t1, t2, t3, t4] =
-  t5 <- b1280[t4, t3, t2, t0]
-  b3972[1, t0, t1, t4, t3, t2]
-b3972 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3972[t0, t1, t2, t3, t4, t5] =
-  t6 <- add((t1, t0))
-  t7 <- primUle((t6, t2))
-  if t7
-    then b1282[t6, t2, t5, t4, t3]
-    else b295[]
+    then b2578[t0, t1]
+    else b2234[]
 
 -----------------------------------------
 -- not recursive
@@ -1001,44 +1067,44 @@ str1 <- "["
 
 -----------------------------------------
 -- recursive
-b3975 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3975[t0, t1, t2, t3] =
+b4000 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4000[t0, t1, t2, t3] =
   t4 <- nzdiv((t1, 10))
   t5 <- primEq((t4, 0))
   if t5
-    then b2004[t3, t2]
-    else b2010[t4, t0, t3]
-b2010 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2010[t0, t1, t2] =
+    then b2013[t3, t2]
+    else b2019[t4, t0, t3]
+b2019 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2019[t0, t1, t2] =
   t3 <- add((itoaBuf, t1))
   t4 <- nzrem((t0, 10))
-  t5 <- b1242[t4, 9]
+  t5 <- b1248[t4, 9]
   t6 <- store8((t3, t5))
   t7 <- add((t1, 1))
   t8 <- primUle((t7, 31))
   if t8
-    then b3975[t7, t0, t1, t2]
-    else b2004[t2, t1]
+    then b4000[t7, t0, t1, t2]
+    else b2013[t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3983 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3983[t0, t1, t2] =
+b4008 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4008[t0, t1, t2] =
   t3 <- nzdiv((t1, 10))
   t4 <- primEq((t3, 0))
   if t4
-    then b3925[1, 0, t2]
-    else b2010[t3, t0, t2]
+    then b3950[1, 0, t2]
+    else b2019[t3, t0, t2]
 
 -----------------------------------------
 -- not recursive
-b3981 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3981[t0, t1, t2, t3, t4] =
+b4006 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4006[t0, t1, t2, t3, t4] =
   t5 <- add((t1, t0))
   t6 <- primUle((t5, t2))
   if t6
-    then b3983[t5, t3, t4]
-    else b3925[1, 0, t4]
+    then b4008[t5, t3, t4]
+    else b3950[1, 0, t4]
 
 -----------------------------------------
 -- not recursive
@@ -1062,182 +1128,182 @@ str6 <- "], entry 0x"
 
 -----------------------------------------
 -- not recursive
-b1357 :: [Bit 32] >>= [Unit]
-b1357[t0] =
+b1366 :: [Bit 32] >>= [Unit]
+b1366[t0] =
   t1 <- add((t0, 8))
   t2 <- load32((t1))
   t3 <- and((t2, 15))
-  t4 <- b1242[t3, 9]
+  t4 <- b1248[t3, 9]
   t5 <- store8((itoaBuf, t4))
   t6 <- lshr((t2, 4))
   t7 <- primEq((t6, 0))
   if t7
-    then b3925[1, 0, 32]
-    else b2003[t6, 1, 32]
+    then b3950[1, 0, 32]
+    else b2012[t6, 1, 32]
 
 -----------------------------------------
 -- recursive
-b2957 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2957[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b2948[t1, t2]
-b2955 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2955[t0, t1, t2] =
+b2982 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2982[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b2973[t1, t2]
+b2980 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2980[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b2948[t1, t2]
-b2948 :: [Bit 32, Bit 32] >>= [Unit]
-b2948[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b2973[t1, t2]
+b2973 :: [Bit 32, Bit 32] >>= [Unit]
+b2973[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1357[t1]
-    else b2950[t2, t0, t1]
-b2950 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2950[t0, t1, t2] =
+    then b1366[t1]
+    else b2975[t2, t0, t1]
+b2975 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2975[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b2952[t0, t3, t2]
-b2952 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2952[t0, t1, t2] =
+  b2977[t0, t3, t2]
+b2977 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2977[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b2955[t0, t1, t2]
-    else b2957[t0, t1, t2]
+    then b2980[t0, t1, t2]
+    else b2982[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b2960 :: [Bit 32, Bit 32] >>= [Unit]
-b2960[t0, t1] =
+b2985 :: [Bit 32, Bit 32] >>= [Unit]
+b2985[t0, t1] =
   t2 <- add((str6, 1))
-  b2952[t0, t2, t1]
+  b2977[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b1359 :: [Bit 32] >>= [Unit]
-b1359[t0] =
+b1368 :: [Bit 32] >>= [Unit]
+b1368[t0] =
   t1 <- add((t0, 4))
   t2 <- load32((t1))
   t3 <- and((t2, 15))
-  t4 <- b1242[t3, 9]
+  t4 <- b1248[t3, 9]
   t5 <- store8((itoaBuf, t4))
-  t6 <- b3934[1, 0, 31, t2, 32]
+  t6 <- b3959[1, 0, 31, t2, 32]
   t7 <- load8((str6))
   t8 <- primEq((t7, 0))
   if t8
-    then b1357[t0]
-    else b2960[t7, t0]
+    then b1366[t0]
+    else b2985[t7, t0]
 
 -----------------------------------------
 -- recursive
-b2970 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2970[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b2961[t1, t2]
-b2968 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2968[t0, t1, t2] =
+b2995 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2995[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b2986[t1, t2]
+b2993 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2993[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b2961[t1, t2]
-b2961 :: [Bit 32, Bit 32] >>= [Unit]
-b2961[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b2986[t1, t2]
+b2986 :: [Bit 32, Bit 32] >>= [Unit]
+b2986[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1359[t1]
-    else b2963[t2, t0, t1]
-b2963 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2963[t0, t1, t2] =
+    then b1368[t1]
+    else b2988[t2, t0, t1]
+b2988 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2988[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b2965[t0, t3, t2]
-b2965 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2965[t0, t1, t2] =
+  b2990[t0, t3, t2]
+b2990 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b2990[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b2968[t0, t1, t2]
-    else b2970[t0, t1, t2]
+    then b2993[t0, t1, t2]
+    else b2995[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b2973 :: [Bit 32, Bit 32] >>= [Unit]
-b2973[t0, t1] =
+b2998 :: [Bit 32, Bit 32] >>= [Unit]
+b2998[t0, t1] =
   t2 <- add((str5, 1))
-  b2965[t0, t2, t1]
+  b2990[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b1361 :: [Bit 32] >>= [Unit]
-b1361[t0] =
+b1370 :: [Bit 32] >>= [Unit]
+b1370[t0] =
   t1 <- load32((t0))
   t2 <- and((t1, 15))
-  t3 <- b1242[t2, 9]
+  t3 <- b1248[t2, 9]
   t4 <- store8((itoaBuf, t3))
-  t5 <- b3934[1, 0, 31, t1, 32]
+  t5 <- b3959[1, 0, 31, t1, 32]
   t6 <- load8((str5))
   t7 <- primEq((t6, 0))
   if t7
-    then b1359[t0]
-    else b2973[t6, t0]
+    then b1368[t0]
+    else b2998[t6, t0]
 
 -----------------------------------------
 -- recursive
-b2983 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2983[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b2974[t1, t2]
-b2981 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2981[t0, t1, t2] =
+b3008 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3008[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b2999[t1, t2]
+b3006 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3006[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b2974[t1, t2]
-b2974 :: [Bit 32, Bit 32] >>= [Unit]
-b2974[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b2999[t1, t2]
+b2999 :: [Bit 32, Bit 32] >>= [Unit]
+b2999[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1361[t1]
-    else b2976[t2, t0, t1]
-b2976 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2976[t0, t1, t2] =
+    then b1370[t1]
+    else b3001[t2, t0, t1]
+b3001 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3001[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b2978[t0, t3, t2]
-b2978 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b2978[t0, t1, t2] =
+  b3003[t0, t3, t2]
+b3003 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3003[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b2981[t0, t1, t2]
-    else b2983[t0, t1, t2]
+    then b3006[t0, t1, t2]
+    else b3008[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b2996 :: [Bit 32, Bit 32] >>= [Unit]
-b2996[t0, t1] =
+b3021 :: [Bit 32, Bit 32] >>= [Unit]
+b3021[t0, t1] =
   t2 <- add((str4, 1))
-  b2978[t0, t2, t1]
+  b3003[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b2994 :: [Bit 32] >>= [Unit]
-b2994[t0] =
+b3019 :: [Bit 32] >>= [Unit]
+b3019[t0] =
   t1 <- load8((str4))
   t2 <- primEq((t1, 0))
   if t2
-    then b1361[t0]
-    else b2996[t1, t0]
+    then b1370[t0]
+    else b3021[t1, t0]
 
 -----------------------------------------
 -- not recursive
@@ -1246,233 +1312,233 @@ str3 <- "\n"
 
 -----------------------------------------
 -- not recursive
-b1363 :: [Bit 32] >>= [Bit 32]
-b1363[t0] =
+b1372 :: [Bit 32] >>= [Bit 32]
+b1372[t0] =
   add((t0, 1))
 
 -----------------------------------------
 -- recursive
-b2993 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b2993[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b2984[t1, t2]
-b2991 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b2991[t0, t1, t2] =
+b3018 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3018[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3009[t1, t2]
+b3016 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3016[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b2984[t1, t2]
-b2984 :: [Bit 32, Bit 32] >>= [Bit 32]
-b2984[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3009[t1, t2]
+b3009 :: [Bit 32, Bit 32] >>= [Bit 32]
+b3009[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1363[t1]
-    else b2986[t2, t0, t1]
-b2986 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b2986[t0, t1, t2] =
+    then b1372[t1]
+    else b3011[t2, t0, t1]
+b3011 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3011[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b2988[t0, t3, t2]
-b2988 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b2988[t0, t1, t2] =
+  b3013[t0, t3, t2]
+b3013 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3013[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b2991[t0, t1, t2]
-    else b2993[t0, t1, t2]
+    then b3016[t0, t1, t2]
+    else b3018[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b2999 :: [Bit 32, Bit 32] >>= [Bit 32]
-b2999[t0, t1] =
+b3024 :: [Bit 32, Bit 32] >>= [Bit 32]
+b3024[t0, t1] =
   t2 <- add((str3, 1))
-  b2988[t0, t2, t1]
+  b3013[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b1833 :: [Bit 32, Bit 32] >>= [Bit 32]
-b1833[t0, t1] =
-  t2 <- b2994[t0]
+b1842 :: [Bit 32, Bit 32] >>= [Bit 32]
+b1842[t0, t1] =
+  t2 <- b3019[t0]
   t3 <- load8((str3))
   t4 <- primEq((t3, 0))
   if t4
-    then b1363[t1]
-    else b2999[t3, t1]
+    then b1372[t1]
+    else b3024[t3, t1]
 
 -----------------------------------------
 -- recursive
-b3009 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3009[t0, t1, t2, t3] =
-  t4 <- b1427[t0]
-  b3000[t1, t2, t3]
-b3007 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3007[t0, t1, t2, t3] =
+b3034 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3034[t0, t1, t2, t3] =
+  t4 <- b1436[t0]
+  b3025[t1, t2, t3]
+b3032 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3032[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, 13]
-  t7 <- b1427[t0]
-  b3000[t1, t2, t3]
-b3000 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3000[t0, t1, t2] =
+  t6 <- b1212[t5, 0, 13]
+  t7 <- b1436[t0]
+  b3025[t1, t2, t3]
+b3025 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3025[t0, t1, t2] =
   t3 <- load8((t0))
   t4 <- primEq((t3, 0))
   if t4
-    then b1833[t2, t1]
-    else b3002[t3, t0, t1, t2]
-b3002 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3002[t0, t1, t2, t3] =
+    then b1842[t2, t1]
+    else b3027[t3, t0, t1, t2]
+b3027 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3027[t0, t1, t2, t3] =
   t4 <- add((t1, 1))
-  b3004[t0, t4, t3, t2]
-b3004 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3004[t0, t1, t2, t3] =
+  b3029[t0, t4, t3, t2]
+b3029 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3029[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, t0]
+  t6 <- b1212[t5, 0, t0]
   t7 <- primEq((t0, 10))
   if t7
-    then b3007[t0, t1, t3, t2]
-    else b3009[t0, t1, t3, t2]
+    then b3032[t0, t1, t3, t2]
+    else b3034[t0, t1, t3, t2]
 
 -----------------------------------------
 -- not recursive
-b3012 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3012[t0, t1, t2] =
+b3037 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3037[t0, t1, t2] =
   t3 <- add((str2, 1))
-  b3004[t0, t3, t2, t1]
+  b3029[t0, t3, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b1832 :: [Bit 32, Bit 32] >>= [Bit 32]
-b1832[t0, t1] =
+b1841 :: [Bit 32, Bit 32] >>= [Bit 32]
+b1841[t0, t1] =
   t2 <- nzrem((t0, 10))
-  t3 <- b1242[t2, 9]
+  t3 <- b1248[t2, 9]
   t4 <- store8((itoaBuf, t3))
-  t5 <- b3981[1, 0, 31, t0, 32]
+  t5 <- b4006[1, 0, 31, t0, 32]
   t6 <- load8((str2))
   t7 <- primEq((t6, 0))
   if t7
-    then b1833[t1, t0]
-    else b3012[t6, t0, t1]
+    then b1842[t1, t0]
+    else b3037[t6, t0, t1]
 
 -----------------------------------------
 -- recursive
-b3022 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3022[t0, t1, t2, t3] =
-  t4 <- b1427[t0]
-  b3013[t1, t2, t3]
-b3020 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3020[t0, t1, t2, t3] =
+b3047 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3047[t0, t1, t2, t3] =
+  t4 <- b1436[t0]
+  b3038[t1, t2, t3]
+b3045 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3045[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, 13]
-  t7 <- b1427[t0]
-  b3013[t1, t2, t3]
-b3013 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3013[t0, t1, t2] =
+  t6 <- b1212[t5, 0, 13]
+  t7 <- b1436[t0]
+  b3038[t1, t2, t3]
+b3038 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3038[t0, t1, t2] =
   t3 <- load8((t0))
   t4 <- primEq((t3, 0))
   if t4
-    then b1832[t2, t1]
-    else b3015[t3, t0, t1, t2]
-b3015 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3015[t0, t1, t2, t3] =
+    then b1841[t2, t1]
+    else b3040[t3, t0, t1, t2]
+b3040 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3040[t0, t1, t2, t3] =
   t4 <- add((t1, 1))
-  b3017[t0, t4, t3, t2]
-b3017 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3017[t0, t1, t2, t3] =
+  b3042[t0, t4, t3, t2]
+b3042 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3042[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, t0]
+  t6 <- b1212[t5, 0, t0]
   t7 <- primEq((t0, 10))
   if t7
-    then b3020[t0, t1, t3, t2]
-    else b3022[t0, t1, t3, t2]
+    then b3045[t0, t1, t3, t2]
+    else b3047[t0, t1, t3, t2]
 
 -----------------------------------------
 -- not recursive
-b3025 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3025[t0, t1, t2] =
+b3050 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3050[t0, t1, t2] =
   t3 <- add((str1, 1))
-  b3017[t0, t3, t2, t1]
+  b3042[t0, t3, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3023 :: [Bit 32, Bit 32] >>= [Bit 32]
-b3023[t0, t1] =
+b3048 :: [Bit 32, Bit 32] >>= [Bit 32]
+b3048[t0, t1] =
   t2 <- load8((str1))
   t3 <- primEq((t2, 0))
   if t3
-    then b1832[t1, t0]
-    else b3025[t2, t0, t1]
+    then b1841[t1, t0]
+    else b3050[t2, t0, t1]
 
 -----------------------------------------
 -- recursive
-b3028 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3028[t0, t1, t2, t3] =
+b3053 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3053[t0, t1, t2, t3] =
   t4 <- add((t1, 1))
-  b3030[t0, t4, t3, t2]
-b3030 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3030[t0, t1, t2, t3] =
-  t4 <- b1436[t0]
+  b3055[t0, t4, t3, t2]
+b3055 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3055[t0, t1, t2, t3] =
+  t4 <- b1445[t0]
   t5 <- load8((t1))
   t6 <- primEq((t5, 0))
   if t6
-    then b3023[t2, t3]
-    else b3028[t5, t1, t3, t2]
+    then b3048[t2, t3]
+    else b3053[t5, t1, t3, t2]
 
 -----------------------------------------
 -- not recursive
-b3033 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3033[t0, t1, t2] =
+b3058 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3058[t0, t1, t2] =
   t3 <- add((str11, 1))
-  b3030[t0, t3, t2, t1]
+  b3055[t0, t3, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3031 :: [Bit 32, Bit 32] >>= [Bit 32]
-b3031[t0, t1] =
+b3056 :: [Bit 32, Bit 32] >>= [Bit 32]
+b3056[t0, t1] =
   t2 <- load8((str11))
   t3 <- primEq((t2, 0))
   if t3
-    then b3023[t1, t0]
-    else b3033[t2, t0, t1]
+    then b3048[t1, t0]
+    else b3058[t2, t0, t1]
 
 -----------------------------------------
 -- recursive
-b3788 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3788[t0, t1, t2, t3] =
-  t4 <- b1427[t0]
-  b3034[t1, t2, t3]
-b3787 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3787[t0, t1, t2, t3] =
+b3813 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3813[t0, t1, t2, t3] =
+  t4 <- b1436[t0]
+  b3059[t1, t2, t3]
+b3812 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3812[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, 13]
-  t7 <- b1427[t0]
-  b3034[t1, t2, t3]
-b3034 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3034[t0, t1, t2] =
+  t6 <- b1212[t5, 0, 13]
+  t7 <- b1436[t0]
+  b3059[t1, t2, t3]
+b3059 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3059[t0, t1, t2] =
   t3 <- load8((t0))
   t4 <- primEq((t3, 0))
   if t4
-    then b3031[t1, t2]
-    else b3036[t3, t0, t1, t2]
-b3036 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3036[t0, t1, t2, t3] =
+    then b3056[t1, t2]
+    else b3061[t3, t0, t1, t2]
+b3061 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3061[t0, t1, t2, t3] =
   t4 <- add((t1, 1))
-  b3043[t0, t4, t2, t3]
-b3043 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3043[t0, t1, t2, t3] =
+  b3068[t0, t4, t2, t3]
+b3068 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3068[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, t0]
+  t6 <- b1212[t5, 0, t0]
   t7 <- primEq((t0, 10))
   if t7
-    then b3787[t0, t1, t2, t3]
-    else b3788[t0, t1, t2, t3]
+    then b3812[t0, t1, t2, t3]
+    else b3813[t0, t1, t2, t3]
 
 -----------------------------------------
 -- not recursive
@@ -1482,30 +1548,30 @@ b423[t0] =
 
 -----------------------------------------
 -- recursive
-b3792 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3792[t0, t1, t2, t3, t4] =
+b3817 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3817[t0, t1, t2, t3, t4] =
   t5 <- add((str0, 1))
-  t6 <- b3043[t0, t5, t4, t1]
-  b3049[t2, t3, 12, t6]
-b3051 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3051[t0, t1, t2, t3] =
+  t6 <- b3068[t0, t5, t4, t1]
+  b3074[t2, t3, 12, t6]
+b3076 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3076[t0, t1, t2, t3] =
   t4 <- add((t1, t2))
   t5 <- add((t0, -1))
   t6 <- load8((str0))
   t7 <- primEq((t6, 0))
   if t7
-    then b3791[t1, t3, t5, t4]
-    else b3792[t6, t1, t5, t4, t3]
-b3791 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3791[t0, t1, t2, t3] =
-  t4 <- b3031[t1, t0]
-  b3049[t2, t3, 12, t4]
-b3049 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3049[t0, t1, t2, t3] =
+    then b3816[t1, t3, t5, t4]
+    else b3817[t6, t1, t5, t4, t3]
+b3816 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3816[t0, t1, t2, t3] =
+  t4 <- b3056[t1, t0]
+  b3074[t2, t3, 12, t4]
+b3074 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3074[t0, t1, t2, t3] =
   t4 <- primEq((t0, 0))
   if t4
     then b423[t3]
-    else b3051[t0, t1, t2, t3]
+    else b3076[t0, t1, t2, t3]
 
 -----------------------------------------
 -- not recursive
@@ -1534,496 +1600,496 @@ str9 <- "]"
 
 -----------------------------------------
 -- not recursive
-b3084 :: [Bit 32] >>= [Unit]
-b3084[t0] =
+b3109 :: [Bit 32] >>= [Unit]
+b3109[t0] =
   t1 <- add((str9, 1))
-  b2915[t0, t1]
+  b2940[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b1371 :: [Bit 32] >>= [Unit]
-b1371[t0] =
+b1380 :: [Bit 32] >>= [Unit]
+b1380[t0] =
   t1 <- add((t0, 4))
   t2 <- load32((t1))
   t3 <- and((t2, 15))
-  t4 <- b1242[t3, 9]
+  t4 <- b1248[t3, 9]
   t5 <- store8((itoaBuf, t4))
-  t6 <- b3934[1, 0, 31, t2, 32]
+  t6 <- b3959[1, 0, 31, t2, 32]
   t7 <- load8((str9))
   t8 <- primEq((t7, 0))
   if t8
     then b295[]
-    else b3084[t7]
+    else b3109[t7]
 
 -----------------------------------------
 -- recursive
-b3094 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3094[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b3085[t1, t2]
-b3092 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3092[t0, t1, t2] =
+b3119 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3119[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3110[t1, t2]
+b3117 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3117[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b3085[t1, t2]
-b3085 :: [Bit 32, Bit 32] >>= [Unit]
-b3085[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3110[t1, t2]
+b3110 :: [Bit 32, Bit 32] >>= [Unit]
+b3110[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1371[t1]
-    else b3087[t2, t0, t1]
-b3087 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3087[t0, t1, t2] =
+    then b1380[t1]
+    else b3112[t2, t0, t1]
+b3112 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3112[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3089[t0, t3, t2]
-b3089 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3089[t0, t1, t2] =
+  b3114[t0, t3, t2]
+b3114 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3114[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3092[t0, t1, t2]
-    else b3094[t0, t1, t2]
+    then b3117[t0, t1, t2]
+    else b3119[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b3112 :: [Bit 32, Bit 32] >>= [Unit]
-b3112[t0, t1] =
+b3137 :: [Bit 32, Bit 32] >>= [Unit]
+b3137[t0, t1] =
   t2 <- add((str8, 1))
-  b3089[t0, t2, t1]
+  b3114[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b1373 :: [Bit 32] >>= [Unit]
-b1373[t0] =
+b1382 :: [Bit 32] >>= [Unit]
+b1382[t0] =
   t1 <- load32((t0))
   t2 <- and((t1, 15))
-  t3 <- b1242[t2, 9]
+  t3 <- b1248[t2, 9]
   t4 <- store8((itoaBuf, t3))
-  t5 <- b3934[1, 0, 31, t1, 32]
+  t5 <- b3959[1, 0, 31, t1, 32]
   t6 <- load8((str8))
   t7 <- primEq((t6, 0))
   if t7
-    then b1371[t0]
-    else b3112[t6, t0]
+    then b1380[t0]
+    else b3137[t6, t0]
 
 -----------------------------------------
 -- recursive
-b3122 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3122[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b3113[t1, t2]
-b3115 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3115[t0, t1, t2] =
+b3147 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3147[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3138[t1, t2]
+b3140 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3140[t0, t1, t2] =
   t3 <- add((t1, 1))
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, t0]
+  t6 <- b1212[t5, 0, t0]
   t7 <- primEq((t0, 10))
   if t7
-    then b3120[t0, t3, t2]
-    else b3122[t0, t3, t2]
-b3120 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3120[t0, t1, t2] =
+    then b3145[t0, t3, t2]
+    else b3147[t0, t3, t2]
+b3145 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3145[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b3113[t1, t2]
-b3113 :: [Bit 32, Bit 32] >>= [Unit]
-b3113[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3138[t1, t2]
+b3138 :: [Bit 32, Bit 32] >>= [Unit]
+b3138[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1373[t1]
-    else b3115[t2, t0, t1]
+    then b1382[t1]
+    else b3140[t2, t0, t1]
 
 -----------------------------------------
 -- recursive
-b3070 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3070[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b3061[t1, t2]
-b3068 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3068[t0, t1, t2] =
+b3095 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3095[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3086[t1, t2]
+b3093 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3093[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b3061[t1, t2]
-b3061 :: [Bit 32, Bit 32] >>= [Bit 32]
-b3061[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3086[t1, t2]
+b3086 :: [Bit 32, Bit 32] >>= [Bit 32]
+b3086[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1363[t1]
-    else b3063[t2, t0, t1]
-b3063 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3063[t0, t1, t2] =
+    then b1372[t1]
+    else b3088[t2, t0, t1]
+b3088 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3088[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3065[t0, t3, t2]
-b3065 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3065[t0, t1, t2] =
+  b3090[t0, t3, t2]
+b3090 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3090[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3068[t0, t1, t2]
-    else b3070[t0, t1, t2]
+    then b3093[t0, t1, t2]
+    else b3095[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b3125 :: [Bit 32, Bit 32] >>= [Bit 32]
-b3125[t0, t1] =
+b3150 :: [Bit 32, Bit 32] >>= [Bit 32]
+b3150[t0, t1] =
   t2 <- add((str3, 1))
-  b3065[t0, t2, t1]
+  b3090[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3137 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3137[t0, t1, t2, t3] =
-  t4 <- b1427[t0]
-  t5 <- b3113[t1, t2]
+b3162 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3162[t0, t1, t2, t3] =
+  t4 <- b1436[t0]
+  t5 <- b3138[t1, t2]
   t6 <- load8((str3))
   t7 <- primEq((t6, 0))
   if t7
-    then b1363[t3]
-    else b3125[t6, t3]
+    then b1372[t3]
+    else b3150[t6, t3]
 
 -----------------------------------------
 -- not recursive
-b3135 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3135[t0, t1, t2, t3] =
+b3160 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3160[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, 13]
-  t7 <- b1427[t0]
-  t8 <- b3113[t1, t2]
+  t6 <- b1212[t5, 0, 13]
+  t7 <- b1436[t0]
+  t8 <- b3138[t1, t2]
   t9 <- load8((str3))
   t10 <- primEq((t9, 0))
   if t10
-    then b1363[t3]
-    else b3125[t9, t3]
+    then b1372[t3]
+    else b3150[t9, t3]
 
 -----------------------------------------
 -- not recursive
-b3131 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3131[t0, t1, t2] =
+b3156 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3156[t0, t1, t2] =
   t3 <- add((str7, 1))
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, t0]
+  t6 <- b1212[t5, 0, t0]
   t7 <- primEq((t0, 10))
   if t7
-    then b3135[t0, t3, t2, t1]
-    else b3137[t0, t3, t2, t1]
+    then b3160[t0, t3, t2, t1]
+    else b3162[t0, t3, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3109 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3109[t0, t1, t2, t3] =
-  t4 <- b1427[t0]
-  t5 <- b3085[t1, t2]
+b3134 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3134[t0, t1, t2, t3] =
+  t4 <- b1436[t0]
+  t5 <- b3110[t1, t2]
   t6 <- load8((str3))
   t7 <- primEq((t6, 0))
   if t7
-    then b1363[t3]
-    else b3125[t6, t3]
+    then b1372[t3]
+    else b3150[t6, t3]
 
 -----------------------------------------
 -- not recursive
-b3107 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3107[t0, t1, t2, t3] =
+b3132 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3132[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, 13]
-  t7 <- b1427[t0]
-  t8 <- b3085[t1, t2]
+  t6 <- b1212[t5, 0, 13]
+  t7 <- b1436[t0]
+  t8 <- b3110[t1, t2]
   t9 <- load8((str3))
   t10 <- primEq((t9, 0))
   if t10
-    then b1363[t3]
-    else b3125[t9, t3]
+    then b1372[t3]
+    else b3150[t9, t3]
 
 -----------------------------------------
 -- not recursive
-b3103 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3103[t0, t1, t2] =
+b3128 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3128[t0, t1, t2] =
   t3 <- add((str8, 1))
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, t0]
+  t6 <- b1212[t5, 0, t0]
   t7 <- primEq((t0, 10))
   if t7
-    then b3107[t0, t3, t2, t1]
-    else b3109[t0, t3, t2, t1]
+    then b3132[t0, t3, t2, t1]
+    else b3134[t0, t3, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3079 :: [Bit 32, Bit 32] >>= [Bit 32]
-b3079[t0, t1] =
+b3104 :: [Bit 32, Bit 32] >>= [Bit 32]
+b3104[t0, t1] =
   t2 <- add((str9, 1))
-  t3 <- b2915[t0, t2]
+  t3 <- b2940[t0, t2]
   t4 <- load8((str3))
   t5 <- primEq((t4, 0))
   if t5
-    then b1363[t1]
-    else b3125[t4, t1]
+    then b1372[t1]
+    else b3150[t4, t1]
 
 -----------------------------------------
 -- not recursive
-b3071 :: [Bit 32] >>= [Bit 32]
-b3071[t0] =
+b3096 :: [Bit 32] >>= [Bit 32]
+b3096[t0] =
   t1 <- load8((str3))
   t2 <- primEq((t1, 0))
   if t2
-    then b1363[t0]
-    else b3125[t1, t0]
+    then b1372[t0]
+    else b3150[t1, t0]
 
 -----------------------------------------
 -- not recursive
-b2115 :: [Bit 32, Bit 32] >>= [Bit 32]
-b2115[t0, t1] =
+b2124 :: [Bit 32, Bit 32] >>= [Bit 32]
+b2124[t0, t1] =
   t2 <- add((t0, 4))
   t3 <- load32((t2))
   t4 <- and((t3, 15))
-  t5 <- b1242[t4, 9]
+  t5 <- b1248[t4, 9]
   t6 <- store8((itoaBuf, t5))
-  t7 <- b3934[1, 0, 31, t3, 32]
+  t7 <- b3959[1, 0, 31, t3, 32]
   t8 <- load8((str9))
   t9 <- primEq((t8, 0))
   if t9
-    then b3071[t1]
-    else b3079[t8, t1]
+    then b3096[t1]
+    else b3104[t8, t1]
 
 -----------------------------------------
 -- not recursive
-b2114 :: [Bit 32, Bit 32] >>= [Bit 32]
-b2114[t0, t1] =
+b2123 :: [Bit 32, Bit 32] >>= [Bit 32]
+b2123[t0, t1] =
   t2 <- load32((t0))
   t3 <- and((t2, 15))
-  t4 <- b1242[t3, 9]
+  t4 <- b1248[t3, 9]
   t5 <- store8((itoaBuf, t4))
-  t6 <- b3934[1, 0, 31, t2, 32]
+  t6 <- b3959[1, 0, 31, t2, 32]
   t7 <- load8((str8))
   t8 <- primEq((t7, 0))
   if t8
-    then b2115[t0, t1]
-    else b3103[t7, t1, t0]
+    then b2124[t0, t1]
+    else b3128[t7, t1, t0]
 
 -----------------------------------------
 -- not recursive
-b3129 :: [Bit 32, Bit 32] >>= [Bit 32]
-b3129[t0, t1] =
+b3154 :: [Bit 32, Bit 32] >>= [Bit 32]
+b3154[t0, t1] =
   t2 <- load8((str7))
   t3 <- primEq((t2, 0))
   if t3
-    then b2114[t1, t0]
-    else b3131[t2, t0, t1]
+    then b2123[t1, t0]
+    else b3156[t2, t0, t1]
 
 -----------------------------------------
 -- recursive
-b3147 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3147[t0, t1, t2, t3] =
-  t4 <- b1427[t0]
-  b3138[t1, t2, t3]
-b3145 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3145[t0, t1, t2, t3] =
+b3172 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3172[t0, t1, t2, t3] =
+  t4 <- b1436[t0]
+  b3163[t1, t2, t3]
+b3170 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3170[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, 13]
-  t7 <- b1427[t0]
-  b3138[t1, t2, t3]
-b3138 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3138[t0, t1, t2] =
+  t6 <- b1212[t5, 0, 13]
+  t7 <- b1436[t0]
+  b3163[t1, t2, t3]
+b3163 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3163[t0, t1, t2] =
   t3 <- load8((t0))
   t4 <- primEq((t3, 0))
   if t4
-    then b3129[t1, t2]
-    else b3140[t3, t0, t1, t2]
-b3140 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3140[t0, t1, t2, t3] =
+    then b3154[t1, t2]
+    else b3165[t3, t0, t1, t2]
+b3165 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3165[t0, t1, t2, t3] =
   t4 <- add((t1, 1))
-  b3142[t0, t4, t3, t2]
-b3142 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3142[t0, t1, t2, t3] =
+  b3167[t0, t4, t3, t2]
+b3167 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3167[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, t0]
+  t6 <- b1212[t5, 0, t0]
   t7 <- primEq((t0, 10))
   if t7
-    then b3145[t0, t1, t3, t2]
-    else b3147[t0, t1, t3, t2]
+    then b3170[t0, t1, t3, t2]
+    else b3172[t0, t1, t3, t2]
 
 -----------------------------------------
 -- not recursive
-b3150 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3150[t0, t1, t2] =
+b3175 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3175[t0, t1, t2] =
   t3 <- add((str2, 1))
-  b3142[t0, t3, t2, t1]
+  b3167[t0, t3, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b1896 :: [Bit 32, Bit 32] >>= [Bit 32]
-b1896[t0, t1] =
+b1905 :: [Bit 32, Bit 32] >>= [Bit 32]
+b1905[t0, t1] =
   t2 <- nzrem((t0, 10))
-  t3 <- b1242[t2, 9]
+  t3 <- b1248[t2, 9]
   t4 <- store8((itoaBuf, t3))
-  t5 <- b3981[1, 0, 31, t0, 32]
+  t5 <- b4006[1, 0, 31, t0, 32]
   t6 <- load8((str2))
   t7 <- primEq((t6, 0))
   if t7
-    then b3129[t0, t1]
-    else b3150[t6, t0, t1]
+    then b3154[t0, t1]
+    else b3175[t6, t0, t1]
 
 -----------------------------------------
 -- recursive
-b3160 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3160[t0, t1, t2, t3] =
-  t4 <- b1427[t0]
-  b3151[t1, t2, t3]
-b3158 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3158[t0, t1, t2, t3] =
+b3185 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3185[t0, t1, t2, t3] =
+  t4 <- b1436[t0]
+  b3176[t1, t2, t3]
+b3183 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3183[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, 13]
-  t7 <- b1427[t0]
-  b3151[t1, t2, t3]
-b3151 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3151[t0, t1, t2] =
+  t6 <- b1212[t5, 0, 13]
+  t7 <- b1436[t0]
+  b3176[t1, t2, t3]
+b3176 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3176[t0, t1, t2] =
   t3 <- load8((t0))
   t4 <- primEq((t3, 0))
   if t4
-    then b1896[t2, t1]
-    else b3153[t3, t0, t1, t2]
-b3153 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3153[t0, t1, t2, t3] =
+    then b1905[t2, t1]
+    else b3178[t3, t0, t1, t2]
+b3178 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3178[t0, t1, t2, t3] =
   t4 <- add((t1, 1))
-  b3155[t0, t4, t3, t2]
-b3155 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3155[t0, t1, t2, t3] =
+  b3180[t0, t4, t3, t2]
+b3180 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3180[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, t0]
+  t6 <- b1212[t5, 0, t0]
   t7 <- primEq((t0, 10))
   if t7
-    then b3158[t0, t1, t3, t2]
-    else b3160[t0, t1, t3, t2]
+    then b3183[t0, t1, t3, t2]
+    else b3185[t0, t1, t3, t2]
 
 -----------------------------------------
 -- not recursive
-b3163 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3163[t0, t1, t2] =
+b3188 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3188[t0, t1, t2] =
   t3 <- add((str1, 1))
-  b3155[t0, t3, t2, t1]
+  b3180[t0, t3, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3161 :: [Bit 32, Bit 32] >>= [Bit 32]
-b3161[t0, t1] =
+b3186 :: [Bit 32, Bit 32] >>= [Bit 32]
+b3186[t0, t1] =
   t2 <- load8((str1))
   t3 <- primEq((t2, 0))
   if t3
-    then b1896[t1, t0]
-    else b3163[t2, t0, t1]
+    then b1905[t1, t0]
+    else b3188[t2, t0, t1]
 
 -----------------------------------------
 -- recursive
-b3166 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3166[t0, t1, t2, t3] =
+b3191 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3191[t0, t1, t2, t3] =
   t4 <- add((t1, 1))
-  b3168[t0, t4, t3, t2]
-b3168 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3168[t0, t1, t2, t3] =
-  t4 <- b1436[t0]
+  b3193[t0, t4, t3, t2]
+b3193 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3193[t0, t1, t2, t3] =
+  t4 <- b1445[t0]
   t5 <- load8((t1))
   t6 <- primEq((t5, 0))
   if t6
-    then b3161[t2, t3]
-    else b3166[t5, t1, t3, t2]
+    then b3186[t2, t3]
+    else b3191[t5, t1, t3, t2]
 
 -----------------------------------------
 -- not recursive
-b3171 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3171[t0, t1, t2] =
+b3196 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3196[t0, t1, t2] =
   t3 <- add((str13, 1))
-  b3168[t0, t3, t2, t1]
+  b3193[t0, t3, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3169 :: [Bit 32, Bit 32] >>= [Bit 32]
-b3169[t0, t1] =
+b3194 :: [Bit 32, Bit 32] >>= [Bit 32]
+b3194[t0, t1] =
   t2 <- load8((str13))
   t3 <- primEq((t2, 0))
   if t3
-    then b3161[t1, t0]
-    else b3171[t2, t0, t1]
+    then b3186[t1, t0]
+    else b3196[t2, t0, t1]
 
 -----------------------------------------
 -- recursive
-b3794 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3794[t0, t1, t2, t3] =
-  t4 <- b1427[t0]
-  b3172[t1, t2, t3]
-b3793 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3793[t0, t1, t2, t3] =
+b3819 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3819[t0, t1, t2, t3] =
+  t4 <- b1436[t0]
+  b3197[t1, t2, t3]
+b3818 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3818[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, 13]
-  t7 <- b1427[t0]
-  b3172[t1, t2, t3]
-b3172 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3172[t0, t1, t2] =
+  t6 <- b1212[t5, 0, 13]
+  t7 <- b1436[t0]
+  b3197[t1, t2, t3]
+b3197 :: [Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3197[t0, t1, t2] =
   t3 <- load8((t0))
   t4 <- primEq((t3, 0))
   if t4
-    then b3169[t1, t2]
-    else b3174[t3, t0, t1, t2]
-b3174 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3174[t0, t1, t2, t3] =
+    then b3194[t1, t2]
+    else b3199[t3, t0, t1, t2]
+b3199 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3199[t0, t1, t2, t3] =
   t4 <- add((t1, 1))
-  b3181[t0, t4, t2, t3]
-b3181 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3181[t0, t1, t2, t3] =
+  b3206[t0, t4, t2, t3]
+b3206 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3206[t0, t1, t2, t3] =
   t4 <- inb((1021))
   t5 <- and((t4, 96))
-  t6 <- b1206[t5, 0, t0]
+  t6 <- b1212[t5, 0, t0]
   t7 <- primEq((t0, 10))
   if t7
-    then b3793[t0, t1, t2, t3]
-    else b3794[t0, t1, t2, t3]
+    then b3818[t0, t1, t2, t3]
+    else b3819[t0, t1, t2, t3]
 
 -----------------------------------------
 -- recursive
-b3798 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3798[t0, t1, t2, t3, t4] =
+b3823 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3823[t0, t1, t2, t3, t4] =
   t5 <- add((str0, 1))
-  t6 <- b3181[t0, t5, t4, t1]
-  b3187[t2, t3, 8, t6]
-b3189 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3189[t0, t1, t2, t3] =
+  t6 <- b3206[t0, t5, t4, t1]
+  b3212[t2, t3, 8, t6]
+b3214 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3214[t0, t1, t2, t3] =
   t4 <- add((t1, t2))
   t5 <- add((t0, -1))
   t6 <- load8((str0))
   t7 <- primEq((t6, 0))
   if t7
-    then b3797[t1, t3, t5, t4]
-    else b3798[t6, t1, t5, t4, t3]
-b3797 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3797[t0, t1, t2, t3] =
-  t4 <- b3169[t1, t0]
-  b3187[t2, t3, 8, t4]
-b3187 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
-b3187[t0, t1, t2, t3] =
+    then b3822[t1, t3, t5, t4]
+    else b3823[t6, t1, t5, t4, t3]
+b3822 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3822[t0, t1, t2, t3] =
+  t4 <- b3194[t1, t0]
+  b3212[t2, t3, 8, t4]
+b3212 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Bit 32]
+b3212[t0, t1, t2, t3] =
   t4 <- primEq((t0, 0))
   if t4
     then b423[t3]
-    else b3189[t0, t1, t2, t3]
+    else b3214[t0, t1, t2, t3]
 
 -----------------------------------------
 -- not recursive
@@ -2057,214 +2123,214 @@ str20 <- "]\n"
 
 -----------------------------------------
 -- not recursive
-b3435 :: [Bit 32] >>= [Unit]
-b3435[t0] =
+b3460 :: [Bit 32] >>= [Unit]
+b3460[t0] =
   t1 <- add((str20, 1))
-  b2915[t0, t1]
+  b2940[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b1379 :: [Bit 32] >>= [Unit]
-b1379[t0] =
+b1388 :: [Bit 32] >>= [Unit]
+b1388[t0] =
   t1 <- and((t0, 15))
-  t2 <- b1242[t1, 9]
+  t2 <- b1248[t1, 9]
   t3 <- store8((itoaBuf, t2))
-  t4 <- b3934[1, 0, 31, t0, 32]
+  t4 <- b3959[1, 0, 31, t0, 32]
   t5 <- load8((str20))
   t6 <- primEq((t5, 0))
   if t6
     then b295[]
-    else b3435[t5]
+    else b3460[t5]
 
 -----------------------------------------
 -- recursive
-b3445 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3445[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b3436[t1, t2]
-b3443 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3443[t0, t1, t2] =
+b3470 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3470[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3461[t1, t2]
+b3468 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3468[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b3436[t1, t2]
-b3436 :: [Bit 32, Bit 32] >>= [Unit]
-b3436[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3461[t1, t2]
+b3461 :: [Bit 32, Bit 32] >>= [Unit]
+b3461[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1379[t1]
-    else b3438[t2, t0, t1]
-b3438 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3438[t0, t1, t2] =
+    then b1388[t1]
+    else b3463[t2, t0, t1]
+b3463 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3463[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3440[t0, t3, t2]
-b3440 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3440[t0, t1, t2] =
+  b3465[t0, t3, t2]
+b3465 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3465[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3443[t0, t1, t2]
-    else b3445[t0, t1, t2]
+    then b3468[t0, t1, t2]
+    else b3470[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b3466 :: [Bit 32, Bit 32] >>= [Unit]
-b3466[t0, t1] =
+b3491 :: [Bit 32, Bit 32] >>= [Unit]
+b3491[t0, t1] =
   t2 <- add((str19, 1))
-  b3440[t0, t2, t1]
+  b3465[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3464 :: [Bit 32] >>= [Unit]
-b3464[t0] =
+b3489 :: [Bit 32] >>= [Unit]
+b3489[t0] =
   t1 <- load8((str19))
   t2 <- primEq((t1, 0))
   if t2
-    then b1379[t0]
-    else b3466[t1, t0]
+    then b1388[t0]
+    else b3491[t1, t0]
 
 -----------------------------------------
 -- recursive
-b3469 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3469[t0, t1, t2] =
+b3494 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3494[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3471[t0, t3, t2]
-b3471 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3471[t0, t1, t2] =
-  t3 <- b1436[t0]
+  b3496[t0, t3, t2]
+b3496 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3496[t0, t1, t2] =
+  t3 <- b1445[t0]
   t4 <- load8((t1))
   t5 <- primEq((t4, 0))
   if t5
-    then b3464[t2]
-    else b3469[t4, t1, t2]
+    then b3489[t2]
+    else b3494[t4, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b3799 :: [Bit 32, Bit 32] >>= [Unit]
-b3799[t0, t1] =
+b3824 :: [Bit 32, Bit 32] >>= [Unit]
+b3824[t0, t1] =
   t2 <- add((t1, 1))
-  b3471[t0, t2, t1]
+  b3496[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3475 :: [Bit 32] >>= [Unit]
-b3475[t0] =
+b3500 :: [Bit 32] >>= [Unit]
+b3500[t0] =
   t1 <- load8((t0))
   t2 <- primEq((t1, 0))
   if t2
-    then b3464[t0]
-    else b3799[t1, t0]
+    then b3489[t0]
+    else b3824[t1, t0]
 
 -----------------------------------------
 -- recursive
-b3485 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3485[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b3476[t1, t2]
-b3483 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3483[t0, t1, t2] =
+b3510 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3510[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3501[t1, t2]
+b3508 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3508[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b3476[t1, t2]
-b3476 :: [Bit 32, Bit 32] >>= [Unit]
-b3476[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3501[t1, t2]
+b3501 :: [Bit 32, Bit 32] >>= [Unit]
+b3501[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b3475[t1]
-    else b3478[t2, t0, t1]
-b3478 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3478[t0, t1, t2] =
+    then b3500[t1]
+    else b3503[t2, t0, t1]
+b3503 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3503[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3480[t0, t3, t2]
-b3480 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3480[t0, t1, t2] =
+  b3505[t0, t3, t2]
+b3505 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3505[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3483[t0, t1, t2]
-    else b3485[t0, t1, t2]
+    then b3508[t0, t1, t2]
+    else b3510[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b3508 :: [Bit 32, Bit 32] >>= [Unit]
-b3508[t0, t1] =
+b3533 :: [Bit 32, Bit 32] >>= [Unit]
+b3533[t0, t1] =
   t2 <- add((str18, 1))
-  b3480[t0, t2, t1]
+  b3505[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3590 :: [Bit 32, Bit 32] >>= [Unit]
-b3590[t0, t1] =
+b3615 :: [Bit 32, Bit 32] >>= [Unit]
+b3615[t0, t1] =
   t2 <- add((str15, 1))
-  t3 <- b2915[t0, t2]
+  t3 <- b2940[t0, t2]
   t4 <- load8((str18))
   t5 <- primEq((t4, 0))
   if t5
-    then b3475[t1]
-    else b3508[t4, t1]
+    then b3500[t1]
+    else b3533[t4, t1]
 
 -----------------------------------------
 -- not recursive
-b3503 :: [Bit 32] >>= [Unit]
-b3503[t0] =
+b3528 :: [Bit 32] >>= [Unit]
+b3528[t0] =
   t1 <- load8((str18))
   t2 <- primEq((t1, 0))
   if t2
-    then b3475[t0]
-    else b3508[t1, t0]
+    then b3500[t0]
+    else b3533[t1, t0]
 
 -----------------------------------------
 -- not recursive
-b3588 :: [Bit 32] >>= [Unit]
-b3588[t0] =
+b3613 :: [Bit 32] >>= [Unit]
+b3613[t0] =
   t1 <- load8((str15))
   t2 <- primEq((t1, 0))
   if t2
-    then b3503[t0]
-    else b3590[t1, t0]
+    then b3528[t0]
+    else b3615[t1, t0]
 
 -----------------------------------------
 -- recursive
-b3801 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3801[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b3591[t1, t2]
-b3800 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3800[t0, t1, t2] =
+b3826 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3826[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3616[t1, t2]
+b3825 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3825[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b3591[t1, t2]
-b3591 :: [Bit 32, Bit 32] >>= [Unit]
-b3591[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3616[t1, t2]
+b3616 :: [Bit 32, Bit 32] >>= [Unit]
+b3616[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b3588[t1]
-    else b3593[t2, t0, t1]
-b3593 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3593[t0, t1, t2] =
+    then b3613[t1]
+    else b3618[t2, t0, t1]
+b3618 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3618[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3600[t0, t3, t2]
-b3600 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3600[t0, t1, t2] =
+  b3625[t0, t3, t2]
+b3625 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3625[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3800[t0, t1, t2]
-    else b3801[t0, t1, t2]
+    then b3825[t0, t1, t2]
+    else b3826[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
@@ -2273,433 +2339,433 @@ str16 <- "imgline"
 
 -----------------------------------------
 -- not recursive
-b3511 :: [Bit 32, Bit 32] >>= [Unit]
-b3511[t0, t1] =
+b3536 :: [Bit 32, Bit 32] >>= [Unit]
+b3536[t0, t1] =
   t2 <- add((str16, 1))
-  t3 <- b2915[t0, t2]
+  t3 <- b2940[t0, t2]
   t4 <- load8((str18))
   t5 <- primEq((t4, 0))
   if t5
-    then b3475[t1]
-    else b3508[t4, t1]
+    then b3500[t1]
+    else b3533[t4, t1]
 
 -----------------------------------------
 -- not recursive
-b3509 :: [Bit 32] >>= [Unit]
-b3509[t0] =
+b3534 :: [Bit 32] >>= [Unit]
+b3534[t0] =
   t1 <- load8((str16))
   t2 <- primEq((t1, 0))
   if t2
-    then b3503[t0]
-    else b3511[t1, t0]
+    then b3528[t0]
+    else b3536[t1, t0]
 
 -----------------------------------------
 -- recursive
-b3523 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3523[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b3514[t1, t2]
-b3521 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3521[t0, t1, t2] =
+b3548 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3548[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3539[t1, t2]
+b3546 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3546[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b3514[t1, t2]
-b3514 :: [Bit 32, Bit 32] >>= [Unit]
-b3514[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3539[t1, t2]
+b3539 :: [Bit 32, Bit 32] >>= [Unit]
+b3539[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b3509[t1]
-    else b3516[t2, t0, t1]
-b3516 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3516[t0, t1, t2] =
+    then b3534[t1]
+    else b3541[t2, t0, t1]
+b3541 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3541[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3518[t0, t3, t2]
-b3518 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3518[t0, t1, t2] =
+  b3543[t0, t3, t2]
+b3543 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3543[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3521[t0, t1, t2]
-    else b3523[t0, t1, t2]
+    then b3546[t0, t1, t2]
+    else b3548[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b3669 :: [Bit 32, Bit 32] >>= [Unit]
-b3669[t0, t1] =
+b3694 :: [Bit 32, Bit 32] >>= [Unit]
+b3694[t0, t1] =
   t2 <- add((str17, 1))
-  b3518[t0, t2, t1]
+  b3543[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3672 :: [Bit 32, Bit 32] >>= [Unit]
-b3672[t0, t1] =
+b3697 :: [Bit 32, Bit 32] >>= [Unit]
+b3697[t0, t1] =
   t2 <- add((str17, 1))
-  t3 <- b3600[t0, t2, t1]
+  t3 <- b3625[t0, t2, t1]
   t4 <- load32((4108))
   t5 <- load8((str17))
   t6 <- primEq((t5, 0))
   if t6
-    then b3509[t4]
-    else b3669[t5, t4]
+    then b3534[t4]
+    else b3694[t5, t4]
 
 -----------------------------------------
 -- not recursive
-b3658 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3658[t0, t1, t2] =
-  t3 <- b1427[t0]
-  t4 <- b3476[t1, t2]
+b3683 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3683[t0, t1, t2] =
+  t3 <- b1436[t0]
+  t4 <- b3501[t1, t2]
   t5 <- load32((4108))
   t6 <- load8((str17))
   t7 <- primEq((t6, 0))
   if t7
-    then b3509[t5]
-    else b3669[t6, t5]
+    then b3534[t5]
+    else b3694[t6, t5]
 
 -----------------------------------------
 -- not recursive
-b3656 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3656[t0, t1, t2] =
+b3681 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3681[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  t7 <- b3476[t1, t2]
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  t7 <- b3501[t1, t2]
   t8 <- load32((4108))
   t9 <- load8((str17))
   t10 <- primEq((t9, 0))
   if t10
-    then b3509[t8]
-    else b3669[t9, t8]
+    then b3534[t8]
+    else b3694[t9, t8]
 
 -----------------------------------------
 -- not recursive
-b3661 :: [Bit 32, Bit 32] >>= [Unit]
-b3661[t0, t1] =
+b3686 :: [Bit 32, Bit 32] >>= [Unit]
+b3686[t0, t1] =
   t2 <- add((str18, 1))
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3656[t0, t2, t1]
-    else b3658[t0, t2, t1]
+    then b3681[t0, t2, t1]
+    else b3683[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3634 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3634[t0, t1, t2] =
-  t3 <- b1427[t0]
-  t4 <- b3436[t1, t2]
+b3659 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3659[t0, t1, t2] =
+  t3 <- b1436[t0]
+  t4 <- b3461[t1, t2]
   t5 <- load32((4108))
   t6 <- load8((str17))
   t7 <- primEq((t6, 0))
   if t7
-    then b3509[t5]
-    else b3669[t6, t5]
+    then b3534[t5]
+    else b3694[t6, t5]
 
 -----------------------------------------
 -- not recursive
-b3632 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3632[t0, t1, t2] =
+b3657 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3657[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  t7 <- b3436[t1, t2]
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  t7 <- b3461[t1, t2]
   t8 <- load32((4108))
   t9 <- load8((str17))
   t10 <- primEq((t9, 0))
   if t10
-    then b3509[t8]
-    else b3669[t9, t8]
+    then b3534[t8]
+    else b3694[t9, t8]
 
 -----------------------------------------
 -- not recursive
-b3628 :: [Bit 32, Bit 32] >>= [Unit]
-b3628[t0, t1] =
+b3653 :: [Bit 32, Bit 32] >>= [Unit]
+b3653[t0, t1] =
   t2 <- add((str19, 1))
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3632[t0, t2, t1]
-    else b3634[t0, t2, t1]
+    then b3657[t0, t2, t1]
+    else b3659[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3617 :: [Bit 32] >>= [Unit]
-b3617[t0] =
+b3642 :: [Bit 32] >>= [Unit]
+b3642[t0] =
   t1 <- add((str20, 1))
-  t2 <- b2915[t0, t1]
+  t2 <- b2940[t0, t1]
   t3 <- load32((4108))
   t4 <- load8((str17))
   t5 <- primEq((t4, 0))
   if t5
-    then b3509[t3]
-    else b3669[t4, t3]
+    then b3534[t3]
+    else b3694[t4, t3]
 
 -----------------------------------------
 -- not recursive
-b1977 :: [] >>= [Unit]
-b1977[] =
+b1986 :: [] >>= [Unit]
+b1986[] =
   t0 <- load32((4108))
   t1 <- load8((str17))
   t2 <- primEq((t1, 0))
   if t2
-    then b3509[t0]
-    else b3669[t1, t0]
+    then b3534[t0]
+    else b3694[t1, t0]
 
 -----------------------------------------
 -- not recursive
-b2042 :: [Bit 32] >>= [Unit]
-b2042[t0] =
+b2051 :: [Bit 32] >>= [Unit]
+b2051[t0] =
   t1 <- and((t0, 15))
-  t2 <- b1242[t1, 9]
+  t2 <- b1248[t1, 9]
   t3 <- store8((itoaBuf, t2))
-  t4 <- b3934[1, 0, 31, t0, 32]
+  t4 <- b3959[1, 0, 31, t0, 32]
   t5 <- load8((str20))
   t6 <- primEq((t5, 0))
   if t6
-    then b1977[]
-    else b3617[t5]
+    then b1986[]
+    else b3642[t5]
 
 -----------------------------------------
 -- not recursive
-b3626 :: [Bit 32] >>= [Unit]
-b3626[t0] =
+b3651 :: [Bit 32] >>= [Unit]
+b3651[t0] =
   t1 <- load8((str19))
   t2 <- primEq((t1, 0))
   if t2
-    then b2042[t0]
-    else b3628[t1, t0]
+    then b2051[t0]
+    else b3653[t1, t0]
 
 -----------------------------------------
 -- recursive
-b3637 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3637[t0, t1, t2] =
+b3662 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3662[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3639[t0, t3, t2]
-b3639 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3639[t0, t1, t2] =
-  t3 <- b1436[t0]
+  b3664[t0, t3, t2]
+b3664 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3664[t0, t1, t2] =
+  t3 <- b1445[t0]
   t4 <- load8((t1))
   t5 <- primEq((t4, 0))
   if t5
-    then b3626[t2]
-    else b3637[t4, t1, t2]
+    then b3651[t2]
+    else b3662[t4, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b3802 :: [Bit 32, Bit 32] >>= [Unit]
-b3802[t0, t1] =
+b3827 :: [Bit 32, Bit 32] >>= [Unit]
+b3827[t0, t1] =
   t2 <- add((t1, 1))
-  b3639[t0, t2, t1]
+  b3664[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3643 :: [Bit 32] >>= [Unit]
-b3643[t0] =
+b3668 :: [Bit 32] >>= [Unit]
+b3668[t0] =
   t1 <- load8((t0))
   t2 <- primEq((t1, 0))
   if t2
-    then b3626[t0]
-    else b3802[t1, t0]
+    then b3651[t0]
+    else b3827[t1, t0]
 
 -----------------------------------------
 -- not recursive
-b3664 :: [Bit 32, Bit 32] >>= [Unit]
-b3664[t0, t1] =
+b3689 :: [Bit 32, Bit 32] >>= [Unit]
+b3689[t0, t1] =
   t2 <- add((str15, 1))
-  t3 <- b2915[t0, t2]
+  t3 <- b2940[t0, t2]
   t4 <- load8((str18))
   t5 <- primEq((t4, 0))
   if t5
-    then b3643[t1]
-    else b3661[t4, t1]
+    then b3668[t1]
+    else b3686[t4, t1]
 
 -----------------------------------------
 -- not recursive
-b3650 :: [Bit 32] >>= [Unit]
-b3650[t0] =
+b3675 :: [Bit 32] >>= [Unit]
+b3675[t0] =
   t1 <- load8((str18))
   t2 <- primEq((t1, 0))
   if t2
-    then b3643[t0]
-    else b3661[t1, t0]
+    then b3668[t0]
+    else b3686[t1, t0]
 
 -----------------------------------------
 -- not recursive
-b3662 :: [Bit 32] >>= [Unit]
-b3662[t0] =
+b3687 :: [Bit 32] >>= [Unit]
+b3687[t0] =
   t1 <- load8((str15))
   t2 <- primEq((t1, 0))
   if t2
-    then b3650[t0]
-    else b3664[t1, t0]
+    then b3675[t0]
+    else b3689[t1, t0]
 
 -----------------------------------------
 -- not recursive
-b1385 :: [] >>= [Unit]
-b1385[] =
+b1394 :: [] >>= [Unit]
+b1394[] =
   t0 <- load32((4104))
   t1 <- load8((str17))
   t2 <- primEq((t1, 0))
   if t2
-    then b3662[t0]
-    else b3672[t1, t0]
+    then b3687[t0]
+    else b3697[t1, t0]
 
 -----------------------------------------
 -- recursive
-b3804 :: [Bit 32, Bit 32] >>= [Unit]
-b3804[t0, t1] =
-  t2 <- b1427[t0]
+b3829 :: [Bit 32, Bit 32] >>= [Unit]
+b3829[t0, t1] =
+  t2 <- b1436[t0]
   t3 <- load8((t1))
   t4 <- primEq((t3, 0))
   if t4
-    then b1385[]
-    else b3677[t3, t1]
-b3803 :: [Bit 32, Bit 32] >>= [Unit]
-b3803[t0, t1] =
+    then b1394[]
+    else b3702[t3, t1]
+b3828 :: [Bit 32, Bit 32] >>= [Unit]
+b3828[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, 13]
-  t5 <- b1427[t0]
+  t4 <- b1212[t3, 0, 13]
+  t5 <- b1436[t0]
   t6 <- load8((t1))
   t7 <- primEq((t6, 0))
   if t7
-    then b1385[]
-    else b3677[t6, t1]
-b3677 :: [Bit 32, Bit 32] >>= [Unit]
-b3677[t0, t1] =
+    then b1394[]
+    else b3702[t6, t1]
+b3702 :: [Bit 32, Bit 32] >>= [Unit]
+b3702[t0, t1] =
   t2 <- add((t1, 1))
-  b3684[t0, t2]
-b3684 :: [Bit 32, Bit 32] >>= [Unit]
-b3684[t0, t1] =
+  b3709[t0, t2]
+b3709 :: [Bit 32, Bit 32] >>= [Unit]
+b3709[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, t0]
+  t4 <- b1212[t3, 0, t0]
   t5 <- primEq((t0, 10))
   if t5
-    then b3803[t0, t1]
-    else b3804[t0, t1]
+    then b3828[t0, t1]
+    else b3829[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b3692 :: [Bit 32] >>= [Unit]
-b3692[t0] =
+b3717 :: [Bit 32] >>= [Unit]
+b3717[t0] =
   t1 <- add((str14, 1))
-  b3684[t0, t1]
+  b3709[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b1387 :: [] >>= [Unit]
-b1387[] =
+b1396 :: [] >>= [Unit]
+b1396[] =
   t0 <- load32((4100))
   t1 <- load32((t0))
   t2 <- add((t0, 4))
-  t3 <- b3187[t1, t2, 8, 0]
+  t3 <- b3212[t1, t2, 8, 0]
   t4 <- load8((str14))
   t5 <- primEq((t4, 0))
   if t5
-    then b1385[]
-    else b3692[t4]
+    then b1394[]
+    else b3717[t4]
 
 -----------------------------------------
 -- recursive
-b3806 :: [Bit 32, Bit 32] >>= [Unit]
-b3806[t0, t1] =
-  t2 <- b1427[t0]
+b3831 :: [Bit 32, Bit 32] >>= [Unit]
+b3831[t0, t1] =
+  t2 <- b1436[t0]
   t3 <- load8((t1))
   t4 <- primEq((t3, 0))
   if t4
-    then b1387[]
-    else b3695[t3, t1]
-b3805 :: [Bit 32, Bit 32] >>= [Unit]
-b3805[t0, t1] =
+    then b1396[]
+    else b3720[t3, t1]
+b3830 :: [Bit 32, Bit 32] >>= [Unit]
+b3830[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, 13]
-  t5 <- b1427[t0]
+  t4 <- b1212[t3, 0, 13]
+  t5 <- b1436[t0]
   t6 <- load8((t1))
   t7 <- primEq((t6, 0))
   if t7
-    then b1387[]
-    else b3695[t6, t1]
-b3695 :: [Bit 32, Bit 32] >>= [Unit]
-b3695[t0, t1] =
+    then b1396[]
+    else b3720[t6, t1]
+b3720 :: [Bit 32, Bit 32] >>= [Unit]
+b3720[t0, t1] =
   t2 <- add((t1, 1))
-  b3702[t0, t2]
-b3702 :: [Bit 32, Bit 32] >>= [Unit]
-b3702[t0, t1] =
+  b3727[t0, t2]
+b3727 :: [Bit 32, Bit 32] >>= [Unit]
+b3727[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, t0]
+  t4 <- b1212[t3, 0, t0]
   t5 <- primEq((t0, 10))
   if t5
-    then b3805[t0, t1]
-    else b3806[t0, t1]
+    then b3830[t0, t1]
+    else b3831[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b3710 :: [Bit 32] >>= [Unit]
-b3710[t0] =
+b3735 :: [Bit 32] >>= [Unit]
+b3735[t0] =
   t1 <- add((str12, 1))
-  b3702[t0, t1]
+  b3727[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b1389 :: [] >>= [Unit]
-b1389[] =
+b1398 :: [] >>= [Unit]
+b1398[] =
   t0 <- load32((4096))
   t1 <- load32((t0))
   t2 <- add((t0, 4))
-  t3 <- b3049[t1, t2, 12, 0]
+  t3 <- b3074[t1, t2, 12, 0]
   t4 <- load8((str12))
   t5 <- primEq((t4, 0))
   if t5
-    then b1387[]
-    else b3710[t4]
+    then b1396[]
+    else b3735[t4]
 
 -----------------------------------------
 -- recursive
-b3808 :: [Bit 32, Bit 32] >>= [Unit]
-b3808[t0, t1] =
-  t2 <- b1427[t0]
+b3833 :: [Bit 32, Bit 32] >>= [Unit]
+b3833[t0, t1] =
+  t2 <- b1436[t0]
   t3 <- load8((t1))
   t4 <- primEq((t3, 0))
   if t4
-    then b1389[]
-    else b3713[t3, t1]
-b3807 :: [Bit 32, Bit 32] >>= [Unit]
-b3807[t0, t1] =
+    then b1398[]
+    else b3738[t3, t1]
+b3832 :: [Bit 32, Bit 32] >>= [Unit]
+b3832[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, 13]
-  t5 <- b1427[t0]
+  t4 <- b1212[t3, 0, 13]
+  t5 <- b1436[t0]
   t6 <- load8((t1))
   t7 <- primEq((t6, 0))
   if t7
-    then b1389[]
-    else b3713[t6, t1]
-b3713 :: [Bit 32, Bit 32] >>= [Unit]
-b3713[t0, t1] =
+    then b1398[]
+    else b3738[t6, t1]
+b3738 :: [Bit 32, Bit 32] >>= [Unit]
+b3738[t0, t1] =
   t2 <- add((t1, 1))
-  b3720[t0, t2]
-b3720 :: [Bit 32, Bit 32] >>= [Unit]
-b3720[t0, t1] =
+  b3745[t0, t2]
+b3745 :: [Bit 32, Bit 32] >>= [Unit]
+b3745[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, t0]
+  t4 <- b1212[t3, 0, t0]
   t5 <- primEq((t0, 10))
   if t5
-    then b3807[t0, t1]
-    else b3808[t0, t1]
+    then b3832[t0, t1]
+    else b3833[t0, t1]
 
 -----------------------------------------
 -- not recursive
@@ -2713,72 +2779,72 @@ str45 <- "\nHalting kernel, returning to mimgload\n"
 
 -----------------------------------------
 -- not recursive
-b3201 :: [Bit 32] >>= [Unit]
-b3201[t0] =
+b3226 :: [Bit 32] >>= [Unit]
+b3226[t0] =
   t1 <- add((str45, 1))
-  b2915[t0, t1]
+  b2940[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b3199 :: [] >>= [Unit]
-b3199[] =
+b3224 :: [] >>= [Unit]
+b3224[] =
   t0 <- load8((str45))
   t1 <- primEq((t0, 0))
   if t1
     then b295[]
-    else b3201[t0]
+    else b3226[t0]
 
 -----------------------------------------
 -- recursive
-b3211 :: [Bit 32, Bit 32] >>= [Unit]
-b3211[t0, t1] =
-  t2 <- b1427[t0]
+b3236 :: [Bit 32, Bit 32] >>= [Unit]
+b3236[t0, t1] =
+  t2 <- b1436[t0]
   t3 <- load8((t1))
   t4 <- primEq((t3, 0))
   if t4
-    then b3199[]
-    else b3204[t3, t1]
-b3209 :: [Bit 32, Bit 32] >>= [Unit]
-b3209[t0, t1] =
+    then b3224[]
+    else b3229[t3, t1]
+b3234 :: [Bit 32, Bit 32] >>= [Unit]
+b3234[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, 13]
-  t5 <- b1427[t0]
+  t4 <- b1212[t3, 0, 13]
+  t5 <- b1436[t0]
   t6 <- load8((t1))
   t7 <- primEq((t6, 0))
   if t7
-    then b3199[]
-    else b3204[t6, t1]
-b3204 :: [Bit 32, Bit 32] >>= [Unit]
-b3204[t0, t1] =
+    then b3224[]
+    else b3229[t6, t1]
+b3229 :: [Bit 32, Bit 32] >>= [Unit]
+b3229[t0, t1] =
   t2 <- add((t1, 1))
-  b3206[t0, t2]
-b3206 :: [Bit 32, Bit 32] >>= [Unit]
-b3206[t0, t1] =
+  b3231[t0, t2]
+b3231 :: [Bit 32, Bit 32] >>= [Unit]
+b3231[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, t0]
+  t4 <- b1212[t3, 0, t0]
   t5 <- primEq((t0, 10))
   if t5
-    then b3209[t0, t1]
-    else b3211[t0, t1]
+    then b3234[t0, t1]
+    else b3236[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b3214 :: [Bit 32] >>= [Unit]
-b3214[t0] =
+b3239 :: [Bit 32] >>= [Unit]
+b3239[t0] =
   t1 <- add((str51, 1))
-  b3206[t0, t1]
+  b3231[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b3212 :: [] >>= [Unit]
-b3212[] =
+b3237 :: [] >>= [Unit]
+b3237[] =
   t0 <- load8((str51))
   t1 <- primEq((t0, 0))
   if t1
-    then b3199[]
-    else b3214[t0]
+    then b3224[]
+    else b3239[t0]
 
 -----------------------------------------
 -- not recursive
@@ -2812,200 +2878,200 @@ str53 <- "\n"
 
 -----------------------------------------
 -- not recursive
-b1565 :: [Bit 32] >>= [Unit]
-b1565[t0] =
+b1574 :: [Bit 32] >>= [Unit]
+b1574[t0] =
   t1 <- add((users, 52))
   store32((t1, t0))
 
 -----------------------------------------
 -- recursive
-b3237 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3237[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b3228[t1, t2]
-b3235 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3235[t0, t1, t2] =
+b3262 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3262[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3253[t1, t2]
+b3260 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3260[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b3228[t1, t2]
-b3228 :: [Bit 32, Bit 32] >>= [Unit]
-b3228[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3253[t1, t2]
+b3253 :: [Bit 32, Bit 32] >>= [Unit]
+b3253[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1565[t1]
-    else b3230[t2, t0, t1]
-b3230 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3230[t0, t1, t2] =
+    then b1574[t1]
+    else b3255[t2, t0, t1]
+b3255 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3255[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3232[t0, t3, t2]
-b3232 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3232[t0, t1, t2] =
+  b3257[t0, t3, t2]
+b3257 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3257[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3235[t0, t1, t2]
-    else b3237[t0, t1, t2]
+    then b3260[t0, t1, t2]
+    else b3262[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b3266 :: [Bit 32, Bit 32] >>= [Unit]
-b3266[t0, t1] =
+b3291 :: [Bit 32, Bit 32] >>= [Unit]
+b3291[t0, t1] =
   t2 <- add((str53, 1))
-  b3232[t0, t2, t1]
+  b3257[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b1561 :: [Bit 32] >>= [Unit]
-b1561[t0] =
+b1570 :: [Bit 32] >>= [Unit]
+b1570[t0] =
   t1 <- and((t0, 15))
-  t2 <- b1242[t1, 9]
+  t2 <- b1248[t1, 9]
   t3 <- store8((itoaBuf, t2))
-  t4 <- b3934[1, 0, 31, t0, 32]
+  t4 <- b3959[1, 0, 31, t0, 32]
   t5 <- load8((str53))
   t6 <- primEq((t5, 0))
   if t6
-    then b1565[t0]
-    else b3266[t5, t0]
+    then b1574[t0]
+    else b3291[t5, t0]
 
 -----------------------------------------
 -- recursive
-b3810 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3810[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b3272[t1, t2]
-b3809 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3809[t0, t1, t2] =
+b3835 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3835[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3297[t1, t2]
+b3834 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3834[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b3272[t1, t2]
-b3272 :: [Bit 32, Bit 32] >>= [Unit]
-b3272[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3297[t1, t2]
+b3297 :: [Bit 32, Bit 32] >>= [Unit]
+b3297[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1561[t1]
-    else b3274[t2, t0, t1]
-b3274 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3274[t0, t1, t2] =
+    then b1570[t1]
+    else b3299[t2, t0, t1]
+b3299 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3299[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3281[t0, t3, t2]
-b3281 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3281[t0, t1, t2] =
+  b3306[t0, t3, t2]
+b3306 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3306[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3809[t0, t1, t2]
-    else b3810[t0, t1, t2]
+    then b3834[t0, t1, t2]
+    else b3835[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b1576 :: [Bit 32] >>= [Unit]
-b1576[t0] =
+b1585 :: [Bit 32] >>= [Unit]
+b1585[t0] =
   t1 <- add((users, 124))
   store32((t1, t0))
 
 -----------------------------------------
 -- recursive
-b3247 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3247[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b3238[t1, t2]
-b3245 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3245[t0, t1, t2] =
+b3272 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3272[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3263[t1, t2]
+b3270 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3270[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b3238[t1, t2]
-b3238 :: [Bit 32, Bit 32] >>= [Unit]
-b3238[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3263[t1, t2]
+b3263 :: [Bit 32, Bit 32] >>= [Unit]
+b3263[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1576[t1]
-    else b3240[t2, t0, t1]
-b3240 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3240[t0, t1, t2] =
+    then b1585[t1]
+    else b3265[t2, t0, t1]
+b3265 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3265[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3242[t0, t3, t2]
-b3242 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3242[t0, t1, t2] =
+  b3267[t0, t3, t2]
+b3267 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3267[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3245[t0, t1, t2]
-    else b3247[t0, t1, t2]
+    then b3270[t0, t1, t2]
+    else b3272[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b3253 :: [Bit 32, Bit 32] >>= [Unit]
-b3253[t0, t1] =
+b3278 :: [Bit 32, Bit 32] >>= [Unit]
+b3278[t0, t1] =
   t2 <- add((str53, 1))
-  b3242[t0, t2, t1]
+  b3267[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b1572 :: [Bit 32] >>= [Unit]
-b1572[t0] =
+b1581 :: [Bit 32] >>= [Unit]
+b1581[t0] =
   t1 <- and((t0, 15))
-  t2 <- b1242[t1, 9]
+  t2 <- b1248[t1, 9]
   t3 <- store8((itoaBuf, t2))
-  t4 <- b3934[1, 0, 31, t0, 32]
+  t4 <- b3959[1, 0, 31, t0, 32]
   t5 <- load8((str53))
   t6 <- primEq((t5, 0))
   if t6
-    then b1576[t0]
-    else b3253[t5, t0]
+    then b1585[t0]
+    else b3278[t5, t0]
 
 -----------------------------------------
 -- recursive
-b3812 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3812[t0, t1, t2] =
-  t3 <- b1427[t0]
-  b3254[t1, t2]
-b3811 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3811[t0, t1, t2] =
+b3837 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3837[t0, t1, t2] =
+  t3 <- b1436[t0]
+  b3279[t1, t2]
+b3836 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3836[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  b3254[t1, t2]
-b3254 :: [Bit 32, Bit 32] >>= [Unit]
-b3254[t0, t1] =
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  b3279[t1, t2]
+b3279 :: [Bit 32, Bit 32] >>= [Unit]
+b3279[t0, t1] =
   t2 <- load8((t0))
   t3 <- primEq((t2, 0))
   if t3
-    then b1572[t1]
-    else b3256[t2, t0, t1]
-b3256 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3256[t0, t1, t2] =
+    then b1581[t1]
+    else b3281[t2, t0, t1]
+b3281 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3281[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3263[t0, t3, t2]
-b3263 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3263[t0, t1, t2] =
+  b3288[t0, t3, t2]
+b3288 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3288[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3811[t0, t1, t2]
-    else b3812[t0, t1, t2]
+    then b3836[t0, t1, t2]
+    else b3837[t0, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b1663 :: [] >>= [Unit]
-b1663[] =
+b1672 :: [] >>= [Unit]
+b1672[] =
   t0 <- store1((current, flag0))
   t1 <- outb((32, 17))
   t2 <- outb((33, 32))
@@ -3035,78 +3101,78 @@ b1663[] =
   t26 <- primEq((t25, 0))
   if t26
     then b295[]
-    else b3201[t25]
+    else b3226[t25]
 
 -----------------------------------------
 -- not recursive
-b3284 :: [Bit 32, Bit 32] >>= [Unit]
-b3284[t0, t1] =
+b3309 :: [Bit 32, Bit 32] >>= [Unit]
+b3309[t0, t1] =
   t2 <- add((str52, 1))
-  t3 <- b3263[t0, t2, t1]
-  b1663[]
+  t3 <- b3288[t0, t2, t1]
+  b1672[]
 
 -----------------------------------------
 -- not recursive
-b3987 :: [Bit 32, Bit 32] >>= [Unit]
-b3987[t0, t1] =
+b4012 :: [Bit 32, Bit 32] >>= [Unit]
+b4012[t0, t1] =
   t2 <- add((str53, 1))
-  t3 <- b3242[t0, t2, t1]
-  b1663[]
+  t3 <- b3267[t0, t2, t1]
+  b1672[]
 
 -----------------------------------------
 -- not recursive
-b3986 :: [Bit 32] >>= [Unit]
-b3986[t0] =
+b4011 :: [Bit 32] >>= [Unit]
+b4011[t0] =
   t1 <- add((users, 124))
   t2 <- store32((t1, t0))
-  b1663[]
+  b1672[]
 
 -----------------------------------------
 -- not recursive
-b1763 :: [Bit 32] >>= [Unit]
-b1763[t0] =
+b1772 :: [Bit 32] >>= [Unit]
+b1772[t0] =
   t1 <- and((t0, 15))
-  t2 <- b1242[t1, 9]
+  t2 <- b1248[t1, 9]
   t3 <- store8((itoaBuf, t2))
-  t4 <- b3934[1, 0, 31, t0, 32]
+  t4 <- b3959[1, 0, 31, t0, 32]
   t5 <- load8((str53))
   t6 <- primEq((t5, 0))
   if t6
-    then b3986[t0]
-    else b3987[t5, t0]
+    then b4011[t0]
+    else b4012[t5, t0]
 
 -----------------------------------------
 -- not recursive
-b3287 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3287[t0, t1, t2] =
+b3312 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3312[t0, t1, t2] =
   t3 <- add((str52, 1))
-  t4 <- b3281[t0, t3, t2]
+  t4 <- b3306[t0, t3, t2]
   t5 <- add((t1, 8))
   t6 <- load32((t5))
   t7 <- load8((str52))
   t8 <- primEq((t7, 0))
   if t8
-    then b1763[t6]
-    else b3284[t7, t6]
+    then b1772[t6]
+    else b3309[t7, t6]
 
 -----------------------------------------
 -- not recursive
-b3990 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3990[t0, t1, t2] =
+b4015 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4015[t0, t1, t2] =
   t3 <- add((str53, 1))
-  t4 <- b3232[t0, t3, t1]
+  t4 <- b3257[t0, t3, t1]
   t5 <- add((t2, 8))
   t6 <- load32((t5))
   t7 <- load8((str52))
   t8 <- primEq((t7, 0))
   if t8
-    then b1763[t6]
-    else b3284[t7, t6]
+    then b1772[t6]
+    else b3309[t7, t6]
 
 -----------------------------------------
 -- not recursive
-b3989 :: [Bit 32, Bit 32] >>= [Unit]
-b3989[t0, t1] =
+b4014 :: [Bit 32, Bit 32] >>= [Unit]
+b4014[t0, t1] =
   t2 <- add((users, 52))
   t3 <- store32((t2, t0))
   t4 <- add((t1, 8))
@@ -3114,147 +3180,147 @@ b3989[t0, t1] =
   t6 <- load8((str52))
   t7 <- primEq((t6, 0))
   if t7
-    then b1763[t5]
-    else b3284[t6, t5]
+    then b1772[t5]
+    else b3309[t6, t5]
 
 -----------------------------------------
 -- not recursive
-b1775 :: [Bit 32, Bit 32] >>= [Unit]
-b1775[t0, t1] =
+b1784 :: [Bit 32, Bit 32] >>= [Unit]
+b1784[t0, t1] =
   t2 <- and((t0, 15))
-  t3 <- b1242[t2, 9]
+  t3 <- b1248[t2, 9]
   t4 <- store8((itoaBuf, t3))
-  t5 <- b3934[1, 0, 31, t0, 32]
+  t5 <- b3959[1, 0, 31, t0, 32]
   t6 <- load8((str53))
   t7 <- primEq((t6, 0))
   if t7
-    then b3989[t0, t1]
-    else b3990[t6, t0, t1]
+    then b4014[t0, t1]
+    else b4015[t6, t0, t1]
 
 -----------------------------------------
 -- not recursive
-b3994 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3994[t0, t1, t2] =
+b4019 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4019[t0, t1, t2] =
   t3 <- add((t0, 8))
   t4 <- load32((t3))
   t5 <- load8((str52))
   t6 <- primEq((t5, 0))
   if t6
-    then b1775[t4, t2]
-    else b3287[t5, t2, t4]
+    then b1784[t4, t2]
+    else b3312[t5, t2, t4]
 
 -----------------------------------------
 -- recursive
-b4000 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b4000[t0, t1, t2, t3, t4] =
+b4025 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4025[t0, t1, t2, t3, t4] =
   t5 <- inb((1021))
   t6 <- and((t5, 96))
-  t7 <- b1206[t6, 0, 13]
-  t8 <- b1427[t0]
+  t7 <- b1212[t6, 0, 13]
+  t8 <- b1436[t0]
   t9 <- load8((t1))
   t10 <- primEq((t9, 0))
   if t10
-    then b3994[t3, t4, t2]
-    else b4002[t9, t1, t2, t3, t4]
-b4002 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b4002[t0, t1, t2, t3, t4] =
+    then b4019[t3, t4, t2]
+    else b4027[t9, t1, t2, t3, t4]
+b4027 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4027[t0, t1, t2, t3, t4] =
   t5 <- add((t1, 1))
   t6 <- inb((1021))
   t7 <- and((t6, 96))
-  t8 <- b1206[t7, 0, t0]
+  t8 <- b1212[t7, 0, t0]
   t9 <- primEq((t0, 10))
   if t9
-    then b4000[t0, t5, t2, t3, t4]
-    else b4001[t0, t5, t2, t3, t4]
-b4001 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b4001[t0, t1, t2, t3, t4] =
-  t5 <- b1427[t0]
+    then b4025[t0, t5, t2, t3, t4]
+    else b4026[t0, t5, t2, t3, t4]
+b4026 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4026[t0, t1, t2, t3, t4] =
+  t5 <- b1436[t0]
   t6 <- load8((t1))
   t7 <- primEq((t6, 0))
   if t7
-    then b3994[t3, t4, t2]
-    else b4002[t6, t1, t2, t3, t4]
+    then b4019[t3, t4, t2]
+    else b4027[t6, t1, t2, t3, t4]
 
 -----------------------------------------
 -- not recursive
-b3995 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3995[t0, t1, t2, t3] =
+b4020 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4020[t0, t1, t2, t3] =
   t4 <- add((str49, 1))
   t5 <- inb((1021))
   t6 <- and((t5, 96))
-  t7 <- b1206[t6, 0, t0]
+  t7 <- b1212[t6, 0, t0]
   t8 <- primEq((t0, 10))
   if t8
-    then b4000[t0, t4, t1, t2, t3]
-    else b4001[t0, t4, t1, t2, t3]
+    then b4025[t0, t4, t1, t2, t3]
+    else b4026[t0, t4, t1, t2, t3]
 
 -----------------------------------------
 -- not recursive
-b3991 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3991[t0, t1, t2, t3, t4] =
-  t5 <- b2994[t0]
+b4016 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4016[t0, t1, t2, t3, t4] =
+  t5 <- b3019[t0]
   t6 <- load8((str49))
   t7 <- primEq((t6, 0))
   if t7
-    then b3994[t3, t4, t0]
-    else b3995[t6, t0, t3, t4]
+    then b4019[t3, t4, t0]
+    else b4020[t6, t0, t3, t4]
 
 -----------------------------------------
 -- recursive
-b3996 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3996[t0, t1, t2, t3, t4, t5, t6] =
+b4021 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4021[t0, t1, t2, t3, t4, t5, t6] =
   t7 <- inb((1021))
   t8 <- and((t7, 96))
-  t9 <- b1206[t8, 0, 13]
-  t10 <- b1427[t0]
+  t9 <- b1212[t8, 0, 13]
+  t10 <- b1436[t0]
   t11 <- load8((t1))
   t12 <- primEq((t11, 0))
   if t12
-    then b3991[t4, t5, t6, t2, t3]
-    else b3999[t11, t1, t2, t3, t4, t5, t6]
-b3999 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3999[t0, t1, t2, t3, t4, t5, t6] =
+    then b4016[t4, t5, t6, t2, t3]
+    else b4024[t11, t1, t2, t3, t4, t5, t6]
+b4024 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4024[t0, t1, t2, t3, t4, t5, t6] =
   t7 <- add((t1, 1))
   t8 <- inb((1021))
   t9 <- and((t8, 96))
-  t10 <- b1206[t9, 0, t0]
+  t10 <- b1212[t9, 0, t0]
   t11 <- primEq((t0, 10))
   if t11
-    then b3996[t0, t7, t2, t3, t4, t5, t6]
-    else b3997[t0, t7, t2, t3, t4, t5, t6]
-b3997 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3997[t0, t1, t2, t3, t4, t5, t6] =
-  t7 <- b1427[t0]
+    then b4021[t0, t7, t2, t3, t4, t5, t6]
+    else b4022[t0, t7, t2, t3, t4, t5, t6]
+b4022 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4022[t0, t1, t2, t3, t4, t5, t6] =
+  t7 <- b1436[t0]
   t8 <- load8((t1))
   t9 <- primEq((t8, 0))
   if t9
-    then b3991[t4, t5, t6, t2, t3]
-    else b3999[t8, t1, t2, t3, t4, t5, t6]
+    then b4016[t4, t5, t6, t2, t3]
+    else b4024[t8, t1, t2, t3, t4, t5, t6]
 
 -----------------------------------------
 -- not recursive
-b3992 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3992[t0, t1, t2, t3, t4, t5] =
+b4017 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b4017[t0, t1, t2, t3, t4, t5] =
   t6 <- add((str48, 1))
   t7 <- inb((1021))
   t8 <- and((t7, 96))
-  t9 <- b1206[t8, 0, t0]
+  t9 <- b1212[t8, 0, t0]
   t10 <- primEq((t0, 10))
   if t10
-    then b3996[t0, t6, t1, t2, t3, t4, t5]
-    else b3997[t0, t6, t1, t2, t3, t4, t5]
+    then b4021[t0, t6, t1, t2, t3, t4, t5]
+    else b4022[t0, t6, t1, t2, t3, t4, t5]
 
 -----------------------------------------
 -- not recursive
-b3821 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3821[t0, t1, t2, t3] =
+b3846 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3846[t0, t1, t2, t3] =
   t4 <- add((t1, t2))
   t5 <- add((t0, -1))
   t6 <- load8((str48))
   t7 <- primEq((t6, 0))
   if t7
-    then b3991[t1, t5, t4, t3, t0]
-    else b3992[t6, t3, t0, t1, t5, t4]
+    then b4016[t1, t5, t4, t3, t0]
+    else b4017[t6, t3, t0, t1, t5, t4]
 
 -----------------------------------------
 -- not recursive
@@ -3263,739 +3329,739 @@ str50 <- "Did not find second user program\n"
 
 -----------------------------------------
 -- recursive
-b3224 :: [Bit 32, Bit 32] >>= [Unit]
-b3224[t0, t1] =
-  t2 <- b1427[t0]
+b3249 :: [Bit 32, Bit 32] >>= [Unit]
+b3249[t0, t1] =
+  t2 <- b1436[t0]
   t3 <- load8((t1))
   t4 <- primEq((t3, 0))
   if t4
-    then b3199[]
-    else b3217[t3, t1]
-b3222 :: [Bit 32, Bit 32] >>= [Unit]
-b3222[t0, t1] =
+    then b3224[]
+    else b3242[t3, t1]
+b3247 :: [Bit 32, Bit 32] >>= [Unit]
+b3247[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, 13]
-  t5 <- b1427[t0]
+  t4 <- b1212[t3, 0, 13]
+  t5 <- b1436[t0]
   t6 <- load8((t1))
   t7 <- primEq((t6, 0))
   if t7
-    then b3199[]
-    else b3217[t6, t1]
-b3217 :: [Bit 32, Bit 32] >>= [Unit]
-b3217[t0, t1] =
+    then b3224[]
+    else b3242[t6, t1]
+b3242 :: [Bit 32, Bit 32] >>= [Unit]
+b3242[t0, t1] =
   t2 <- add((t1, 1))
-  b3219[t0, t2]
-b3219 :: [Bit 32, Bit 32] >>= [Unit]
-b3219[t0, t1] =
+  b3244[t0, t2]
+b3244 :: [Bit 32, Bit 32] >>= [Unit]
+b3244[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, t0]
+  t4 <- b1212[t3, 0, t0]
   t5 <- primEq((t0, 10))
   if t5
-    then b3222[t0, t1]
-    else b3224[t0, t1]
+    then b3247[t0, t1]
+    else b3249[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b3227 :: [Bit 32] >>= [Unit]
-b3227[t0] =
+b3252 :: [Bit 32] >>= [Unit]
+b3252[t0] =
   t1 <- add((str50, 1))
-  b3219[t0, t1]
+  b3244[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b3225 :: [] >>= [Unit]
-b3225[] =
+b3250 :: [] >>= [Unit]
+b3250[] =
   t0 <- load8((str50))
   t1 <- primEq((t0, 0))
   if t1
-    then b3199[]
-    else b3227[t0]
+    then b3224[]
+    else b3252[t0]
 
 -----------------------------------------
 -- not recursive
-b3404 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3404[t0, t1, t2, t3] =
+b3429 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3429[t0, t1, t2, t3] =
   t4 <- primEq((t0, 0))
   if t4
-    then b3225[]
-    else b3821[t0, t1, t2, t3]
+    then b3250[]
+    else b3846[t0, t1, t2, t3]
 
 -----------------------------------------
 -- recursive
-b3413 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3413[t0, t1, t2, t3, t4] =
-  t5 <- b1427[t0]
+b3438 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3438[t0, t1, t2, t3, t4] =
+  t5 <- b1436[t0]
   t6 <- load8((t1))
   t7 <- primEq((t6, 0))
   if t7
-    then b3404[t3, t4, 12, t2]
-    else b3412[t6, t1, t2, t3, t4]
-b3407 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3407[t0, t1, t2, t3, t4] =
+    then b3429[t3, t4, 12, t2]
+    else b3437[t6, t1, t2, t3, t4]
+b3432 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3432[t0, t1, t2, t3, t4] =
   t5 <- inb((1021))
   t6 <- and((t5, 96))
-  t7 <- b1206[t6, 0, 13]
-  t8 <- b1427[t0]
+  t7 <- b1212[t6, 0, 13]
+  t8 <- b1436[t0]
   t9 <- load8((t1))
   t10 <- primEq((t9, 0))
   if t10
-    then b3404[t3, t4, 12, t2]
-    else b3412[t9, t1, t2, t3, t4]
-b3412 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3412[t0, t1, t2, t3, t4] =
+    then b3429[t3, t4, 12, t2]
+    else b3437[t9, t1, t2, t3, t4]
+b3437 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3437[t0, t1, t2, t3, t4] =
   t5 <- add((t1, 1))
-  b3406[t0, t5, t2, t3, t4]
-b3406 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3406[t0, t1, t2, t3, t4] =
+  b3431[t0, t5, t2, t3, t4]
+b3431 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3431[t0, t1, t2, t3, t4] =
   t5 <- inb((1021))
   t6 <- and((t5, 96))
-  t7 <- b1206[t6, 0, t0]
+  t7 <- b1212[t6, 0, t0]
   t8 <- primEq((t0, 10))
   if t8
-    then b3407[t0, t1, t2, t3, t4]
-    else b3413[t0, t1, t2, t3, t4]
+    then b3432[t0, t1, t2, t3, t4]
+    else b3438[t0, t1, t2, t3, t4]
 
 -----------------------------------------
 -- not recursive
-b3405 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3405[t0, t1, t2, t3] =
+b3430 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3430[t0, t1, t2, t3] =
   t4 <- add((str47, 1))
-  b3406[t0, t4, t1, t2, t3]
+  b3431[t0, t4, t1, t2, t3]
 
 -----------------------------------------
 -- not recursive
-b3368 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3368[t0, t1, t2] =
-  t3 <- b2994[t0]
+b3393 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3393[t0, t1, t2] =
+  t3 <- b3019[t0]
   t4 <- load8((str47))
   t5 <- primEq((t4, 0))
   if t5
-    then b3404[t1, t2, 12, t0]
-    else b3405[t4, t0, t1, t2]
+    then b3429[t1, t2, 12, t0]
+    else b3430[t4, t0, t1, t2]
 
 -----------------------------------------
 -- recursive
-b3422 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3422[t0, t1, t2, t3, t4] =
-  t5 <- b1427[t0]
+b3447 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3447[t0, t1, t2, t3, t4] =
+  t5 <- b1436[t0]
   t6 <- load8((t1))
   t7 <- primEq((t6, 0))
   if t7
-    then b3368[t2, t3, t4]
-    else b3421[t6, t1, t2, t3, t4]
-b3416 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3416[t0, t1, t2, t3, t4] =
+    then b3393[t2, t3, t4]
+    else b3446[t6, t1, t2, t3, t4]
+b3441 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3441[t0, t1, t2, t3, t4] =
   t5 <- inb((1021))
   t6 <- and((t5, 96))
-  t7 <- b1206[t6, 0, 13]
-  t8 <- b1427[t0]
+  t7 <- b1212[t6, 0, 13]
+  t8 <- b1436[t0]
   t9 <- load8((t1))
   t10 <- primEq((t9, 0))
   if t10
-    then b3368[t2, t3, t4]
-    else b3421[t9, t1, t2, t3, t4]
-b3421 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3421[t0, t1, t2, t3, t4] =
+    then b3393[t2, t3, t4]
+    else b3446[t9, t1, t2, t3, t4]
+b3446 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3446[t0, t1, t2, t3, t4] =
   t5 <- add((t1, 1))
-  b3415[t0, t5, t2, t3, t4]
-b3415 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3415[t0, t1, t2, t3, t4] =
+  b3440[t0, t5, t2, t3, t4]
+b3440 :: [Bit 32, Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3440[t0, t1, t2, t3, t4] =
   t5 <- inb((1021))
   t6 <- and((t5, 96))
-  t7 <- b1206[t6, 0, t0]
+  t7 <- b1212[t6, 0, t0]
   t8 <- primEq((t0, 10))
   if t8
-    then b3416[t0, t1, t2, t3, t4]
-    else b3422[t0, t1, t2, t3, t4]
+    then b3441[t0, t1, t2, t3, t4]
+    else b3447[t0, t1, t2, t3, t4]
 
 -----------------------------------------
 -- not recursive
-b3414 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3414[t0, t1, t2, t3] =
+b3439 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3439[t0, t1, t2, t3] =
   t4 <- add((str46, 1))
-  b3415[t0, t4, t1, t2, t3]
+  b3440[t0, t4, t1, t2, t3]
 
 -----------------------------------------
 -- not recursive
-b3362 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3362[t0, t1, t2] =
+b3387 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3387[t0, t1, t2] =
   t3 <- add((t1, t2))
   t4 <- add((t0, -1))
   t5 <- load8((str46))
   t6 <- primEq((t5, 0))
   if t6
-    then b3368[t1, t4, t3]
-    else b3414[t5, t1, t4, t3]
+    then b3393[t1, t4, t3]
+    else b3439[t5, t1, t4, t3]
 
 -----------------------------------------
 -- not recursive
-b3360 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3360[t0, t1, t2] =
+b3385 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3385[t0, t1, t2] =
   t3 <- primEq((t0, 0))
   if t3
-    then b3212[]
-    else b3362[t0, t1, t2]
+    then b3237[]
+    else b3387[t0, t1, t2]
 
 -----------------------------------------
 -- recursive
-b3423 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3423[t0, t1, t2, t3] =
+b3448 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3448[t0, t1, t2, t3] =
   t4 <- primEq((t0, 0))
   if t4
-    then b3212[]
-    else b3425[t0, t1, t2, t3]
-b3425 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3425[t0, t1, t2, t3] =
+    then b3237[]
+    else b3450[t0, t1, t2, t3]
+b3450 :: [Bit 32, Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3450[t0, t1, t2, t3] =
   t4 <- add((t1, t2))
   t5 <- add((t0, -1))
   t6 <- add((t3, -1))
   t7 <- primEq((t6, 0))
   if t7
-    then b3360[t5, t4, 12]
-    else b3423[t5, t4, 12, t6]
+    then b3385[t5, t4, 12]
+    else b3448[t5, t4, 12, t6]
 
 -----------------------------------------
 -- not recursive
-b3723 :: [Bit 32] >>= [Unit]
-b3723[t0] =
+b3748 :: [Bit 32] >>= [Unit]
+b3748[t0] =
   t1 <- add((str10, 1))
-  t2 <- b3720[t0, t1]
+  t2 <- b3745[t0, t1]
   t3 <- load32((4096))
   t4 <- load32((t3))
   t5 <- add((t3, 4))
   t6 <- primEq((t4, 0))
   if t6
-    then b3212[]
-    else b3425[t4, t5, 12, 2]
+    then b3237[]
+    else b3450[t4, t5, 12, 2]
 
 -----------------------------------------
 -- not recursive
-b3705 :: [Bit 32] >>= [Unit]
-b3705[t0] =
+b3730 :: [Bit 32] >>= [Unit]
+b3730[t0] =
   t1 <- add((str12, 1))
-  t2 <- b3702[t0, t1]
+  t2 <- b3727[t0, t1]
   t3 <- load32((4096))
   t4 <- load32((t3))
   t5 <- add((t3, 4))
   t6 <- primEq((t4, 0))
   if t6
-    then b3212[]
-    else b3425[t4, t5, 12, 2]
+    then b3237[]
+    else b3450[t4, t5, 12, 2]
 
 -----------------------------------------
 -- not recursive
-b3687 :: [Bit 32] >>= [Unit]
-b3687[t0] =
+b3712 :: [Bit 32] >>= [Unit]
+b3712[t0] =
   t1 <- add((str14, 1))
-  t2 <- b3684[t0, t1]
+  t2 <- b3709[t0, t1]
   t3 <- load32((4096))
   t4 <- load32((t3))
   t5 <- add((t3, 4))
   t6 <- primEq((t4, 0))
   if t6
-    then b3212[]
-    else b3425[t4, t5, 12, 2]
+    then b3237[]
+    else b3450[t4, t5, 12, 2]
 
 -----------------------------------------
 -- not recursive
-b3532 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3532[t0, t1, t2] =
-  t3 <- b1427[t0]
-  t4 <- b3514[t1, t2]
-  t5 <- load32((4096))
-  t6 <- load32((t5))
-  t7 <- add((t5, 4))
-  t8 <- primEq((t6, 0))
-  if t8
-    then b3212[]
-    else b3425[t6, t7, 12, 2]
-
------------------------------------------
--- not recursive
-b3530 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3530[t0, t1, t2] =
-  t3 <- inb((1021))
-  t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  t7 <- b3514[t1, t2]
-  t8 <- load32((4096))
-  t9 <- load32((t8))
-  t10 <- add((t8, 4))
-  t11 <- primEq((t9, 0))
-  if t11
-    then b3212[]
-    else b3425[t9, t10, 12, 2]
-
------------------------------------------
--- not recursive
-b3603 :: [Bit 32, Bit 32] >>= [Unit]
-b3603[t0, t1] =
-  t2 <- add((str17, 1))
-  t3 <- inb((1021))
-  t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
-  t6 <- primEq((t0, 10))
-  if t6
-    then b3530[t0, t2, t1]
-    else b3532[t0, t2, t1]
-
------------------------------------------
--- not recursive
-b3494 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3494[t0, t1, t2] =
-  t3 <- b1427[t0]
-  t4 <- b3476[t1, t2]
-  t5 <- load32((4096))
-  t6 <- load32((t5))
-  t7 <- add((t5, 4))
-  t8 <- primEq((t6, 0))
-  if t8
-    then b3212[]
-    else b3425[t6, t7, 12, 2]
-
------------------------------------------
--- not recursive
-b3492 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3492[t0, t1, t2] =
-  t3 <- inb((1021))
-  t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  t7 <- b3476[t1, t2]
-  t8 <- load32((4096))
-  t9 <- load32((t8))
-  t10 <- add((t8, 4))
-  t11 <- primEq((t9, 0))
-  if t11
-    then b3212[]
-    else b3425[t9, t10, 12, 2]
-
------------------------------------------
--- not recursive
-b3497 :: [Bit 32, Bit 32] >>= [Unit]
-b3497[t0, t1] =
-  t2 <- add((str18, 1))
-  t3 <- inb((1021))
-  t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
-  t6 <- primEq((t0, 10))
-  if t6
-    then b3492[t0, t2, t1]
-    else b3494[t0, t2, t1]
-
------------------------------------------
--- not recursive
-b3454 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3454[t0, t1, t2] =
-  t3 <- b1427[t0]
-  t4 <- b3436[t1, t2]
-  t5 <- load32((4096))
-  t6 <- load32((t5))
-  t7 <- add((t5, 4))
-  t8 <- primEq((t6, 0))
-  if t8
-    then b3212[]
-    else b3425[t6, t7, 12, 2]
-
------------------------------------------
--- not recursive
-b3452 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3452[t0, t1, t2] =
-  t3 <- inb((1021))
-  t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  t7 <- b3436[t1, t2]
-  t8 <- load32((4096))
-  t9 <- load32((t8))
-  t10 <- add((t8, 4))
-  t11 <- primEq((t9, 0))
-  if t11
-    then b3212[]
-    else b3425[t9, t10, 12, 2]
-
------------------------------------------
--- not recursive
-b3448 :: [Bit 32, Bit 32] >>= [Unit]
-b3448[t0, t1] =
-  t2 <- add((str19, 1))
-  t3 <- inb((1021))
-  t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
-  t6 <- primEq((t0, 10))
-  if t6
-    then b3452[t0, t2, t1]
-    else b3454[t0, t2, t1]
-
------------------------------------------
--- not recursive
-b3430 :: [Bit 32] >>= [Unit]
-b3430[t0] =
-  t1 <- add((str20, 1))
-  t2 <- b2915[t0, t1]
-  t3 <- load32((4096))
-  t4 <- load32((t3))
-  t5 <- add((t3, 4))
-  t6 <- primEq((t4, 0))
-  if t6
-    then b3212[]
-    else b3425[t4, t5, 12, 2]
-
------------------------------------------
--- not recursive
-b2075 :: [] >>= [Unit]
-b2075[] =
-  t0 <- load32((4096))
-  t1 <- load32((t0))
-  t2 <- add((t0, 4))
-  t3 <- primEq((t1, 0))
-  if t3
-    then b3212[]
-    else b3425[t1, t2, 12, 2]
-
------------------------------------------
--- not recursive
-b2143 :: [Bit 32] >>= [Unit]
-b2143[t0] =
-  t1 <- and((t0, 15))
-  t2 <- b1242[t1, 9]
-  t3 <- store8((itoaBuf, t2))
-  t4 <- b3934[1, 0, 31, t0, 32]
-  t5 <- load8((str20))
-  t6 <- primEq((t5, 0))
-  if t6
-    then b2075[]
-    else b3430[t5]
-
------------------------------------------
--- not recursive
-b3446 :: [Bit 32] >>= [Unit]
-b3446[t0] =
-  t1 <- load8((str19))
-  t2 <- primEq((t1, 0))
-  if t2
-    then b2143[t0]
-    else b3448[t1, t0]
-
------------------------------------------
--- recursive
-b3457 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3457[t0, t1, t2] =
-  t3 <- add((t1, 1))
-  b3459[t0, t3, t2]
-b3459 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3459[t0, t1, t2] =
+b3557 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3557[t0, t1, t2] =
   t3 <- b1436[t0]
-  t4 <- load8((t1))
-  t5 <- primEq((t4, 0))
-  if t5
-    then b3446[t2]
-    else b3457[t4, t1, t2]
-
------------------------------------------
--- not recursive
-b3822 :: [Bit 32, Bit 32] >>= [Unit]
-b3822[t0, t1] =
-  t2 <- add((t1, 1))
-  b3459[t0, t2, t1]
-
------------------------------------------
--- not recursive
-b3463 :: [Bit 32] >>= [Unit]
-b3463[t0] =
-  t1 <- load8((t0))
-  t2 <- primEq((t1, 0))
-  if t2
-    then b3446[t0]
-    else b3822[t1, t0]
-
------------------------------------------
--- not recursive
-b3500 :: [Bit 32, Bit 32] >>= [Unit]
-b3500[t0, t1] =
-  t2 <- add((str16, 1))
-  t3 <- b2915[t0, t2]
-  t4 <- load8((str18))
-  t5 <- primEq((t4, 0))
-  if t5
-    then b3463[t1]
-    else b3497[t4, t1]
-
------------------------------------------
--- not recursive
-b3486 :: [Bit 32] >>= [Unit]
-b3486[t0] =
-  t1 <- load8((str18))
-  t2 <- primEq((t1, 0))
-  if t2
-    then b3463[t0]
-    else b3497[t1, t0]
-
------------------------------------------
--- not recursive
-b3498 :: [Bit 32] >>= [Unit]
-b3498[t0] =
-  t1 <- load8((str16))
-  t2 <- primEq((t1, 0))
-  if t2
-    then b3486[t0]
-    else b3500[t1, t0]
-
------------------------------------------
--- not recursive
-b3606 :: [Bit 32, Bit 32] >>= [Unit]
-b3606[t0, t1] =
-  t2 <- add((str17, 1))
-  t3 <- b3600[t0, t2, t1]
-  t4 <- load32((4108))
-  t5 <- load8((str17))
-  t6 <- primEq((t5, 0))
-  if t6
-    then b3498[t4]
-    else b3603[t5, t4]
-
------------------------------------------
--- not recursive
-b3579 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3579[t0, t1, t2] =
-  t3 <- b1427[t0]
-  t4 <- b3476[t1, t2]
-  t5 <- load32((4108))
-  t6 <- load8((str17))
-  t7 <- primEq((t6, 0))
-  if t7
-    then b3498[t5]
-    else b3603[t6, t5]
-
------------------------------------------
--- not recursive
-b3577 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3577[t0, t1, t2] =
-  t3 <- inb((1021))
-  t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  t7 <- b3476[t1, t2]
-  t8 <- load32((4108))
-  t9 <- load8((str17))
-  t10 <- primEq((t9, 0))
-  if t10
-    then b3498[t8]
-    else b3603[t9, t8]
-
------------------------------------------
--- not recursive
-b3582 :: [Bit 32, Bit 32] >>= [Unit]
-b3582[t0, t1] =
-  t2 <- add((str18, 1))
-  t3 <- inb((1021))
-  t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
-  t6 <- primEq((t0, 10))
-  if t6
-    then b3577[t0, t2, t1]
-    else b3579[t0, t2, t1]
+  t4 <- b3539[t1, t2]
+  t5 <- load32((4096))
+  t6 <- load32((t5))
+  t7 <- add((t5, 4))
+  t8 <- primEq((t6, 0))
+  if t8
+    then b3237[]
+    else b3450[t6, t7, 12, 2]
 
 -----------------------------------------
 -- not recursive
 b3555 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
 b3555[t0, t1, t2] =
-  t3 <- b1427[t0]
-  t4 <- b3436[t1, t2]
+  t3 <- inb((1021))
+  t4 <- and((t3, 96))
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  t7 <- b3539[t1, t2]
+  t8 <- load32((4096))
+  t9 <- load32((t8))
+  t10 <- add((t8, 4))
+  t11 <- primEq((t9, 0))
+  if t11
+    then b3237[]
+    else b3450[t9, t10, 12, 2]
+
+-----------------------------------------
+-- not recursive
+b3628 :: [Bit 32, Bit 32] >>= [Unit]
+b3628[t0, t1] =
+  t2 <- add((str17, 1))
+  t3 <- inb((1021))
+  t4 <- and((t3, 96))
+  t5 <- b1212[t4, 0, t0]
+  t6 <- primEq((t0, 10))
+  if t6
+    then b3555[t0, t2, t1]
+    else b3557[t0, t2, t1]
+
+-----------------------------------------
+-- not recursive
+b3519 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3519[t0, t1, t2] =
+  t3 <- b1436[t0]
+  t4 <- b3501[t1, t2]
+  t5 <- load32((4096))
+  t6 <- load32((t5))
+  t7 <- add((t5, 4))
+  t8 <- primEq((t6, 0))
+  if t8
+    then b3237[]
+    else b3450[t6, t7, 12, 2]
+
+-----------------------------------------
+-- not recursive
+b3517 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3517[t0, t1, t2] =
+  t3 <- inb((1021))
+  t4 <- and((t3, 96))
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  t7 <- b3501[t1, t2]
+  t8 <- load32((4096))
+  t9 <- load32((t8))
+  t10 <- add((t8, 4))
+  t11 <- primEq((t9, 0))
+  if t11
+    then b3237[]
+    else b3450[t9, t10, 12, 2]
+
+-----------------------------------------
+-- not recursive
+b3522 :: [Bit 32, Bit 32] >>= [Unit]
+b3522[t0, t1] =
+  t2 <- add((str18, 1))
+  t3 <- inb((1021))
+  t4 <- and((t3, 96))
+  t5 <- b1212[t4, 0, t0]
+  t6 <- primEq((t0, 10))
+  if t6
+    then b3517[t0, t2, t1]
+    else b3519[t0, t2, t1]
+
+-----------------------------------------
+-- not recursive
+b3479 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3479[t0, t1, t2] =
+  t3 <- b1436[t0]
+  t4 <- b3461[t1, t2]
+  t5 <- load32((4096))
+  t6 <- load32((t5))
+  t7 <- add((t5, 4))
+  t8 <- primEq((t6, 0))
+  if t8
+    then b3237[]
+    else b3450[t6, t7, 12, 2]
+
+-----------------------------------------
+-- not recursive
+b3477 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3477[t0, t1, t2] =
+  t3 <- inb((1021))
+  t4 <- and((t3, 96))
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  t7 <- b3461[t1, t2]
+  t8 <- load32((4096))
+  t9 <- load32((t8))
+  t10 <- add((t8, 4))
+  t11 <- primEq((t9, 0))
+  if t11
+    then b3237[]
+    else b3450[t9, t10, 12, 2]
+
+-----------------------------------------
+-- not recursive
+b3473 :: [Bit 32, Bit 32] >>= [Unit]
+b3473[t0, t1] =
+  t2 <- add((str19, 1))
+  t3 <- inb((1021))
+  t4 <- and((t3, 96))
+  t5 <- b1212[t4, 0, t0]
+  t6 <- primEq((t0, 10))
+  if t6
+    then b3477[t0, t2, t1]
+    else b3479[t0, t2, t1]
+
+-----------------------------------------
+-- not recursive
+b3455 :: [Bit 32] >>= [Unit]
+b3455[t0] =
+  t1 <- add((str20, 1))
+  t2 <- b2940[t0, t1]
+  t3 <- load32((4096))
+  t4 <- load32((t3))
+  t5 <- add((t3, 4))
+  t6 <- primEq((t4, 0))
+  if t6
+    then b3237[]
+    else b3450[t4, t5, 12, 2]
+
+-----------------------------------------
+-- not recursive
+b2084 :: [] >>= [Unit]
+b2084[] =
+  t0 <- load32((4096))
+  t1 <- load32((t0))
+  t2 <- add((t0, 4))
+  t3 <- primEq((t1, 0))
+  if t3
+    then b3237[]
+    else b3450[t1, t2, 12, 2]
+
+-----------------------------------------
+-- not recursive
+b2152 :: [Bit 32] >>= [Unit]
+b2152[t0] =
+  t1 <- and((t0, 15))
+  t2 <- b1248[t1, 9]
+  t3 <- store8((itoaBuf, t2))
+  t4 <- b3959[1, 0, 31, t0, 32]
+  t5 <- load8((str20))
+  t6 <- primEq((t5, 0))
+  if t6
+    then b2084[]
+    else b3455[t5]
+
+-----------------------------------------
+-- not recursive
+b3471 :: [Bit 32] >>= [Unit]
+b3471[t0] =
+  t1 <- load8((str19))
+  t2 <- primEq((t1, 0))
+  if t2
+    then b2152[t0]
+    else b3473[t1, t0]
+
+-----------------------------------------
+-- recursive
+b3482 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3482[t0, t1, t2] =
+  t3 <- add((t1, 1))
+  b3484[t0, t3, t2]
+b3484 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3484[t0, t1, t2] =
+  t3 <- b1445[t0]
+  t4 <- load8((t1))
+  t5 <- primEq((t4, 0))
+  if t5
+    then b3471[t2]
+    else b3482[t4, t1, t2]
+
+-----------------------------------------
+-- not recursive
+b3847 :: [Bit 32, Bit 32] >>= [Unit]
+b3847[t0, t1] =
+  t2 <- add((t1, 1))
+  b3484[t0, t2, t1]
+
+-----------------------------------------
+-- not recursive
+b3488 :: [Bit 32] >>= [Unit]
+b3488[t0] =
+  t1 <- load8((t0))
+  t2 <- primEq((t1, 0))
+  if t2
+    then b3471[t0]
+    else b3847[t1, t0]
+
+-----------------------------------------
+-- not recursive
+b3525 :: [Bit 32, Bit 32] >>= [Unit]
+b3525[t0, t1] =
+  t2 <- add((str16, 1))
+  t3 <- b2940[t0, t2]
+  t4 <- load8((str18))
+  t5 <- primEq((t4, 0))
+  if t5
+    then b3488[t1]
+    else b3522[t4, t1]
+
+-----------------------------------------
+-- not recursive
+b3511 :: [Bit 32] >>= [Unit]
+b3511[t0] =
+  t1 <- load8((str18))
+  t2 <- primEq((t1, 0))
+  if t2
+    then b3488[t0]
+    else b3522[t1, t0]
+
+-----------------------------------------
+-- not recursive
+b3523 :: [Bit 32] >>= [Unit]
+b3523[t0] =
+  t1 <- load8((str16))
+  t2 <- primEq((t1, 0))
+  if t2
+    then b3511[t0]
+    else b3525[t1, t0]
+
+-----------------------------------------
+-- not recursive
+b3631 :: [Bit 32, Bit 32] >>= [Unit]
+b3631[t0, t1] =
+  t2 <- add((str17, 1))
+  t3 <- b3625[t0, t2, t1]
+  t4 <- load32((4108))
+  t5 <- load8((str17))
+  t6 <- primEq((t5, 0))
+  if t6
+    then b3523[t4]
+    else b3628[t5, t4]
+
+-----------------------------------------
+-- not recursive
+b3604 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3604[t0, t1, t2] =
+  t3 <- b1436[t0]
+  t4 <- b3501[t1, t2]
   t5 <- load32((4108))
   t6 <- load8((str17))
   t7 <- primEq((t6, 0))
   if t7
-    then b3498[t5]
-    else b3603[t6, t5]
+    then b3523[t5]
+    else b3628[t6, t5]
 
 -----------------------------------------
 -- not recursive
-b3553 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3553[t0, t1, t2] =
+b3602 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3602[t0, t1, t2] =
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, 13]
-  t6 <- b1427[t0]
-  t7 <- b3436[t1, t2]
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  t7 <- b3501[t1, t2]
   t8 <- load32((4108))
   t9 <- load8((str17))
   t10 <- primEq((t9, 0))
   if t10
-    then b3498[t8]
-    else b3603[t9, t8]
+    then b3523[t8]
+    else b3628[t9, t8]
 
 -----------------------------------------
 -- not recursive
-b3549 :: [Bit 32, Bit 32] >>= [Unit]
-b3549[t0, t1] =
+b3607 :: [Bit 32, Bit 32] >>= [Unit]
+b3607[t0, t1] =
+  t2 <- add((str18, 1))
+  t3 <- inb((1021))
+  t4 <- and((t3, 96))
+  t5 <- b1212[t4, 0, t0]
+  t6 <- primEq((t0, 10))
+  if t6
+    then b3602[t0, t2, t1]
+    else b3604[t0, t2, t1]
+
+-----------------------------------------
+-- not recursive
+b3580 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3580[t0, t1, t2] =
+  t3 <- b1436[t0]
+  t4 <- b3461[t1, t2]
+  t5 <- load32((4108))
+  t6 <- load8((str17))
+  t7 <- primEq((t6, 0))
+  if t7
+    then b3523[t5]
+    else b3628[t6, t5]
+
+-----------------------------------------
+-- not recursive
+b3578 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3578[t0, t1, t2] =
+  t3 <- inb((1021))
+  t4 <- and((t3, 96))
+  t5 <- b1212[t4, 0, 13]
+  t6 <- b1436[t0]
+  t7 <- b3461[t1, t2]
+  t8 <- load32((4108))
+  t9 <- load8((str17))
+  t10 <- primEq((t9, 0))
+  if t10
+    then b3523[t8]
+    else b3628[t9, t8]
+
+-----------------------------------------
+-- not recursive
+b3574 :: [Bit 32, Bit 32] >>= [Unit]
+b3574[t0, t1] =
   t2 <- add((str19, 1))
   t3 <- inb((1021))
   t4 <- and((t3, 96))
-  t5 <- b1206[t4, 0, t0]
+  t5 <- b1212[t4, 0, t0]
   t6 <- primEq((t0, 10))
   if t6
-    then b3553[t0, t2, t1]
-    else b3555[t0, t2, t1]
+    then b3578[t0, t2, t1]
+    else b3580[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3538 :: [Bit 32] >>= [Unit]
-b3538[t0] =
+b3563 :: [Bit 32] >>= [Unit]
+b3563[t0] =
   t1 <- add((str20, 1))
-  t2 <- b2915[t0, t1]
+  t2 <- b2940[t0, t1]
   t3 <- load32((4108))
   t4 <- load8((str17))
   t5 <- primEq((t4, 0))
   if t5
-    then b3498[t3]
-    else b3603[t4, t3]
+    then b3523[t3]
+    else b3628[t4, t3]
 
 -----------------------------------------
 -- not recursive
-b2138 :: [] >>= [Unit]
-b2138[] =
+b2147 :: [] >>= [Unit]
+b2147[] =
   t0 <- load32((4108))
   t1 <- load8((str17))
   t2 <- primEq((t1, 0))
   if t2
-    then b3498[t0]
-    else b3603[t1, t0]
+    then b3523[t0]
+    else b3628[t1, t0]
 
 -----------------------------------------
 -- not recursive
-b2137 :: [Bit 32] >>= [Unit]
-b2137[t0] =
+b2146 :: [Bit 32] >>= [Unit]
+b2146[t0] =
   t1 <- and((t0, 15))
-  t2 <- b1242[t1, 9]
+  t2 <- b1248[t1, 9]
   t3 <- store8((itoaBuf, t2))
-  t4 <- b3934[1, 0, 31, t0, 32]
+  t4 <- b3959[1, 0, 31, t0, 32]
   t5 <- load8((str20))
   t6 <- primEq((t5, 0))
   if t6
-    then b2138[]
-    else b3538[t5]
+    then b2147[]
+    else b3563[t5]
 
 -----------------------------------------
 -- not recursive
-b3547 :: [Bit 32] >>= [Unit]
-b3547[t0] =
+b3572 :: [Bit 32] >>= [Unit]
+b3572[t0] =
   t1 <- load8((str19))
   t2 <- primEq((t1, 0))
   if t2
-    then b2137[t0]
-    else b3549[t1, t0]
+    then b2146[t0]
+    else b3574[t1, t0]
 
 -----------------------------------------
 -- recursive
-b3558 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3558[t0, t1, t2] =
+b3583 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3583[t0, t1, t2] =
   t3 <- add((t1, 1))
-  b3560[t0, t3, t2]
-b3560 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
-b3560[t0, t1, t2] =
-  t3 <- b1436[t0]
+  b3585[t0, t3, t2]
+b3585 :: [Bit 32, Bit 32, Bit 32] >>= [Unit]
+b3585[t0, t1, t2] =
+  t3 <- b1445[t0]
   t4 <- load8((t1))
   t5 <- primEq((t4, 0))
   if t5
-    then b3547[t2]
-    else b3558[t4, t1, t2]
+    then b3572[t2]
+    else b3583[t4, t1, t2]
 
 -----------------------------------------
 -- not recursive
-b3823 :: [Bit 32, Bit 32] >>= [Unit]
-b3823[t0, t1] =
+b3848 :: [Bit 32, Bit 32] >>= [Unit]
+b3848[t0, t1] =
   t2 <- add((t1, 1))
-  b3560[t0, t2, t1]
+  b3585[t0, t2, t1]
 
 -----------------------------------------
 -- not recursive
-b3564 :: [Bit 32] >>= [Unit]
-b3564[t0] =
+b3589 :: [Bit 32] >>= [Unit]
+b3589[t0] =
   t1 <- load8((t0))
   t2 <- primEq((t1, 0))
   if t2
-    then b3547[t0]
-    else b3823[t1, t0]
+    then b3572[t0]
+    else b3848[t1, t0]
 
 -----------------------------------------
 -- not recursive
-b3585 :: [Bit 32, Bit 32] >>= [Unit]
-b3585[t0, t1] =
+b3610 :: [Bit 32, Bit 32] >>= [Unit]
+b3610[t0, t1] =
   t2 <- add((str15, 1))
-  t3 <- b2915[t0, t2]
+  t3 <- b2940[t0, t2]
   t4 <- load8((str18))
   t5 <- primEq((t4, 0))
   if t5
-    then b3564[t1]
-    else b3582[t4, t1]
+    then b3589[t1]
+    else b3607[t4, t1]
 
 -----------------------------------------
 -- not recursive
-b3571 :: [Bit 32] >>= [Unit]
-b3571[t0] =
+b3596 :: [Bit 32] >>= [Unit]
+b3596[t0] =
   t1 <- load8((str18))
   t2 <- primEq((t1, 0))
   if t2
-    then b3564[t0]
-    else b3582[t1, t0]
+    then b3589[t0]
+    else b3607[t1, t0]
 
 -----------------------------------------
 -- not recursive
-b3583 :: [Bit 32] >>= [Unit]
-b3583[t0] =
+b3608 :: [Bit 32] >>= [Unit]
+b3608[t0] =
   t1 <- load8((str15))
   t2 <- primEq((t1, 0))
   if t2
-    then b3571[t0]
-    else b3585[t1, t0]
+    then b3596[t0]
+    else b3610[t1, t0]
 
 -----------------------------------------
 -- not recursive
-b1969 :: [] >>= [Unit]
-b1969[] =
+b1978 :: [] >>= [Unit]
+b1978[] =
   t0 <- load32((4104))
   t1 <- load8((str17))
   t2 <- primEq((t1, 0))
   if t2
-    then b3583[t0]
-    else b3606[t1, t0]
+    then b3608[t0]
+    else b3631[t1, t0]
 
 -----------------------------------------
 -- not recursive
-b1968 :: [] >>= [Unit]
-b1968[] =
+b1977 :: [] >>= [Unit]
+b1977[] =
   t0 <- load32((4100))
   t1 <- load32((t0))
   t2 <- add((t0, 4))
-  t3 <- b3187[t1, t2, 8, 0]
+  t3 <- b3212[t1, t2, 8, 0]
   t4 <- load8((str14))
   t5 <- primEq((t4, 0))
   if t5
-    then b1969[]
-    else b3687[t4]
+    then b1978[]
+    else b3712[t4]
 
 -----------------------------------------
 -- not recursive
-b1967 :: [] >>= [Unit]
-b1967[] =
+b1976 :: [] >>= [Unit]
+b1976[] =
   t0 <- load32((4096))
   t1 <- load32((t0))
   t2 <- add((t0, 4))
-  t3 <- b3049[t1, t2, 12, 0]
+  t3 <- b3074[t1, t2, 12, 0]
   t4 <- load8((str12))
   t5 <- primEq((t4, 0))
   if t5
-    then b1968[]
-    else b3705[t4]
+    then b1977[]
+    else b3730[t4]
 
 -----------------------------------------
 -- not recursive
-b1407 :: [] >>= [Unit]
-b1407[] =
+b1416 :: [] >>= [Unit]
+b1416[] =
   t0 <- store8((console, 1))
   t1 <- add((console, 1))
   t2 <- store8((t1, 1))
@@ -4009,62 +4075,54 @@ b1407[] =
   t10 <- store8((t9, 1))
   t11 <- add((console, 6))
   t12 <- store8((t11, 15))
-  t13 <- load8((console))
-  t14 <- load8((t1))
-  t15 <- store8((t7, t13))
-  t16 <- store8((t9, t14))
-  t17 <- load8((t3))
-  t18 <- load8((t5))
-  t19 <- load8((t11))
-  t20 <- b1280[t14, t18, t19, t13]
-  t21 <- b3972[1, t13, t17, t14, t18, t19]
-  t22 <- load8((str10))
-  t23 <- primEq((t22, 0))
-  if t23
-    then b1967[]
-    else b3723[t22]
+  t13 <- b1007[]
+  t14 <- load8((str10))
+  t15 <- primEq((t14, 0))
+  if t15
+    then b1976[]
+    else b3748[t14]
 
 -----------------------------------------
 -- recursive
-b3735 :: [Bit 32, Bit 32] >>= [Unit]
-b3735[t0, t1] =
-  t2 <- b1427[t0]
+b3760 :: [Bit 32, Bit 32] >>= [Unit]
+b3760[t0, t1] =
+  t2 <- b1436[t0]
   t3 <- load8((t1))
   t4 <- primEq((t3, 0))
   if t4
-    then b1407[]
-    else b3728[t3, t1]
-b3733 :: [Bit 32, Bit 32] >>= [Unit]
-b3733[t0, t1] =
+    then b1416[]
+    else b3753[t3, t1]
+b3758 :: [Bit 32, Bit 32] >>= [Unit]
+b3758[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, 13]
-  t5 <- b1427[t0]
+  t4 <- b1212[t3, 0, 13]
+  t5 <- b1436[t0]
   t6 <- load8((t1))
   t7 <- primEq((t6, 0))
   if t7
-    then b1407[]
-    else b3728[t6, t1]
-b3728 :: [Bit 32, Bit 32] >>= [Unit]
-b3728[t0, t1] =
+    then b1416[]
+    else b3753[t6, t1]
+b3753 :: [Bit 32, Bit 32] >>= [Unit]
+b3753[t0, t1] =
   t2 <- add((t1, 1))
-  b3730[t0, t2]
-b3730 :: [Bit 32, Bit 32] >>= [Unit]
-b3730[t0, t1] =
+  b3755[t0, t2]
+b3755 :: [Bit 32, Bit 32] >>= [Unit]
+b3755[t0, t1] =
   t2 <- inb((1021))
   t3 <- and((t2, 96))
-  t4 <- b1206[t3, 0, t0]
+  t4 <- b1212[t3, 0, t0]
   t5 <- primEq((t0, 10))
   if t5
-    then b3733[t0, t1]
-    else b3735[t0, t1]
+    then b3758[t0, t1]
+    else b3760[t0, t1]
 
 -----------------------------------------
 -- not recursive
-b3738 :: [Bit 32] >>= [Unit]
-b3738[t0] =
+b3763 :: [Bit 32] >>= [Unit]
+b3763[t0] =
   t1 <- add((str44, 1))
-  b3730[t0, t1]
+  b3755[t0, t1]
 
 -----------------------------------------
 -- not recursive
@@ -4155,36 +4213,36 @@ initialize[] =
   t82 <- store8((t81, 0))
   t83 <- add((console, 6))
   t84 <- store8((t83, 10))
-  t85 <- store8((keyDown, 0))
-  t86 <- store32((ticks, 1))
-  t87 <- store8((spinner, 45))
-  t88 <- add((spinner, 1))
-  t89 <- store8((t88, 92))
-  t90 <- add((spinner, 2))
-  t91 <- store8((t90, 124))
-  t92 <- add((spinner, 3))
-  t93 <- store8((t92, 47))
-  t94 <- store8((spinpos, 0))
-  t95 <- store8((pos, 55))
-  t96 <- store1((dir, flag1))
-  t97 <- store8((itoaBuf, 0))
-  t98 <- add((itoaBuf, 1))
-  t99 <- b2553[t98, 1]
-  t100 <- store8((t83, 32))
-  t101 <- load8((console))
-  t102 <- load8((t73))
-  t103 <- store8((t79, t101))
-  t104 <- store8((t81, t102))
-  t105 <- load8((t75))
-  t106 <- load8((t77))
-  t107 <- load8((t83))
-  t108 <- b1280[t102, t106, t107, t101]
-  t109 <- b3972[1, t101, t105, t102, t106, t107]
+  t85 <- store8((keyUp, 0))
+  t86 <- store8((keyDown, 0))
+  t87 <- store32((ticks, 1))
+  t88 <- store32((ball, 1))
+  t89 <- add((ball, 4))
+  t90 <- store32((t89, 1))
+  t91 <- add((ball, 8))
+  t92 <- store8((t91, 10))
+  t93 <- add((ball, 9))
+  t94 <- store8((t93, 10))
+  t95 <- store8((spinner, 45))
+  t96 <- add((spinner, 1))
+  t97 <- store8((t96, 92))
+  t98 <- add((spinner, 2))
+  t99 <- store8((t98, 124))
+  t100 <- add((spinner, 3))
+  t101 <- store8((t100, 47))
+  t102 <- store8((spinpos, 0))
+  t103 <- store8((pos, 55))
+  t104 <- store1((dir, flag1))
+  t105 <- store8((itoaBuf, 0))
+  t106 <- add((itoaBuf, 1))
+  t107 <- b2577[t106, 1]
+  t108 <- store8((t83, 32))
+  t109 <- b1007[]
   t110 <- load8((str44))
   t111 <- primEq((t110, 0))
   if t111
-    then b1407[]
-    else b3738[t110]
+    then b1416[]
+    else b3763[t110]
 
 -----------------------------------------
 -- Entrypoints: yield kputc keyboardInterrupt timerInterrupt unhandled

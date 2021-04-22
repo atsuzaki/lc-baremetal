@@ -47,10 +47,10 @@ kputc:                                  # @kputc
 	movl	%edi, 8(%esp)
 	movl	%eax, (%esp)
 	movl	$0, 4(%esp)
-	calll	func_b1206
+	calll	func_b1212
 	cmpl	$10, %edi
 	jne	.LBB1_2
-# %bb.1:                                # %b1729
+# %bb.1:                                # %b1738
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -60,10 +60,10 @@ kputc:                                  # @kputc
 	movl	%eax, (%esp)
 	movl	$13, 8(%esp)
 	movl	$0, 4(%esp)
-	calll	func_b1206
-.LBB1_2:                                # %b1730
+	calll	func_b1212
+.LBB1_2:                                # %b1739
 	movl	%edi, (%esp)
-	calll	func_b1427
+	calll	func_b1436
 	movl	%esi, (%esp)
 	calll	returnTo
 	addl	$20, %esp
@@ -77,9 +77,9 @@ kputc:                                  # @kputc
 	.size	kputc, .Lfunc_end1-kputc
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b1206
-	.type	func_b1206,@function
-func_b1206:                             # @func_b1206
+	.p2align	4, 0x90                         # -- Begin function func_b1212
+	.type	func_b1212,@function
+func_b1212:                             # @func_b1212
 	.cfi_startproc
 # %bb.0:
 	movl	12(%esp), %ecx
@@ -99,7 +99,7 @@ func_b1206:                             # @func_b1206
 	xorl	%edx, %edx
 	cmpl	%edx, %eax
 	je	.LBB2_2
-.LBB2_3:                                # %b2569
+.LBB2_3:                                # %b2593
 	movw	$1016, %dx                      # imm = 0x3F8
 	movl	%ecx, %eax
 	#APP
@@ -107,14 +107,14 @@ func_b1206:                             # @func_b1206
 	#NO_APP
 	retl
 .Lfunc_end2:
-	.size	func_b1206, .Lfunc_end2-func_b1206
+	.size	func_b1212, .Lfunc_end2-func_b1212
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b1427
-	.type	func_b1427,@function
-func_b1427:                             # @func_b1427
+	.p2align	4, 0x90                         # -- Begin function func_b1436
+	.type	func_b1436,@function
+func_b1436:                             # @func_b1436
 	.cfi_startproc
-# %bb.0:                                # %b1427
+# %bb.0:                                # %b1436
 	pushl	%ebp
 	.cfi_def_cfa_offset 8
 	pushl	%ebx
@@ -133,10 +133,10 @@ func_b1427:                             # @func_b1427
 	movzbl	console+4, %eax
 	cmpl	$13, %edx
 	je	.LBB3_1
-# %bb.7:                                # %b1432
+# %bb.7:                                # %b1441
 	cmpl	$10, %edx
 	je	.LBB3_1
-# %bb.8:                                # %b1434
+# %bb.8:                                # %b1443
 	movzbl	console+5, %ecx
 	movzbl	console+6, %esi
 	leal	(%eax,%eax,4), %edi
@@ -149,20 +149,20 @@ func_b1427:                             # @func_b1427
 	incl	%ecx
 	cmpl	%edx, %ecx
 	ja	.LBB3_1
-# %bb.9:                                # %b3909
+# %bb.9:                                # %b3934
 	movb	%cl, console+5
 	jmp	.LBB3_10
-.LBB3_1:                                # %b1429
+.LBB3_1:                                # %b1438
 	movb	console+1, %cl
 	movb	%cl, console+5
 	movzbl	console+2, %ecx
 	incl	%eax
 	cmpl	%ecx, %eax
 	ja	.LBB3_3
-# %bb.2:                                # %b3905
+# %bb.2:                                # %b3930
 	movb	%al, console+4
 	jmp	.LBB3_10
-.LBB3_3:                                # %b1431
+.LBB3_3:                                # %b1440
 	movzbl	console, %ebp
 	movzbl	console+1, %esi
 	movzbl	console+2, %edi
@@ -173,7 +173,7 @@ func_b1427:                             # @func_b1427
 	cmpl	%edi, %eax
 	ja	.LBB3_5
 	.p2align	4, 0x90
-.LBB3_4:                                # %b3896
+.LBB3_4:                                # %b3921
                                         # =>This Inner Loop Header: Depth=1
 	leal	1(%ebp), %eax
 	movl	%eax, 8(%esp)                   # 4-byte Spill
@@ -185,14 +185,14 @@ func_b1427:                             # @func_b1427
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1214
+	calll	func_b1220
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	addl	$2, %ebp
 	cmpl	%edi, %ebp
 	movl	8(%esp), %ebp                   # 4-byte Reload
 	jbe	.LBB3_4
-.LBB3_5:                                # %b1212.preheader
+.LBB3_5:                                # %b1218.preheader
 	leal	(%edi,%edi,4), %eax
 	shll	$5, %eax
 	leal	753664(%eax,%esi,2), %eax
@@ -200,7 +200,7 @@ func_b1427:                             # @func_b1427
 	shll	$8, %ecx
 	orl	$32, %ecx
 	.p2align	4, 0x90
-.LBB3_6:                                # %b1212
+.LBB3_6:                                # %b1218
                                         # =>This Inner Loop Header: Depth=1
 	movw	%cx, (%eax)
 	incl	%esi
@@ -220,12 +220,12 @@ func_b1427:                             # @func_b1427
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end3:
-	.size	func_b1427, .Lfunc_end3-func_b1427
+	.size	func_b1436, .Lfunc_end3-func_b1436
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b1214
-	.type	func_b1214,@function
-func_b1214:                             # @func_b1214
+	.p2align	4, 0x90                         # -- Begin function func_b1220
+	.type	func_b1220,@function
+func_b1220:                             # @func_b1220
 	.cfi_startproc
 # %bb.0:
 	pushl	%edi
@@ -245,7 +245,7 @@ func_b1214:                             # @func_b1214
 	shll	$5, %esi
 	leal	753664(%esi,%ecx,2), %esi
 	.p2align	4, 0x90
-.LBB4_1:                                # %b1214
+.LBB4_1:                                # %b1220
                                         # =>This Inner Loop Header: Depth=1
 	movzwl	(%esi), %edi
 	movw	%di, (%edx)
@@ -261,7 +261,7 @@ func_b1214:                             # @func_b1214
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end4:
-	.size	func_b1214, .Lfunc_end4-func_b1214
+	.size	func_b1220, .Lfunc_end4-func_b1220
 	.cfi_endproc
                                         # -- End function
 	.globl	keyboardInterrupt               # -- Begin function keyboardInterrupt
@@ -269,9 +269,12 @@ func_b1214:                             # @func_b1214
 	.type	keyboardInterrupt,@function
 keyboardInterrupt:                      # @keyboardInterrupt
 	.cfi_startproc
-# %bb.0:
-	subl	$12, %esp
+# %bb.0:                                # %keyboardInterrupt
+	pushl	%esi
+	.cfi_def_cfa_offset 8
+	subl	$8, %esp
 	.cfi_def_cfa_offset 16
+	.cfi_offset %esi, -8
 	movl	keyb_layout, %ecx
 	#APP
 	inb	$33, %al
@@ -297,21 +300,33 @@ keyboardInterrupt:                      # @keyboardInterrupt
 	movzbl	%al, %eax
 	testb	$-128, %al
 	jne	.LBB5_2
-# %bb.1:                                # %b888
+# %bb.1:                                # %b891
+	movl	%eax, %edx
+	andl	$127, %edx
+	movzbl	(%ecx,%edx), %edx
+	movzbl	753703, %esi
+	shll	$8, %esi
+	orl	%edx, %esi
+	movw	%si, 753702
+	movb	%dl, keyDown
+.LBB5_2:                                # %b890
+	movl	%eax, %edx
+	shrl	$7, %edx
+	cmpl	$1, %edx
+	jne	.LBB5_4
+# %bb.3:                                # %b888
 	andl	$127, %eax
-	movzbl	(%ecx,%eax), %eax
-	movzbl	753703, %ecx
-	shll	$8, %ecx
-	orl	%eax, %ecx
-	movw	%cx, 753702
-	movb	%al, keyDown
-.LBB5_2:                                # %b1011
+	movb	(%ecx,%eax), %al
+	movb	%al, keyUp
+.LBB5_4:                                # %b1024
 	movzbl	current, %eax
 	leal	(%eax,%eax,8), %eax
 	leal	users(,%eax,8), %eax
 	movl	%eax, (%esp)
 	calll	returnTo
-	addl	$12, %esp
+	addl	$8, %esp
+	.cfi_def_cfa_offset 8
+	popl	%esi
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end5:
@@ -365,7 +380,7 @@ timerInterrupt:                         # @timerInterrupt
 	andl	$15, %eax
 	movl	%eax, (%esp)
 	movl	$9, 4(%esp)
-	calll	func_b1242
+	calll	func_b1248
 	orl	%esi, %eax
 	movw	%ax, 753818
 	movl	%edi, 8(%esp)                   # 4-byte Spill
@@ -377,13 +392,13 @@ timerInterrupt:                         # @timerInterrupt
 	andl	$15, %eax
 	movl	%eax, (%esp)
 	movl	$9, 4(%esp)
-	calll	func_b1242
+	calll	func_b1248
 	orl	%edi, %eax
 	movw	%ax, 753816
 	movl	$75, %edi
 	movl	$753814, %ebp                   # imm = 0xB8096
 	.p2align	4, 0x90
-.LBB6_1:                                # %b3954
+.LBB6_1:                                # %b3989
                                         # =>This Inner Loop Header: Depth=1
 	shrl	$4, %esi
 	movzbl	1(%ebp), %ebx
@@ -392,40 +407,46 @@ timerInterrupt:                         # @timerInterrupt
 	andl	$15, %eax
 	movl	%eax, (%esp)
 	movl	$9, 4(%esp)
-	calll	func_b1242
+	calll	func_b1248
 	orl	%ebx, %eax
 	movw	%ax, (%ebp)
 	decl	%edi
 	addl	$-2, %ebp
 	cmpl	$69, %edi
 	jg	.LBB6_1
-# %bb.2:                                # %b1608
+# %bb.2:                                # %b1617
+	calll	func_b1007
+	movzbl	ball+8, %eax
+	movzbl	ball+9, %ecx
+	leal	(%eax,%eax,4), %eax
+	shll	$5, %eax
+	movw	$28704, 753664(%eax,%ecx,2)     # imm = 0x7020
 	movl	8(%esp), %ebx                   # 4-byte Reload
 	testb	$3, %bl
 	jne	.LBB6_11
-# %bb.3:                                # %b1266
+# %bb.3:                                # %b1272
 	movzbl	pos, %esi
 	movl	%esi, (%esp)
 	movl	$32, 4(%esp)
 	calll	func_b829
 	cmpb	$0, dir
 	je	.LBB6_9
-# %bb.4:                                # %b3951
+# %bb.4:                                # %b3986
 	leal	1(%esi), %eax
 	cmpl	$69, %eax
 	jae	.LBB6_7
-# %bb.5:                                # %b3949
+# %bb.5:                                # %b3984
 	movl	%eax, (%esp)
 	movl	$62, 4(%esp)
 	jmp	.LBB6_6
-.LBB6_9:                                # %b3946
+.LBB6_9:                                # %b3981
 	leal	-1(%esi), %eax
 	cmpl	$45, %eax
 	jle	.LBB6_10
-# %bb.8:                                # %b3944
+# %bb.8:                                # %b3979
 	movl	%eax, (%esp)
 	movl	$60, 4(%esp)
-.LBB6_6:                                # %b3949
+.LBB6_6:                                # %b3984
 	movl	%eax, %esi
 	calll	func_b829
 	movl	%esi, %eax
@@ -433,7 +454,7 @@ timerInterrupt:                         # @timerInterrupt
 	testb	$15, %bl
 	jne	.LBB6_16
 	jmp	.LBB6_12
-.LBB6_7:                                # %b1269
+.LBB6_7:                                # %b1275
 	movl	%esi, (%esp)
 	movl	$124, 4(%esp)
 	calll	func_b829
@@ -446,13 +467,13 @@ timerInterrupt:                         # @timerInterrupt
 	incl	%eax
 	cmpl	$2, %eax
 	jae	.LBB6_14
-# %bb.13:                               # %b3939
+# %bb.13:                               # %b3974
 	andl	$1, %eax
 	movb	%al, current
 	jmp	.LBB6_15
-.LBB6_14:                               # %b2290
+.LBB6_14:                               # %b2302
 	movb	$0, current
-.LBB6_15:                               # %b1604
+.LBB6_15:                               # %b1613
 	movzbl	spinpos, %eax
 	movzbl	spinner(%eax), %ecx
 	incb	%al
@@ -462,7 +483,7 @@ timerInterrupt:                         # @timerInterrupt
 	shll	$8, %eax
 	orl	%ecx, %eax
 	movw	%ax, 753822
-.LBB6_16:                               # %b1011
+.LBB6_16:                               # %b1024
 	movzbl	current, %eax
 	leal	(%eax,%eax,8), %eax
 	leal	users(,%eax,8), %eax
@@ -479,7 +500,7 @@ timerInterrupt:                         # @timerInterrupt
 	popl	%ebp
 	.cfi_def_cfa_offset 4
 	retl
-.LBB6_10:                               # %b1272
+.LBB6_10:                               # %b1278
 	.cfi_def_cfa_offset 32
 	movl	%esi, (%esp)
 	movl	$124, 4(%esp)
@@ -492,25 +513,85 @@ timerInterrupt:                         # @timerInterrupt
 	.size	timerInterrupt, .Lfunc_end6-timerInterrupt
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b1242
-	.type	func_b1242,@function
-func_b1242:                             # @func_b1242
+	.p2align	4, 0x90                         # -- Begin function func_b1248
+	.type	func_b1248,@function
+func_b1248:                             # @func_b1248
 	.cfi_startproc
 # %bb.0:
 	movl	8(%esp), %ecx
 	movl	4(%esp), %eax
 	cmpl	%ecx, %eax
 	ja	.LBB7_2
-# %bb.1:                                # %b917
+# %bb.1:                                # %b921
 	addl	$48, %eax
 	movzbl	%al, %eax
 	retl
-.LBB7_2:                                # %b918
+.LBB7_2:                                # %b922
 	addl	$87, %eax
 	movzbl	%al, %eax
 	retl
 .Lfunc_end7:
-	.size	func_b1242, .Lfunc_end7-func_b1242
+	.size	func_b1248, .Lfunc_end7-func_b1248
+	.cfi_endproc
+                                        # -- End function
+	.p2align	4, 0x90                         # -- Begin function func_b1007
+	.type	func_b1007,@function
+func_b1007:                             # @func_b1007
+	.cfi_startproc
+# %bb.0:
+	pushl	%ebp
+	.cfi_def_cfa_offset 8
+	pushl	%ebx
+	.cfi_def_cfa_offset 12
+	pushl	%edi
+	.cfi_def_cfa_offset 16
+	pushl	%esi
+	.cfi_def_cfa_offset 20
+	subl	$12, %esp
+	.cfi_def_cfa_offset 32
+	.cfi_offset %esi, -20
+	.cfi_offset %edi, -16
+	.cfi_offset %ebx, -12
+	.cfi_offset %ebp, -8
+	movzbl	console, %ebx
+	movzbl	console+1, %eax
+	movb	%bl, console+4
+	movl	%eax, 8(%esp)                   # 4-byte Spill
+	movb	%al, console+5
+	movzbl	console+2, %esi
+	movzbl	console+3, %edi
+	movzbl	console+6, %ebp
+	.p2align	4, 0x90
+.LBB8_1:                                # %b1281
+                                        # =>This Inner Loop Header: Depth=1
+	pushl	%ebx
+	.cfi_adjust_cfa_offset 4
+	pushl	%ebp
+	.cfi_adjust_cfa_offset 4
+	pushl	%edi
+	.cfi_adjust_cfa_offset 4
+	pushl	20(%esp)                        # 4-byte Folded Reload
+	.cfi_adjust_cfa_offset 4
+	calll	func_b1279
+	addl	$16, %esp
+	.cfi_adjust_cfa_offset -16
+	incl	%ebx
+	cmpl	%esi, %ebx
+	jbe	.LBB8_1
+# %bb.2:                                # %b295
+	addl	$12, %esp
+	.cfi_def_cfa_offset 20
+	popl	%esi
+	.cfi_def_cfa_offset 16
+	popl	%edi
+	.cfi_def_cfa_offset 12
+	popl	%ebx
+	.cfi_def_cfa_offset 8
+	popl	%ebp
+	.cfi_def_cfa_offset 4
+	retl
+.Lfunc_end8:
+	.size	func_b1007, .Lfunc_end8-func_b1007
 	.cfi_endproc
                                         # -- End function
 	.p2align	4, 0x90                         # -- Begin function func_b829
@@ -526,8 +607,41 @@ func_b829:                              # @func_b829
 	orl	%edx, %ecx
 	movw	%cx, 753664(%eax,%eax)
 	retl
-.Lfunc_end8:
-	.size	func_b829, .Lfunc_end8-func_b829
+.Lfunc_end9:
+	.size	func_b829, .Lfunc_end9-func_b829
+	.cfi_endproc
+                                        # -- End function
+	.p2align	4, 0x90                         # -- Begin function func_b1279
+	.type	func_b1279,@function
+func_b1279:                             # @func_b1279
+	.cfi_startproc
+# %bb.0:
+	pushl	%esi
+	.cfi_def_cfa_offset 8
+	.cfi_offset %esi, -8
+	movl	16(%esp), %eax
+	movl	12(%esp), %ecx
+	movl	8(%esp), %edx
+	movl	20(%esp), %esi
+	leal	(%esi,%esi,4), %esi
+	shll	$5, %esi
+	leal	753664(%esi,%edx,2), %esi
+	shll	$8, %eax
+	orl	$32, %eax
+	.p2align	4, 0x90
+.LBB10_1:                               # %b1279
+                                        # =>This Inner Loop Header: Depth=1
+	movw	%ax, (%esi)
+	incl	%edx
+	addl	$2, %esi
+	cmpl	%ecx, %edx
+	jbe	.LBB10_1
+# %bb.2:                                # %b295
+	popl	%esi
+	.cfi_def_cfa_offset 4
+	retl
+.Lfunc_end10:
+	.size	func_b1279, .Lfunc_end10-func_b1279
 	.cfi_endproc
                                         # -- End function
 	.globl	unhandled                       # -- Begin function unhandled
@@ -548,11 +662,11 @@ unhandled:                              # @unhandled
 	movl	16(%esp), %edi
 	movzbl	str54, %ebx
 	testl	%ebx, %ebx
-	je	.LBB9_1
-# %bb.4:                                # %b2944
+	je	.LBB11_1
+# %bb.4:                                # %b2969
 	movl	$str54+1, %esi
 	.p2align	4, 0x90
-.LBB9_5:                                # %b2936
+.LBB11_5:                               # %b2961
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -568,13 +682,13 @@ unhandled:                              # @unhandled
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
-	jne	.LBB9_11
-# %bb.6:                                # %b2939
-                                        #   in Loop: Header=BB9_5 Depth=1
+	jne	.LBB11_11
+# %bb.6:                                # %b2964
+                                        #   in Loop: Header=BB11_5 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -589,31 +703,31 @@ unhandled:                              # @unhandled
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB9_12
+	jmp	.LBB11_12
 	.p2align	4, 0x90
-.LBB9_11:                               # %b2941
-                                        #   in Loop: Header=BB9_5 Depth=1
+.LBB11_11:                              # %b2966
+                                        #   in Loop: Header=BB11_5 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB9_12:                               # %b2932
-                                        #   in Loop: Header=BB9_5 Depth=1
+.LBB11_12:                              # %b2957
+                                        #   in Loop: Header=BB11_5 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%esi), %ebx
 	testl	%ebx, %ebx
-	je	.LBB9_1
-# %bb.13:                               # %b2934
-                                        #   in Loop: Header=BB9_5 Depth=1
+	je	.LBB11_1
+# %bb.13:                               # %b2959
+                                        #   in Loop: Header=BB11_5 Depth=1
 	incl	%esi
-	jmp	.LBB9_5
-.LBB9_1:                                # %b1350
+	jmp	.LBB11_5
+.LBB11_1:                               # %b1359
 	movl	20(%esp), %esi
 	movl	%edi, %eax
 	andl	$15, %eax
@@ -623,7 +737,7 @@ unhandled:                              # @unhandled
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -639,16 +753,16 @@ unhandled:                              # @unhandled
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str55, %ebx
 	testl	%ebx, %ebx
-	je	.LBB9_2
-# %bb.8:                                # %b2931
+	je	.LBB11_2
+# %bb.8:                                # %b2956
 	movl	$str55+1, %edi
 	.p2align	4, 0x90
-.LBB9_9:                                # %b2923
+.LBB11_9:                               # %b2948
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -664,13 +778,13 @@ unhandled:                              # @unhandled
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
-	jne	.LBB9_14
-# %bb.10:                               # %b2926
-                                        #   in Loop: Header=BB9_9 Depth=1
+	jne	.LBB11_14
+# %bb.10:                               # %b2951
+                                        #   in Loop: Header=BB11_9 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -685,31 +799,31 @@ unhandled:                              # @unhandled
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB9_15
+	jmp	.LBB11_15
 	.p2align	4, 0x90
-.LBB9_14:                               # %b2928
-                                        #   in Loop: Header=BB9_9 Depth=1
+.LBB11_14:                              # %b2953
+                                        #   in Loop: Header=BB11_9 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB9_15:                               # %b2919
-                                        #   in Loop: Header=BB9_9 Depth=1
+.LBB11_15:                              # %b2944
+                                        #   in Loop: Header=BB11_9 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
-	je	.LBB9_2
-# %bb.16:                               # %b2921
-                                        #   in Loop: Header=BB9_9 Depth=1
+	je	.LBB11_2
+# %bb.16:                               # %b2946
+                                        #   in Loop: Header=BB11_9 Depth=1
 	incl	%edi
-	jmp	.LBB9_9
-.LBB9_2:                                # %b1346
+	jmp	.LBB11_9
+.LBB11_2:                               # %b1355
 	movl	%esi, %eax
 	andl	$15, %eax
 	subl	$8, %esp
@@ -718,7 +832,7 @@ unhandled:                              # @unhandled
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -734,23 +848,23 @@ unhandled:                              # @unhandled
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str56, %eax
 	testl	%eax, %eax
-	je	.LBB9_3
-# %bb.7:                                # %b2918
+	je	.LBB11_3
+# %bb.7:                                # %b2943
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str56+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB9_3:                                # %b295
+.LBB11_3:                               # %b295
 	popl	%esi
 	.cfi_def_cfa_offset 12
 	popl	%edi
@@ -758,15 +872,15 @@ unhandled:                              # @unhandled
 	popl	%ebx
 	.cfi_def_cfa_offset 4
 	retl
-.Lfunc_end9:
-	.size	unhandled, .Lfunc_end9-unhandled
+.Lfunc_end11:
+	.size	unhandled, .Lfunc_end11-unhandled
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3934
-	.type	func_b3934,@function
-func_b3934:                             # @func_b3934
+	.p2align	4, 0x90                         # -- Begin function func_b3959
+	.type	func_b3959,@function
+func_b3959:                             # @func_b3959
 	.cfi_startproc
-# %bb.0:                                # %b3934
+# %bb.0:                                # %b3959
 	pushl	%ebx
 	.cfi_def_cfa_offset 8
 	pushl	%edi
@@ -780,13 +894,13 @@ func_b3934:                             # @func_b3934
 	movl	20(%esp), %eax
 	addl	16(%esp), %eax
 	cmpl	24(%esp), %eax
-	ja	.LBB10_2
-# %bb.1:                                # %b3936
+	ja	.LBB12_2
+# %bb.1:                                # %b3961
 	movl	28(%esp), %ebx
 	shrl	$4, %ebx
-	je	.LBB10_2
+	je	.LBB12_2
 	.p2align	4, 0x90
-.LBB10_5:                               # %b2003
+.LBB12_5:                               # %b2012
                                         # =>This Inner Loop Header: Depth=1
 	movl	%eax, %edi
 	movl	%ebx, %eax
@@ -797,18 +911,18 @@ func_b3934:                             # @func_b3934
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf(%edi)
 	leal	1(%edi), %eax
 	cmpl	$32, %eax
-	jae	.LBB10_7
-# %bb.6:                                # %b3931
-                                        #   in Loop: Header=BB10_5 Depth=1
+	jae	.LBB12_7
+# %bb.6:                                # %b3956
+                                        #   in Loop: Header=BB12_5 Depth=1
 	shrl	$4, %ebx
-	jne	.LBB10_5
-.LBB10_7:                               # %b2004
+	jne	.LBB12_5
+.LBB12_7:                               # %b2013
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	$0
@@ -817,34 +931,34 @@ func_b3934:                             # @func_b3934
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3918
+	calll	func_b3943
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	.p2align	4, 0x90
-.LBB10_8:                               # %b2001
+.LBB12_8:                               # %b2010
                                         # =>This Inner Loop Header: Depth=1
 	movzbl	itoaBuf(%edi), %eax
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	decl	%edi
-	jns	.LBB10_8
-	jmp	.LBB10_9
-.LBB10_2:                               # %b3925
+	jns	.LBB12_8
+	jmp	.LBB12_9
+.LBB12_2:                               # %b3950
 	xorl	%eax, %eax
 	testb	%al, %al
-	je	.LBB10_4
-# %bb.3:                                # %b3927
+	je	.LBB12_4
+# %bb.3:                                # %b3952
 	movl	$1, %edi
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	pushl	%esi
@@ -855,19 +969,19 @@ func_b3934:                             # @func_b3934
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3918
+	calll	func_b3943
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB10_4:                               # %b2061
+.LBB12_4:                               # %b2070
 	movzbl	itoaBuf, %eax
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB10_9:                               # %b295
+.LBB12_9:                               # %b295
 	popl	%esi
 	.cfi_def_cfa_offset 12
 	popl	%edi
@@ -875,13 +989,13 @@ func_b3934:                             # @func_b3934
 	popl	%ebx
 	.cfi_def_cfa_offset 4
 	retl
-.Lfunc_end10:
-	.size	func_b3934, .Lfunc_end10-func_b3934
+.Lfunc_end12:
+	.size	func_b3959, .Lfunc_end12-func_b3959
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b2915
-	.type	func_b2915,@function
-func_b2915:                             # @func_b2915
+	.p2align	4, 0x90                         # -- Begin function func_b2940
+	.type	func_b2940,@function
+func_b2940:                             # @func_b2940
 	.cfi_startproc
 # %bb.0:
 	pushl	%edi
@@ -895,7 +1009,7 @@ func_b2915:                             # @func_b2915
 	movl	20(%esp), %esi
 	movl	16(%esp), %edi
 	.p2align	4, 0x90
-.LBB11_1:                               # %b2915
+.LBB13_1:                               # %b2940
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -911,13 +1025,13 @@ func_b2915:                             # @func_b2915
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
-	jne	.LBB11_3
-# %bb.2:                                # %b3780
-                                        #   in Loop: Header=BB11_1 Depth=1
+	jne	.LBB13_3
+# %bb.2:                                # %b3805
+                                        #   in Loop: Header=BB13_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -932,31 +1046,31 @@ func_b2915:                             # @func_b2915
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB11_4
+	jmp	.LBB13_4
 	.p2align	4, 0x90
-.LBB11_3:                               # %b3781
-                                        #   in Loop: Header=BB11_1 Depth=1
+.LBB13_3:                               # %b3806
+                                        #   in Loop: Header=BB13_1 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB11_4:                               # %b2906
-                                        #   in Loop: Header=BB11_1 Depth=1
+.LBB13_4:                               # %b2931
+                                        #   in Loop: Header=BB13_1 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%esi), %edi
 	testl	%edi, %edi
-	je	.LBB11_5
-# %bb.6:                                # %b2908
-                                        #   in Loop: Header=BB11_1 Depth=1
+	je	.LBB13_5
+# %bb.6:                                # %b2933
+                                        #   in Loop: Header=BB13_1 Depth=1
 	incl	%esi
-	jmp	.LBB11_1
-.LBB11_5:                               # %b295
+	jmp	.LBB13_1
+.LBB13_5:                               # %b295
 	addl	$4, %esp
 	.cfi_def_cfa_offset 12
 	popl	%esi
@@ -964,15 +1078,15 @@ func_b2915:                             # @func_b2915
 	popl	%edi
 	.cfi_def_cfa_offset 4
 	retl
-.Lfunc_end11:
-	.size	func_b2915, .Lfunc_end11-func_b2915
+.Lfunc_end13:
+	.size	func_b2940, .Lfunc_end13-func_b2940
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b1436
-	.type	func_b1436,@function
-func_b1436:                             # @func_b1436
+	.p2align	4, 0x90                         # -- Begin function func_b1445
+	.type	func_b1445,@function
+func_b1445:                             # @func_b1445
 	.cfi_startproc
-# %bb.0:                                # %b1436
+# %bb.0:                                # %b1445
 	pushl	%ebp
 	.cfi_def_cfa_offset 8
 	pushl	%ebx
@@ -1002,12 +1116,12 @@ func_b1436:                             # @func_b1436
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
-	jne	.LBB12_12
-# %bb.1:                                # %b1424
+	jne	.LBB14_12
+# %bb.1:                                # %b1433
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1022,16 +1136,16 @@ func_b1436:                             # @func_b1436
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	console+4, %eax
 	cmpl	$13, %ebx
-	je	.LBB12_2
-# %bb.8:                                # %b1432
+	je	.LBB14_2
+# %bb.8:                                # %b1441
 	cmpl	$10, %ebx
-	je	.LBB12_2
-# %bb.9:                                # %b1434
+	je	.LBB14_2
+# %bb.9:                                # %b1443
 	movzbl	console+5, %ecx
 	movzbl	console+6, %edx
 	leal	(%eax,%eax,4), %esi
@@ -1043,11 +1157,11 @@ func_b1436:                             # @func_b1436
 	movzbl	console+3, %edx
 	incl	%ecx
 	cmpl	%edx, %ecx
-	ja	.LBB12_2
-# %bb.10:                               # %b3909
+	ja	.LBB14_2
+# %bb.10:                               # %b3934
 	movb	%cl, console+5
-	jmp	.LBB12_11
-.LBB12_12:                              # %c55
+	jmp	.LBB14_11
+.LBB14_12:                              # %c64
 	addl	$12, %esp
 	.cfi_def_cfa_offset 20
 	popl	%esi
@@ -1058,19 +1172,19 @@ func_b1436:                             # @func_b1436
 	.cfi_def_cfa_offset 8
 	popl	%ebp
 	.cfi_def_cfa_offset 4
-	jmp	func_b1427                      # TAILCALL
-.LBB12_2:                               # %b1429
+	jmp	func_b1436                      # TAILCALL
+.LBB14_2:                               # %b1438
 	.cfi_def_cfa_offset 32
 	movb	console+1, %cl
 	movb	%cl, console+5
 	movzbl	console+2, %ecx
 	incl	%eax
 	cmpl	%ecx, %eax
-	ja	.LBB12_4
-# %bb.3:                                # %b3905
+	ja	.LBB14_4
+# %bb.3:                                # %b3930
 	movb	%al, console+4
-	jmp	.LBB12_11
-.LBB12_4:                               # %b1431
+	jmp	.LBB14_11
+.LBB14_4:                               # %b1440
 	movzbl	console, %ebp
 	movzbl	console+1, %esi
 	movzbl	console+2, %edi
@@ -1079,9 +1193,9 @@ func_b1436:                             # @func_b1436
 	movl	%eax, 4(%esp)                   # 4-byte Spill
 	leal	1(%ebp), %eax
 	cmpl	%edi, %eax
-	ja	.LBB12_6
+	ja	.LBB14_6
 	.p2align	4, 0x90
-.LBB12_5:                               # %b3896
+.LBB14_5:                               # %b3921
                                         # =>This Inner Loop Header: Depth=1
 	leal	1(%ebp), %eax
 	movl	%eax, 8(%esp)                   # 4-byte Spill
@@ -1093,14 +1207,14 @@ func_b1436:                             # @func_b1436
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1214
+	calll	func_b1220
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	addl	$2, %ebp
 	cmpl	%edi, %ebp
 	movl	8(%esp), %ebp                   # 4-byte Reload
-	jbe	.LBB12_5
-.LBB12_6:                               # %b1212.preheader
+	jbe	.LBB14_5
+.LBB14_6:                               # %b1218.preheader
 	leal	(%edi,%edi,4), %eax
 	shll	$5, %eax
 	leal	753664(%eax,%esi,2), %eax
@@ -1108,14 +1222,14 @@ func_b1436:                             # @func_b1436
 	shll	$8, %ecx
 	orl	$32, %ecx
 	.p2align	4, 0x90
-.LBB12_7:                               # %b1212
+.LBB14_7:                               # %b1218
                                         # =>This Inner Loop Header: Depth=1
 	movw	%cx, (%eax)
 	incl	%esi
 	addl	$2, %eax
 	cmpl	%ebx, %esi
-	jbe	.LBB12_7
-.LBB12_11:                              # %b295
+	jbe	.LBB14_7
+.LBB14_11:                              # %b295
 	addl	$12, %esp
 	.cfi_def_cfa_offset 20
 	popl	%esi
@@ -1127,13 +1241,13 @@ func_b1436:                             # @func_b1436
 	popl	%ebp
 	.cfi_def_cfa_offset 4
 	retl
-.Lfunc_end12:
-	.size	func_b1436, .Lfunc_end12-func_b1436
+.Lfunc_end14:
+	.size	func_b1445, .Lfunc_end14-func_b1445
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3918
-	.type	func_b3918,@function
-func_b3918:                             # @func_b3918
+	.p2align	4, 0x90                         # -- Begin function func_b3943
+	.type	func_b3943,@function
+func_b3943:                             # @func_b3943
 	.cfi_startproc
 # %bb.0:
 	pushl	%edi
@@ -1149,21 +1263,21 @@ func_b3918:                             # @func_b3918
 	movl	20(%esp), %edi
 	movl	16(%esp), %ecx
 	.p2align	4, 0x90
-.LBB13_1:                               # %b3918
+.LBB15_1:                               # %b3943
                                         # =>This Inner Loop Header: Depth=1
 	movl	%edi, %edx
 	movl	%ecx, %edi
 	addl	%edx, %edi
 	cmpl	%eax, %edi
-	ja	.LBB13_3
-# %bb.2:                                # %b3920
-                                        #   in Loop: Header=BB13_1 Depth=1
+	ja	.LBB15_3
+# %bb.2:                                # %b3945
+                                        #   in Loop: Header=BB15_1 Depth=1
 	movl	%esi, (%esp)
-	calll	func_b1436
+	calll	func_b1445
 	xorl	%eax, %eax
 	movl	$1, %ecx
-	jmp	.LBB13_1
-.LBB13_3:                               # %b295
+	jmp	.LBB15_1
+.LBB15_3:                               # %b295
 	addl	$4, %esp
 	.cfi_def_cfa_offset 12
 	popl	%esi
@@ -1171,8 +1285,8 @@ func_b3918:                             # @func_b3918
 	popl	%edi
 	.cfi_def_cfa_offset 4
 	retl
-.Lfunc_end13:
-	.size	func_b3918, .Lfunc_end13-func_b3918
+.Lfunc_end15:
+	.size	func_b3943, .Lfunc_end15-func_b3943
 	.cfi_endproc
                                         # -- End function
 	.globl	kernel                          # -- Begin function kernel
@@ -1235,8 +1349,12 @@ kernel:                                 # @kernel
 	movl	$1326972928, console            # imm = 0x4F180000
 	movw	$0, console+4
 	movb	$10, console+6
+	movb	$0, keyUp
 	movb	$0, keyDown
 	movl	$1, ticks
+	movl	$1, ball
+	movl	$1, ball+4
+	movw	$2570, ball+8                   # imm = 0xA0A
 	movl	$796679213, spinner             # imm = 0x2F7C5C2D
 	movb	$0, spinpos
 	movb	$55, pos
@@ -1248,50 +1366,18 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	$itoaBuf+1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2553
+	calll	func_b2577
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	$32, console+6
-	movzbl	console, %eax
-	movzbl	console+1, %ebx
-	movb	%al, console+4
-	movb	%bl, console+5
-	movzbl	console+2, %esi
-	movzbl	console+3, %edi
-	pushl	%eax
-	movl	%eax, %ebp
-	.cfi_adjust_cfa_offset 4
-	pushl	$32
-	.cfi_adjust_cfa_offset 4
-	pushl	%edi
-	.cfi_adjust_cfa_offset 4
-	pushl	%ebx
-	.cfi_adjust_cfa_offset 4
-	calll	func_b1280
-	addl	$8, %esp
-	.cfi_adjust_cfa_offset -8
-	pushl	$32
-	.cfi_adjust_cfa_offset 4
-	pushl	%edi
-	.cfi_adjust_cfa_offset 4
-	pushl	%ebx
-	.cfi_adjust_cfa_offset 4
-	pushl	%esi
-	.cfi_adjust_cfa_offset 4
-	pushl	%ebp
-	.cfi_adjust_cfa_offset 4
-	pushl	$1
-	.cfi_adjust_cfa_offset 4
-	calll	func_b3972
-	addl	$32, %esp
-	.cfi_adjust_cfa_offset -32
+	calll	func_b1007
 	movzbl	str44, %edi
 	testl	%edi, %edi
-	je	.LBB14_7
-# %bb.1:                                # %b3738
+	je	.LBB16_7
+# %bb.1:                                # %b3763
 	movl	$str44+1, %esi
 	.p2align	4, 0x90
-.LBB14_2:                               # %b3730
+.LBB16_2:                               # %b3755
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -1307,13 +1393,13 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
-	jne	.LBB14_4
-# %bb.3:                                # %b3733
-                                        #   in Loop: Header=BB14_2 Depth=1
+	jne	.LBB16_4
+# %bb.3:                                # %b3758
+                                        #   in Loop: Header=BB16_2 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1328,73 +1414,48 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_5
+	jmp	.LBB16_5
 	.p2align	4, 0x90
-.LBB14_4:                               # %b3735
-                                        #   in Loop: Header=BB14_2 Depth=1
+.LBB16_4:                               # %b3760
+                                        #   in Loop: Header=BB16_2 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_5:                               # %b3735
-                                        #   in Loop: Header=BB14_2 Depth=1
+.LBB16_5:                               # %b3760
+                                        #   in Loop: Header=BB16_2 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%esi), %edi
 	testl	%edi, %edi
-	je	.LBB14_7
-# %bb.6:                                # %b3728
-                                        #   in Loop: Header=BB14_2 Depth=1
+	je	.LBB16_7
+# %bb.6:                                # %b3753
+                                        #   in Loop: Header=BB16_2 Depth=1
 	incl	%esi
-	jmp	.LBB14_2
-.LBB14_7:                               # %b1407
+	jmp	.LBB16_2
+.LBB16_7:                               # %b1416
 	movl	$756482305, console             # imm = 0x2D170101
 	movw	$257, console+4                 # imm = 0x101
 	movb	$15, console+6
-	pushl	$1
-	.cfi_adjust_cfa_offset 4
-	pushl	$15
-	.cfi_adjust_cfa_offset 4
-	pushl	$45
-	.cfi_adjust_cfa_offset 4
-	pushl	$1
-	.cfi_adjust_cfa_offset 4
-	calll	func_b1280
-	addl	$8, %esp
-	.cfi_adjust_cfa_offset -8
-	pushl	$15
-	.cfi_adjust_cfa_offset 4
-	pushl	$45
-	.cfi_adjust_cfa_offset 4
-	pushl	$1
-	.cfi_adjust_cfa_offset 4
-	pushl	$23
-	.cfi_adjust_cfa_offset 4
-	pushl	$1
-	.cfi_adjust_cfa_offset 4
-	pushl	$1
-	.cfi_adjust_cfa_offset 4
-	calll	func_b3972
-	addl	$32, %esp
-	.cfi_adjust_cfa_offset -32
+	calll	func_b1007
 	movzbl	str10, %eax
 	testl	%eax, %eax
-	je	.LBB14_9
-# %bb.8:                                # %b3723
+	je	.LBB16_9
+# %bb.8:                                # %b3748
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str10+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3720
-	jmp	.LBB14_57
-.LBB14_9:                               # %b1967
+	calll	func_b3745
+	jmp	.LBB16_57
+.LBB16_9:                               # %b1976
 	.cfi_def_cfa_offset 32
 	movl	4096, %eax
 	leal	4(%eax), %ecx
@@ -1406,22 +1467,22 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	(%eax)
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3049
+	calll	func_b3074
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	str12, %eax
 	testl	%eax, %eax
-	je	.LBB14_11
-# %bb.10:                               # %b3705
+	je	.LBB16_11
+# %bb.10:                               # %b3730
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str12+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3702
-	jmp	.LBB14_57
-.LBB14_11:                              # %b1968
+	calll	func_b3727
+	jmp	.LBB16_57
+.LBB16_11:                              # %b1977
 	.cfi_def_cfa_offset 32
 	movl	4100, %eax
 	leal	4(%eax), %ecx
@@ -1433,28 +1494,28 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	(%eax)
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3187
+	calll	func_b3212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	str14, %eax
 	testl	%eax, %eax
-	je	.LBB14_13
-# %bb.12:                               # %b3687
+	je	.LBB16_13
+# %bb.12:                               # %b3712
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str14+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3684
-	jmp	.LBB14_57
-.LBB14_13:                              # %b1969
+	calll	func_b3709
+	jmp	.LBB16_57
+.LBB16_13:                              # %b1978
 	.cfi_def_cfa_offset 32
 	movl	4104, %esi
 	movzbl	str17, %eax
 	testl	%eax, %eax
-	je	.LBB14_15
-# %bb.14:                               # %b3606
+	je	.LBB16_15
+# %bb.14:                               # %b3631
 	subl	$4, %esp
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
@@ -1463,28 +1524,28 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3600
-	jmp	.LBB14_33
-.LBB14_15:                              # %b3583
+	calll	func_b3625
+	jmp	.LBB16_33
+.LBB16_15:                              # %b3608
 	.cfi_def_cfa_offset 32
 	movzbl	str15, %eax
 	testl	%eax, %eax
-	je	.LBB14_17
-# %bb.16:                               # %b3585
+	je	.LBB16_17
+# %bb.16:                               # %b3610
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str15+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB14_17:                              # %b3571
+.LBB16_17:                              # %b3596
 	movzbl	str18, %edi
 	testl	%edi, %edi
-	je	.LBB14_20
-# %bb.18:                               # %b3582
+	je	.LBB16_20
+# %bb.18:                               # %b3607
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1500,12 +1561,12 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
-	jne	.LBB14_27
-# %bb.19:                               # %b3577
+	jne	.LBB16_27
+# %bb.19:                               # %b3602
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1520,38 +1581,38 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_28
-.LBB14_20:                              # %b3564
+	jmp	.LBB16_28
+.LBB16_20:                              # %b3589
 	.cfi_def_cfa_offset 32
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
-	je	.LBB14_24
-# %bb.21:                               # %b3823
+	je	.LBB16_24
+# %bb.21:                               # %b3848
 	leal	1(%esi), %edi
-.LBB14_22:                              # %b3560
+.LBB16_22:                              # %b3585
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %eax
 	testl	%eax, %eax
-	je	.LBB14_24
-# %bb.23:                               # %b3558
-                                        #   in Loop: Header=BB14_22 Depth=1
+	je	.LBB16_24
+# %bb.23:                               # %b3583
+                                        #   in Loop: Header=BB16_22 Depth=1
 	incl	%edi
-	jmp	.LBB14_22
-.LBB14_24:                              # %b3547
+	jmp	.LBB16_22
+.LBB16_24:                              # %b3572
 	movzbl	str19, %ebx
 	testl	%ebx, %ebx
-	je	.LBB14_29
-# %bb.25:                               # %b3549
+	je	.LBB16_29
+# %bb.25:                               # %b3574
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1567,12 +1628,12 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
-	jne	.LBB14_31
-# %bb.26:                               # %b3553
+	jne	.LBB16_31
+# %bb.26:                               # %b3578
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1587,27 +1648,27 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_32
-.LBB14_27:                              # %b3579
+	jmp	.LBB16_32
+.LBB16_27:                              # %b3604
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_28:                              # %b3579
+.LBB16_28:                              # %b3604
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3476
-	jmp	.LBB14_33
-.LBB14_29:                              # %b2137
+	calll	func_b3501
+	jmp	.LBB16_33
+.LBB16_29:                              # %b2146
 	.cfi_def_cfa_offset 32
 	movl	%esi, %eax
 	andl	$15, %eax
@@ -1617,7 +1678,7 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -1633,45 +1694,45 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
-	je	.LBB14_34
-# %bb.30:                               # %b3538
+	je	.LBB16_34
+# %bb.30:                               # %b3563
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
-	jmp	.LBB14_33
-.LBB14_31:                              # %b3555
+	calll	func_b2940
+	jmp	.LBB16_33
+.LBB16_31:                              # %b3580
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_32:                              # %b3555
+.LBB16_32:                              # %b3580
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3436
-.LBB14_33:                              # %b2138
+	calll	func_b3461
+.LBB16_33:                              # %b2147
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB14_34:                              # %b2138
+.LBB16_34:                              # %b2147
 	movl	4108, %esi
 	movzbl	str17, %edi
 	testl	%edi, %edi
-	je	.LBB14_37
-# %bb.35:                               # %b3603
+	je	.LBB16_37
+# %bb.35:                               # %b3628
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1687,12 +1748,12 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
-	jne	.LBB14_42
-# %bb.36:                               # %b3530
+	jne	.LBB16_42
+# %bb.36:                               # %b3555
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1707,30 +1768,30 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_43
-.LBB14_37:                              # %b3498
+	jmp	.LBB16_43
+.LBB16_37:                              # %b3523
 	.cfi_def_cfa_offset 32
 	movzbl	str16, %eax
 	testl	%eax, %eax
-	je	.LBB14_39
-# %bb.38:                               # %b3500
+	je	.LBB16_39
+# %bb.38:                               # %b3525
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str16+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB14_39:                              # %b3486
+.LBB16_39:                              # %b3511
 	movzbl	str18, %edi
 	testl	%edi, %edi
-	je	.LBB14_44
-# %bb.40:                               # %b3497
+	je	.LBB16_44
+# %bb.40:                               # %b3522
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1746,12 +1807,12 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
-	jne	.LBB14_51
-# %bb.41:                               # %b3492
+	jne	.LBB16_51
+# %bb.41:                               # %b3517
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1766,54 +1827,54 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_52
-.LBB14_42:                              # %b3532
+	jmp	.LBB16_52
+.LBB16_42:                              # %b3557
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_43:                              # %b3532
+.LBB16_43:                              # %b3557
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3514
-	jmp	.LBB14_57
-.LBB14_44:                              # %b3463
+	calll	func_b3539
+	jmp	.LBB16_57
+.LBB16_44:                              # %b3488
 	.cfi_def_cfa_offset 32
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
-	je	.LBB14_48
-# %bb.45:                               # %b3822
+	je	.LBB16_48
+# %bb.45:                               # %b3847
 	leal	1(%esi), %edi
-.LBB14_46:                              # %b3459
+.LBB16_46:                              # %b3484
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %eax
 	testl	%eax, %eax
-	je	.LBB14_48
-# %bb.47:                               # %b3457
-                                        #   in Loop: Header=BB14_46 Depth=1
+	je	.LBB16_48
+# %bb.47:                               # %b3482
+                                        #   in Loop: Header=BB16_46 Depth=1
 	incl	%edi
-	jmp	.LBB14_46
-.LBB14_48:                              # %b3446
+	jmp	.LBB16_46
+.LBB16_48:                              # %b3471
 	movzbl	str19, %ebx
 	testl	%ebx, %ebx
-	je	.LBB14_53
-# %bb.49:                               # %b3448
+	je	.LBB16_53
+# %bb.49:                               # %b3473
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1829,12 +1890,12 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
-	jne	.LBB14_55
-# %bb.50:                               # %b3452
+	jne	.LBB16_55
+# %bb.50:                               # %b3477
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -1849,27 +1910,27 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_56
-.LBB14_51:                              # %b3494
+	jmp	.LBB16_56
+.LBB16_51:                              # %b3519
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_52:                              # %b3494
+.LBB16_52:                              # %b3519
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3476
-	jmp	.LBB14_57
-.LBB14_53:                              # %b2143
+	calll	func_b3501
+	jmp	.LBB16_57
+.LBB16_53:                              # %b2152
 	.cfi_def_cfa_offset 32
 	movl	%esi, %eax
 	andl	$15, %eax
@@ -1879,7 +1940,7 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -1895,44 +1956,44 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
-	je	.LBB14_58
-# %bb.54:                               # %b3430
+	je	.LBB16_58
+# %bb.54:                               # %b3455
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
-	jmp	.LBB14_57
-.LBB14_55:                              # %b3454
+	calll	func_b2940
+	jmp	.LBB16_57
+.LBB16_55:                              # %b3479
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_56:                              # %b3454
+.LBB16_56:                              # %b3479
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3436
-.LBB14_57:                              # %b3705
+	calll	func_b3461
+.LBB16_57:                              # %b3730
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB14_58:                              # %b3705
+.LBB16_58:                              # %b3730
 	movl	4096, %esi
 	movl	(%esi), %ecx
 	testl	%ecx, %ecx
-	je	.LBB14_63
+	je	.LBB16_63
 # %bb.59:
 	addl	$4, %esi
 	movl	%ecx, %eax
@@ -1940,30 +2001,30 @@ kernel:                                 # @kernel
 	addl	$12, %esi
 	xorl	%ebx, %ebx
 	.p2align	4, 0x90
-.LBB14_60:                              # %b3425
+.LBB16_60:                              # %b3450
                                         # =>This Inner Loop Header: Depth=1
 	cmpl	$-1, %ebx
-	je	.LBB14_62
-# %bb.61:                               # %b3423
-                                        #   in Loop: Header=BB14_60 Depth=1
+	je	.LBB16_62
+# %bb.61:                               # %b3448
+                                        #   in Loop: Header=BB16_60 Depth=1
 	decl	%ebx
 	addl	$12, %esi
 	cmpl	%ebx, %eax
-	jne	.LBB14_60
-	jmp	.LBB14_63
-.LBB14_62:                              # %b3360
+	jne	.LBB16_60
+	jmp	.LBB16_63
+.LBB16_62:                              # %b3385
 	movl	$1, %eax
 	subl	%ecx, %eax
 	cmpl	%ebx, %eax
-	jne	.LBB14_70
-.LBB14_63:                              # %b3212
+	jne	.LBB16_70
+.LBB16_63:                              # %b3237
 	movzbl	str51, %edi
 	testl	%edi, %edi
-	je	.LBB14_117
-# %bb.64:                               # %b3214
+	je	.LBB16_117
+# %bb.64:                               # %b3239
 	movl	$str51+1, %esi
 	.p2align	4, 0x90
-.LBB14_65:                              # %b3206
+.LBB16_65:                              # %b3231
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -1979,13 +2040,13 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
-	jne	.LBB14_67
-# %bb.66:                               # %b3209
-                                        #   in Loop: Header=BB14_65 Depth=1
+	jne	.LBB16_67
+# %bb.66:                               # %b3234
+                                        #   in Loop: Header=BB16_65 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -2000,39 +2061,39 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_68
+	jmp	.LBB16_68
 	.p2align	4, 0x90
-.LBB14_67:                              # %b3211
-                                        #   in Loop: Header=BB14_65 Depth=1
+.LBB16_67:                              # %b3236
+                                        #   in Loop: Header=BB16_65 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_68:                              # %b3211
-                                        #   in Loop: Header=BB14_65 Depth=1
+.LBB16_68:                              # %b3236
+                                        #   in Loop: Header=BB16_65 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%esi), %edi
 	testl	%edi, %edi
-	je	.LBB14_117
-# %bb.69:                               # %b3204
-                                        #   in Loop: Header=BB14_65 Depth=1
+	je	.LBB16_117
+# %bb.69:                               # %b3229
+                                        #   in Loop: Header=BB16_65 Depth=1
 	incl	%esi
-	jmp	.LBB14_65
-.LBB14_70:                              # %b3362
+	jmp	.LBB16_65
+.LBB16_70:                              # %b3387
 	movl	%ecx, 8(%esp)                   # 4-byte Spill
 	movzbl	str46, %edi
 	testl	%edi, %edi
-	je	.LBB14_77
-# %bb.71:                               # %b3414
+	je	.LBB16_77
+# %bb.71:                               # %b3439
 	movl	$str46+1, %ebp
 	.p2align	4, 0x90
-.LBB14_72:                              # %b3415
+.LBB16_72:                              # %b3440
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -2048,13 +2109,13 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
-	jne	.LBB14_74
-# %bb.73:                               # %b3416
-                                        #   in Loop: Header=BB14_72 Depth=1
+	jne	.LBB16_74
+# %bb.73:                               # %b3441
+                                        #   in Loop: Header=BB16_72 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -2069,47 +2130,47 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_75
+	jmp	.LBB16_75
 	.p2align	4, 0x90
-.LBB14_74:                              # %b3422
-                                        #   in Loop: Header=BB14_72 Depth=1
+.LBB16_74:                              # %b3447
+                                        #   in Loop: Header=BB16_72 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_75:                              # %b3422
-                                        #   in Loop: Header=BB14_72 Depth=1
+.LBB16_75:                              # %b3447
+                                        #   in Loop: Header=BB16_72 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebp), %edi
 	testl	%edi, %edi
-	je	.LBB14_77
-# %bb.76:                               # %b3421
-                                        #   in Loop: Header=BB14_72 Depth=1
+	je	.LBB16_77
+# %bb.76:                               # %b3446
+                                        #   in Loop: Header=BB16_72 Depth=1
 	incl	%ebp
-	jmp	.LBB14_72
-.LBB14_77:                              # %b3368
+	jmp	.LBB16_72
+.LBB16_77:                              # %b3393
 	movl	8(%esp), %eax                   # 4-byte Reload
 	leal	-2(%eax,%ebx), %edi
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2994
+	calll	func_b3019
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	str47, %ebp
 	testl	%ebp, %ebp
-	je	.LBB14_84
-# %bb.78:                               # %b3405
+	je	.LBB16_84
+# %bb.78:                               # %b3430
 	movl	$str47+1, %ebx
 	.p2align	4, 0x90
-.LBB14_79:                              # %b3406
+.LBB16_79:                              # %b3431
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -2125,13 +2186,13 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebp
-	jne	.LBB14_81
-# %bb.80:                               # %b3407
-                                        #   in Loop: Header=BB14_79 Depth=1
+	jne	.LBB16_81
+# %bb.80:                               # %b3432
+                                        #   in Loop: Header=BB16_79 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -2146,46 +2207,46 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_82
+	jmp	.LBB16_82
 	.p2align	4, 0x90
-.LBB14_81:                              # %b3413
-                                        #   in Loop: Header=BB14_79 Depth=1
+.LBB16_81:                              # %b3438
+                                        #   in Loop: Header=BB16_79 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_82:                              # %b3413
-                                        #   in Loop: Header=BB14_79 Depth=1
+.LBB16_82:                              # %b3438
+                                        #   in Loop: Header=BB16_79 Depth=1
 	pushl	%ebp
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %ebp
 	testl	%ebp, %ebp
-	je	.LBB14_84
-# %bb.83:                               # %b3412
-                                        #   in Loop: Header=BB14_79 Depth=1
+	je	.LBB16_84
+# %bb.83:                               # %b3437
+                                        #   in Loop: Header=BB16_79 Depth=1
 	incl	%ebx
-	jmp	.LBB14_79
-.LBB14_84:                              # %b3404
+	jmp	.LBB16_79
+.LBB16_84:                              # %b3429
 	testl	%edi, %edi
-	je	.LBB14_101
-# %bb.85:                               # %b3821
+	je	.LBB16_101
+# %bb.85:                               # %b3846
 	leal	12(%esi), %edi
 	movzbl	str48, %ebp
 	testl	%ebp, %ebp
-	je	.LBB14_92
-# %bb.86:                               # %b3992
+	je	.LBB16_92
+# %bb.86:                               # %b4017
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
 	#NO_APP
 	movl	$str48+1, %ebx
 	.p2align	4, 0x90
-.LBB14_87:                              # %b3992
+.LBB16_87:                              # %b4017
                                         # =>This Inner Loop Header: Depth=1
 	movzbl	%al, %eax
 	andl	$96, %eax
@@ -2197,13 +2258,13 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebp
-	jne	.LBB14_89
-# %bb.88:                               # %b3996
-                                        #   in Loop: Header=BB14_87 Depth=1
+	jne	.LBB16_89
+# %bb.88:                               # %b4021
+                                        #   in Loop: Header=BB16_87 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -2218,53 +2279,53 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_90
+	jmp	.LBB16_90
 	.p2align	4, 0x90
-.LBB14_89:                              # %b3997
-                                        #   in Loop: Header=BB14_87 Depth=1
+.LBB16_89:                              # %b4022
+                                        #   in Loop: Header=BB16_87 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_90:                              # %b3997
-                                        #   in Loop: Header=BB14_87 Depth=1
+.LBB16_90:                              # %b4022
+                                        #   in Loop: Header=BB16_87 Depth=1
 	pushl	%ebp
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %ebp
 	testl	%ebp, %ebp
-	je	.LBB14_92
-# %bb.91:                               # %b3999
-                                        #   in Loop: Header=BB14_87 Depth=1
+	je	.LBB16_92
+# %bb.91:                               # %b4024
+                                        #   in Loop: Header=BB16_87 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
 	#NO_APP
 	incl	%ebx
-	jmp	.LBB14_87
-.LBB14_92:                              # %b3991
+	jmp	.LBB16_87
+.LBB16_92:                              # %b4016
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2994
+	calll	func_b3019
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	str49, %ebp
 	testl	%ebp, %ebp
-	je	.LBB14_99
-# %bb.93:                               # %b3995
+	je	.LBB16_99
+# %bb.93:                               # %b4020
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
 	#NO_APP
 	movl	$str49+1, %ebx
 	.p2align	4, 0x90
-.LBB14_94:                              # %b3995
+.LBB16_94:                              # %b4020
                                         # =>This Inner Loop Header: Depth=1
 	movzbl	%al, %eax
 	andl	$96, %eax
@@ -2276,13 +2337,13 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebp
-	jne	.LBB14_96
-# %bb.95:                               # %b4000
-                                        #   in Loop: Header=BB14_94 Depth=1
+	jne	.LBB16_96
+# %bb.95:                               # %b4025
+                                        #   in Loop: Header=BB16_94 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -2297,40 +2358,40 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_97
+	jmp	.LBB16_97
 	.p2align	4, 0x90
-.LBB14_96:                              # %b4001
-                                        #   in Loop: Header=BB14_94 Depth=1
+.LBB16_96:                              # %b4026
+                                        #   in Loop: Header=BB16_94 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_97:                              # %b4001
-                                        #   in Loop: Header=BB14_94 Depth=1
+.LBB16_97:                              # %b4026
+                                        #   in Loop: Header=BB16_94 Depth=1
 	pushl	%ebp
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %ebp
 	testl	%ebp, %ebp
-	je	.LBB14_99
-# %bb.98:                               # %b4002
-                                        #   in Loop: Header=BB14_94 Depth=1
+	je	.LBB16_99
+# %bb.98:                               # %b4027
+                                        #   in Loop: Header=BB16_94 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
 	#NO_APP
 	incl	%ebx
-	jmp	.LBB14_94
-.LBB14_99:                              # %b3994
+	jmp	.LBB16_94
+.LBB16_99:                              # %b4019
 	movl	8(%esi), %esi
 	movzbl	str52, %eax
 	testl	%eax, %eax
-	je	.LBB14_108
-# %bb.100:                              # %b3287
+	je	.LBB16_108
+# %bb.100:                              # %b3312
 	subl	$4, %esp
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
@@ -2339,17 +2400,17 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3281
-	jmp	.LBB14_110
-.LBB14_101:                             # %b3225
+	calll	func_b3306
+	jmp	.LBB16_110
+.LBB16_101:                             # %b3250
 	.cfi_def_cfa_offset 32
 	movzbl	str50, %edi
 	testl	%edi, %edi
-	je	.LBB14_117
-# %bb.102:                              # %b3227
+	je	.LBB16_117
+# %bb.102:                              # %b3252
 	movl	$str50+1, %esi
 	.p2align	4, 0x90
-.LBB14_103:                             # %b3219
+.LBB16_103:                             # %b3244
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -2365,13 +2426,13 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
-	jne	.LBB14_105
-# %bb.104:                              # %b3222
-                                        #   in Loop: Header=BB14_103 Depth=1
+	jne	.LBB16_105
+# %bb.104:                              # %b3247
+                                        #   in Loop: Header=BB16_103 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -2386,31 +2447,31 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
-	jmp	.LBB14_106
+	jmp	.LBB16_106
 	.p2align	4, 0x90
-.LBB14_105:                             # %b3224
-                                        #   in Loop: Header=BB14_103 Depth=1
+.LBB16_105:                             # %b3249
+                                        #   in Loop: Header=BB16_103 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB14_106:                             # %b3224
-                                        #   in Loop: Header=BB14_103 Depth=1
+.LBB16_106:                             # %b3249
+                                        #   in Loop: Header=BB16_103 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%esi), %edi
 	testl	%edi, %edi
-	je	.LBB14_117
-# %bb.107:                              # %b3217
-                                        #   in Loop: Header=BB14_103 Depth=1
+	je	.LBB16_117
+# %bb.107:                              # %b3242
+                                        #   in Loop: Header=BB16_103 Depth=1
 	incl	%esi
-	jmp	.LBB14_103
-.LBB14_108:                             # %b1775
+	jmp	.LBB16_103
+.LBB16_108:                             # %b1784
 	movl	%esi, %eax
 	andl	$15, %eax
 	subl	$8, %esp
@@ -2419,7 +2480,7 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -2435,13 +2496,13 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str53, %eax
 	testl	%eax, %eax
-	je	.LBB14_121
-# %bb.109:                              # %b3990
+	je	.LBB16_121
+# %bb.109:                              # %b4015
 	subl	$4, %esp
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
@@ -2450,16 +2511,16 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3232
-.LBB14_110:                             # %b3990
+	calll	func_b3257
+.LBB16_110:                             # %b4015
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB14_111:                             # %b3990
+.LBB16_111:                             # %b4015
 	movl	8(%edi), %esi
 	movzbl	str52, %eax
 	testl	%eax, %eax
-	je	.LBB14_113
-# %bb.112:                              # %b3284
+	je	.LBB16_113
+# %bb.112:                              # %b3309
 	subl	$4, %esp
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
@@ -2468,9 +2529,9 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3263
-	jmp	.LBB14_115
-.LBB14_113:                             # %b1763
+	calll	func_b3288
+	jmp	.LBB16_115
+.LBB16_113:                             # %b1772
 	.cfi_def_cfa_offset 32
 	movl	%esi, %eax
 	andl	$15, %eax
@@ -2480,7 +2541,7 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -2496,13 +2557,13 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str53, %eax
 	testl	%eax, %eax
-	je	.LBB14_122
-# %bb.114:                              # %b3987
+	je	.LBB16_122
+# %bb.114:                              # %b4012
 	subl	$4, %esp
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
@@ -2511,11 +2572,11 @@ kernel:                                 # @kernel
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3242
-.LBB14_115:                             # %b1663
+	calll	func_b3267
+.LBB16_115:                             # %b1672
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB14_116:                             # %b1663
+.LBB16_116:                             # %b1672
 	movb	$0, current
 	movb	$17, %al
 	#APP
@@ -2593,26 +2654,26 @@ kernel:                                 # @kernel
 	calll	returnTo
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB14_117:                             # %b3199
+.LBB16_117:                             # %b3224
 	movzbl	str45, %eax
 	testl	%eax, %eax
-	je	.LBB14_119
-# %bb.118:                              # %b3201
+	je	.LBB16_119
+# %bb.118:                              # %b3226
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str45+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$28, %esp
 	.cfi_adjust_cfa_offset -28
-	jmp	.LBB14_120
-.LBB14_119:                             # %b295
+	jmp	.LBB16_120
+.LBB16_119:                             # %b295
 	.cfi_def_cfa_offset 32
 	addl	$12, %esp
 	.cfi_def_cfa_offset 20
-.LBB14_120:                             # %b295
+.LBB16_120:                             # %b295
 	popl	%esi
 	.cfi_def_cfa_offset 16
 	popl	%edi
@@ -2622,139 +2683,43 @@ kernel:                                 # @kernel
 	popl	%ebp
 	.cfi_def_cfa_offset 4
 	retl
-.LBB14_121:                             # %b3989
+.LBB16_121:                             # %b4014
 	.cfi_def_cfa_offset 32
 	movl	%esi, users+52
-	jmp	.LBB14_111
-.LBB14_122:                             # %b3986
+	jmp	.LBB16_111
+.LBB16_122:                             # %b4011
 	movl	%esi, users+124
-	jmp	.LBB14_116
-.Lfunc_end14:
-	.size	kernel, .Lfunc_end14-kernel
+	jmp	.LBB16_116
+.Lfunc_end16:
+	.size	kernel, .Lfunc_end16-kernel
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b2553
-	.type	func_b2553,@function
-func_b2553:                             # @func_b2553
+	.p2align	4, 0x90                         # -- Begin function func_b2577
+	.type	func_b2577,@function
+func_b2577:                             # @func_b2577
 	.cfi_startproc
 # %bb.0:
 	movl	8(%esp), %eax
 	movl	4(%esp), %ecx
 	cmpl	$31, %eax
-	ja	.LBB15_3
+	ja	.LBB17_3
 	.p2align	4, 0x90
-.LBB15_2:                               # %b2554
+.LBB17_2:                               # %b2578
                                         # =>This Inner Loop Header: Depth=1
 	movb	$0, (%ecx)
 	incl	%eax
 	incl	%ecx
 	cmpl	$31, %eax
-	jbe	.LBB15_2
-.LBB15_3:                               # %b2224
-	retl
-.Lfunc_end15:
-	.size	func_b2553, .Lfunc_end15-func_b2553
-	.cfi_endproc
-                                        # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b1280
-	.type	func_b1280,@function
-func_b1280:                             # @func_b1280
-	.cfi_startproc
-# %bb.0:
-	pushl	%esi
-	.cfi_def_cfa_offset 8
-	.cfi_offset %esi, -8
-	movl	16(%esp), %eax
-	movl	12(%esp), %ecx
-	movl	8(%esp), %edx
-	movl	20(%esp), %esi
-	leal	(%esi,%esi,4), %esi
-	shll	$5, %esi
-	leal	753664(%esi,%edx,2), %esi
-	shll	$8, %eax
-	orl	$32, %eax
-	.p2align	4, 0x90
-.LBB16_1:                               # %b1280
-                                        # =>This Inner Loop Header: Depth=1
-	movw	%ax, (%esi)
-	incl	%edx
-	addl	$2, %esi
-	cmpl	%ecx, %edx
-	jbe	.LBB16_1
-# %bb.2:                                # %b295
-	popl	%esi
-	.cfi_def_cfa_offset 4
-	retl
-.Lfunc_end16:
-	.size	func_b1280, .Lfunc_end16-func_b1280
-	.cfi_endproc
-                                        # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3972
-	.type	func_b3972,@function
-func_b3972:                             # @func_b3972
-	.cfi_startproc
-# %bb.0:
-	pushl	%ebp
-	.cfi_def_cfa_offset 8
-	pushl	%ebx
-	.cfi_def_cfa_offset 12
-	pushl	%edi
-	.cfi_def_cfa_offset 16
-	pushl	%esi
-	.cfi_def_cfa_offset 20
-	subl	$12, %esp
-	.cfi_def_cfa_offset 32
-	.cfi_offset %esi, -20
-	.cfi_offset %edi, -16
-	.cfi_offset %ebx, -12
-	.cfi_offset %ebp, -8
-	movl	48(%esp), %edi
-	movl	44(%esp), %ebx
-	movl	40(%esp), %ebp
-	movl	36(%esp), %esi
-	movl	32(%esp), %eax
-	.p2align	4, 0x90
-.LBB17_1:                               # %b3972
-                                        # =>This Inner Loop Header: Depth=1
-	movl	%esi, %ecx
-	movl	%eax, %esi
-	addl	%ecx, %esi
-	cmpl	%ebp, %esi
-	ja	.LBB17_3
-# %bb.2:                                # %b1282
-                                        #   in Loop: Header=BB17_1 Depth=1
-	pushl	%esi
-	.cfi_adjust_cfa_offset 4
-	pushl	56(%esp)
-	.cfi_adjust_cfa_offset 4
-	pushl	%edi
-	.cfi_adjust_cfa_offset 4
-	pushl	%ebx
-	.cfi_adjust_cfa_offset 4
-	calll	func_b1280
-	addl	$16, %esp
-	.cfi_adjust_cfa_offset -16
-	movl	$1, %eax
-	jmp	.LBB17_1
-.LBB17_3:                               # %b295
-	addl	$12, %esp
-	.cfi_def_cfa_offset 20
-	popl	%esi
-	.cfi_def_cfa_offset 16
-	popl	%edi
-	.cfi_def_cfa_offset 12
-	popl	%ebx
-	.cfi_def_cfa_offset 8
-	popl	%ebp
-	.cfi_def_cfa_offset 4
+	jbe	.LBB17_2
+.LBB17_3:                               # %b2234
 	retl
 .Lfunc_end17:
-	.size	func_b3972, .Lfunc_end17-func_b3972
+	.size	func_b2577, .Lfunc_end17-func_b2577
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3049
-	.type	func_b3049,@function
-func_b3049:                             # @func_b3049
+	.p2align	4, 0x90                         # -- Begin function func_b3074
+	.type	func_b3074,@function
+func_b3074:                             # @func_b3074
 	.cfi_startproc
 # %bb.0:
 	pushl	%edi
@@ -2771,7 +2736,7 @@ func_b3049:                             # @func_b3049
 	movl	16(%esp), %esi
 	jmp	.LBB18_1
 	.p2align	4, 0x90
-.LBB18_3:                               # %b3791
+.LBB18_3:                               # %b3816
                                         #   in Loop: Header=BB18_1 Depth=1
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
@@ -2779,25 +2744,25 @@ func_b3049:                             # @func_b3049
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3031
-.LBB18_4:                               # %b3049
+	calll	func_b3056
+.LBB18_4:                               # %b3074
                                         #   in Loop: Header=BB18_1 Depth=1
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movl	%edi, %ecx
 	movl	$12, %edi
-.LBB18_1:                               # %b3049
+.LBB18_1:                               # %b3074
                                         # =>This Inner Loop Header: Depth=1
 	testl	%esi, %esi
 	je	.LBB18_6
-# %bb.2:                                # %b3051
+# %bb.2:                                # %b3076
                                         #   in Loop: Header=BB18_1 Depth=1
 	addl	%ecx, %edi
 	decl	%esi
 	movzbl	str0, %edx
 	testl	%edx, %edx
 	je	.LBB18_3
-# %bb.5:                                # %b3792
+# %bb.5:                                # %b3817
                                         #   in Loop: Header=BB18_1 Depth=1
 	pushl	%ecx
 	.cfi_adjust_cfa_offset 4
@@ -2807,7 +2772,7 @@ func_b3049:                             # @func_b3049
 	.cfi_adjust_cfa_offset 4
 	pushl	%edx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3043
+	calll	func_b3068
 	jmp	.LBB18_4
 .LBB18_6:                               # %b423
 	.cfi_def_cfa_offset 16
@@ -2819,12 +2784,12 @@ func_b3049:                             # @func_b3049
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end18:
-	.size	func_b3049, .Lfunc_end18-func_b3049
+	.size	func_b3074, .Lfunc_end18-func_b3074
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3720
-	.type	func_b3720,@function
-func_b3720:                             # @func_b3720
+	.p2align	4, 0x90                         # -- Begin function func_b3745
+	.type	func_b3745,@function
+func_b3745:                             # @func_b3745
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -2839,7 +2804,7 @@ func_b3720:                             # @func_b3720
 	movl	20(%esp), %esi
 	movl	16(%esp), %edi
 	.p2align	4, 0x90
-.LBB19_1:                               # %b3720
+.LBB19_1:                               # %b3745
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -2855,12 +2820,12 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB19_3
-# %bb.2:                                # %b3807
+# %bb.2:                                # %b3832
                                         #   in Loop: Header=BB19_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -2876,31 +2841,31 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB19_4
 	.p2align	4, 0x90
-.LBB19_3:                               # %b3808
+.LBB19_3:                               # %b3833
                                         #   in Loop: Header=BB19_1 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB19_4:                               # %b3808
+.LBB19_4:                               # %b3833
                                         #   in Loop: Header=BB19_1 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%esi), %edi
 	testl	%edi, %edi
 	je	.LBB19_6
-# %bb.5:                                # %b3713
+# %bb.5:                                # %b3738
                                         #   in Loop: Header=BB19_1 Depth=1
 	incl	%esi
 	jmp	.LBB19_1
-.LBB19_6:                               # %b1389
+.LBB19_6:                               # %b1398
 	movl	4096, %eax
 	leal	4(%eax), %ecx
 	pushl	$0
@@ -2911,22 +2876,22 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	(%eax)
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3049
+	calll	func_b3074
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	str12, %eax
 	testl	%eax, %eax
 	je	.LBB19_8
-# %bb.7:                                # %b3710
+# %bb.7:                                # %b3735
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str12+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3702
+	calll	func_b3727
 	jmp	.LBB19_60
-.LBB19_8:                               # %b1387
+.LBB19_8:                               # %b1396
 	.cfi_def_cfa_offset 16
 	movl	4100, %eax
 	leal	4(%eax), %ecx
@@ -2938,28 +2903,28 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	(%eax)
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3187
+	calll	func_b3212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	str14, %eax
 	testl	%eax, %eax
 	je	.LBB19_10
-# %bb.9:                                # %b3692
+# %bb.9:                                # %b3717
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str14+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3684
+	calll	func_b3709
 	jmp	.LBB19_60
-.LBB19_10:                              # %b1385
+.LBB19_10:                              # %b1394
 	.cfi_def_cfa_offset 16
 	movl	4104, %esi
 	movzbl	str17, %eax
 	testl	%eax, %eax
 	je	.LBB19_12
-# %bb.11:                               # %b3672
+# %bb.11:                               # %b3697
 	subl	$4, %esp
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
@@ -2968,28 +2933,28 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3600
+	calll	func_b3625
 	jmp	.LBB19_30
-.LBB19_12:                              # %b3662
+.LBB19_12:                              # %b3687
 	.cfi_def_cfa_offset 16
 	movzbl	str15, %eax
 	testl	%eax, %eax
 	je	.LBB19_14
-# %bb.13:                               # %b3664
+# %bb.13:                               # %b3689
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str15+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB19_14:                              # %b3650
+.LBB19_14:                              # %b3675
 	movzbl	str18, %edi
 	testl	%edi, %edi
 	je	.LBB19_17
-# %bb.15:                               # %b3661
+# %bb.15:                               # %b3686
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -3005,12 +2970,12 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB19_24
-# %bb.16:                               # %b3656
+# %bb.16:                               # %b3681
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -3025,39 +2990,39 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB19_25
-.LBB19_17:                              # %b3643
+.LBB19_17:                              # %b3668
 	.cfi_def_cfa_offset 16
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
 	je	.LBB19_21
-# %bb.18:                               # %b3802
+# %bb.18:                               # %b3827
 	leal	1(%esi), %edi
 	.p2align	4, 0x90
-.LBB19_19:                              # %b3639
+.LBB19_19:                              # %b3664
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %eax
 	testl	%eax, %eax
 	je	.LBB19_21
-# %bb.20:                               # %b3637
+# %bb.20:                               # %b3662
                                         #   in Loop: Header=BB19_19 Depth=1
 	incl	%edi
 	jmp	.LBB19_19
-.LBB19_21:                              # %b3626
+.LBB19_21:                              # %b3651
 	movzbl	str19, %ebx
 	testl	%ebx, %ebx
 	je	.LBB19_26
-# %bb.22:                               # %b3628
+# %bb.22:                               # %b3653
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -3073,12 +3038,12 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB19_28
-# %bb.23:                               # %b3632
+# %bb.23:                               # %b3657
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -3093,27 +3058,27 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB19_29
-.LBB19_24:                              # %b3658
+.LBB19_24:                              # %b3683
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB19_25:                              # %b3658
+.LBB19_25:                              # %b3683
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3476
+	calll	func_b3501
 	jmp	.LBB19_30
-.LBB19_26:                              # %b2042
+.LBB19_26:                              # %b2051
 	.cfi_def_cfa_offset 16
 	movl	%esi, %eax
 	andl	$15, %eax
@@ -3123,7 +3088,7 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -3139,48 +3104,48 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
 	je	.LBB19_31
-# %bb.27:                               # %b3617
+# %bb.27:                               # %b3642
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	jmp	.LBB19_30
-.LBB19_28:                              # %b3634
+.LBB19_28:                              # %b3659
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB19_29:                              # %b3634
+.LBB19_29:                              # %b3659
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3436
-.LBB19_30:                              # %b1977
+	calll	func_b3461
+.LBB19_30:                              # %b1986
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB19_31:                              # %b1977
+.LBB19_31:                              # %b1986
 	movl	4108, %esi
 	movzbl	str17, %edi
 	testl	%edi, %edi
 	je	.LBB19_38
-# %bb.32:                               # %b3669
+# %bb.32:                               # %b3694
 	movl	$str17+1, %ebx
 	.p2align	4, 0x90
-.LBB19_33:                              # %b3518
+.LBB19_33:                              # %b3543
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3196,12 +3161,12 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB19_35
-# %bb.34:                               # %b3521
+# %bb.34:                               # %b3546
                                         #   in Loop: Header=BB19_33 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3217,52 +3182,52 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB19_36
 	.p2align	4, 0x90
-.LBB19_35:                              # %b3523
+.LBB19_35:                              # %b3548
                                         #   in Loop: Header=BB19_33 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB19_36:                              # %b3514
+.LBB19_36:                              # %b3539
                                         #   in Loop: Header=BB19_33 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %edi
 	testl	%edi, %edi
 	je	.LBB19_38
-# %bb.37:                               # %b3516
+# %bb.37:                               # %b3541
                                         #   in Loop: Header=BB19_33 Depth=1
 	incl	%ebx
 	jmp	.LBB19_33
-.LBB19_38:                              # %b3509
+.LBB19_38:                              # %b3534
 	movzbl	str16, %eax
 	testl	%eax, %eax
 	je	.LBB19_40
-# %bb.39:                               # %b3511
+# %bb.39:                               # %b3536
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str16+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB19_40:                              # %b3503
+.LBB19_40:                              # %b3528
 	movzbl	str18, %edi
 	testl	%edi, %edi
 	je	.LBB19_47
-# %bb.41:                               # %b3508
+# %bb.41:                               # %b3533
 	movl	$str18+1, %ebx
 	.p2align	4, 0x90
-.LBB19_42:                              # %b3480
+.LBB19_42:                              # %b3505
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3278,12 +3243,12 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB19_44
-# %bb.43:                               # %b3483
+# %bb.43:                               # %b3508
                                         #   in Loop: Header=BB19_42 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3299,61 +3264,61 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB19_45
 	.p2align	4, 0x90
-.LBB19_44:                              # %b3485
+.LBB19_44:                              # %b3510
                                         #   in Loop: Header=BB19_42 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB19_45:                              # %b3476
+.LBB19_45:                              # %b3501
                                         #   in Loop: Header=BB19_42 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %edi
 	testl	%edi, %edi
 	je	.LBB19_47
-# %bb.46:                               # %b3478
+# %bb.46:                               # %b3503
                                         #   in Loop: Header=BB19_42 Depth=1
 	incl	%ebx
 	jmp	.LBB19_42
-.LBB19_47:                              # %b3475
+.LBB19_47:                              # %b3500
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
 	je	.LBB19_51
-# %bb.48:                               # %b3799
+# %bb.48:                               # %b3824
 	leal	1(%esi), %edi
 	.p2align	4, 0x90
-.LBB19_49:                              # %b3471
+.LBB19_49:                              # %b3496
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %eax
 	testl	%eax, %eax
 	je	.LBB19_51
-# %bb.50:                               # %b3469
+# %bb.50:                               # %b3494
                                         #   in Loop: Header=BB19_49 Depth=1
 	incl	%edi
 	jmp	.LBB19_49
-.LBB19_51:                              # %b3464
+.LBB19_51:                              # %b3489
 	movzbl	str19, %ebx
 	testl	%ebx, %ebx
 	je	.LBB19_58
-# %bb.52:                               # %b3466
+# %bb.52:                               # %b3491
 	movl	$str19+1, %edi
 	.p2align	4, 0x90
-.LBB19_53:                              # %b3440
+.LBB19_53:                              # %b3465
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3369,12 +3334,12 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB19_55
-# %bb.54:                               # %b3443
+# %bb.54:                               # %b3468
                                         #   in Loop: Header=BB19_53 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3390,31 +3355,31 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB19_56
 	.p2align	4, 0x90
-.LBB19_55:                              # %b3445
+.LBB19_55:                              # %b3470
                                         #   in Loop: Header=BB19_53 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB19_56:                              # %b3436
+.LBB19_56:                              # %b3461
                                         #   in Loop: Header=BB19_53 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB19_58
-# %bb.57:                               # %b3438
+# %bb.57:                               # %b3463
                                         #   in Loop: Header=BB19_53 Depth=1
 	incl	%edi
 	jmp	.LBB19_53
-.LBB19_58:                              # %b1379
+.LBB19_58:                              # %b1388
 	movl	%esi, %eax
 	andl	$15, %eax
 	subl	$8, %esp
@@ -3423,7 +3388,7 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -3439,20 +3404,20 @@ func_b3720:                             # @func_b3720
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
 	je	.LBB19_61
-# %bb.59:                               # %b3435
+# %bb.59:                               # %b3460
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 .LBB19_60:                              # %b295
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
@@ -3465,12 +3430,12 @@ func_b3720:                             # @func_b3720
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end19:
-	.size	func_b3720, .Lfunc_end19-func_b3720
+	.size	func_b3745, .Lfunc_end19-func_b3745
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3187
-	.type	func_b3187,@function
-func_b3187:                             # @func_b3187
+	.p2align	4, 0x90                         # -- Begin function func_b3212
+	.type	func_b3212,@function
+func_b3212:                             # @func_b3212
 	.cfi_startproc
 # %bb.0:
 	pushl	%edi
@@ -3487,7 +3452,7 @@ func_b3187:                             # @func_b3187
 	movl	16(%esp), %esi
 	jmp	.LBB20_1
 	.p2align	4, 0x90
-.LBB20_3:                               # %b3797
+.LBB20_3:                               # %b3822
                                         #   in Loop: Header=BB20_1 Depth=1
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
@@ -3495,25 +3460,25 @@ func_b3187:                             # @func_b3187
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3169
-.LBB20_4:                               # %b3187
+	calll	func_b3194
+.LBB20_4:                               # %b3212
                                         #   in Loop: Header=BB20_1 Depth=1
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movl	%edi, %ecx
 	movl	$8, %edi
-.LBB20_1:                               # %b3187
+.LBB20_1:                               # %b3212
                                         # =>This Inner Loop Header: Depth=1
 	testl	%esi, %esi
 	je	.LBB20_6
-# %bb.2:                                # %b3189
+# %bb.2:                                # %b3214
                                         #   in Loop: Header=BB20_1 Depth=1
 	addl	%ecx, %edi
 	decl	%esi
 	movzbl	str0, %edx
 	testl	%edx, %edx
 	je	.LBB20_3
-# %bb.5:                                # %b3798
+# %bb.5:                                # %b3823
                                         #   in Loop: Header=BB20_1 Depth=1
 	pushl	%ecx
 	.cfi_adjust_cfa_offset 4
@@ -3523,7 +3488,7 @@ func_b3187:                             # @func_b3187
 	.cfi_adjust_cfa_offset 4
 	pushl	%edx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3181
+	calll	func_b3206
 	jmp	.LBB20_4
 .LBB20_6:                               # %b423
 	.cfi_def_cfa_offset 16
@@ -3535,12 +3500,12 @@ func_b3187:                             # @func_b3187
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end20:
-	.size	func_b3187, .Lfunc_end20-func_b3187
+	.size	func_b3212, .Lfunc_end20-func_b3212
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3702
-	.type	func_b3702,@function
-func_b3702:                             # @func_b3702
+	.p2align	4, 0x90                         # -- Begin function func_b3727
+	.type	func_b3727,@function
+func_b3727:                             # @func_b3727
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -3555,7 +3520,7 @@ func_b3702:                             # @func_b3702
 	movl	20(%esp), %esi
 	movl	16(%esp), %edi
 	.p2align	4, 0x90
-.LBB21_1:                               # %b3702
+.LBB21_1:                               # %b3727
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3571,12 +3536,12 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB21_3
-# %bb.2:                                # %b3805
+# %bb.2:                                # %b3830
                                         #   in Loop: Header=BB21_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3592,31 +3557,31 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB21_4
 	.p2align	4, 0x90
-.LBB21_3:                               # %b3806
+.LBB21_3:                               # %b3831
                                         #   in Loop: Header=BB21_1 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB21_4:                               # %b3806
+.LBB21_4:                               # %b3831
                                         #   in Loop: Header=BB21_1 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%esi), %edi
 	testl	%edi, %edi
 	je	.LBB21_6
-# %bb.5:                                # %b3695
+# %bb.5:                                # %b3720
                                         #   in Loop: Header=BB21_1 Depth=1
 	incl	%esi
 	jmp	.LBB21_1
-.LBB21_6:                               # %b1387
+.LBB21_6:                               # %b1396
 	movl	4100, %eax
 	leal	4(%eax), %ecx
 	pushl	$0
@@ -3627,28 +3592,28 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	(%eax)
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3187
+	calll	func_b3212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	str14, %eax
 	testl	%eax, %eax
 	je	.LBB21_8
-# %bb.7:                                # %b3692
+# %bb.7:                                # %b3717
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str14+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3684
+	calll	func_b3709
 	jmp	.LBB21_58
-.LBB21_8:                               # %b1385
+.LBB21_8:                               # %b1394
 	.cfi_def_cfa_offset 16
 	movl	4104, %esi
 	movzbl	str17, %eax
 	testl	%eax, %eax
 	je	.LBB21_10
-# %bb.9:                                # %b3672
+# %bb.9:                                # %b3697
 	subl	$4, %esp
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
@@ -3657,28 +3622,28 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3600
+	calll	func_b3625
 	jmp	.LBB21_28
-.LBB21_10:                              # %b3662
+.LBB21_10:                              # %b3687
 	.cfi_def_cfa_offset 16
 	movzbl	str15, %eax
 	testl	%eax, %eax
 	je	.LBB21_12
-# %bb.11:                               # %b3664
+# %bb.11:                               # %b3689
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str15+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB21_12:                              # %b3650
+.LBB21_12:                              # %b3675
 	movzbl	str18, %edi
 	testl	%edi, %edi
 	je	.LBB21_15
-# %bb.13:                               # %b3661
+# %bb.13:                               # %b3686
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -3694,12 +3659,12 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB21_22
-# %bb.14:                               # %b3656
+# %bb.14:                               # %b3681
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -3714,39 +3679,39 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB21_23
-.LBB21_15:                              # %b3643
+.LBB21_15:                              # %b3668
 	.cfi_def_cfa_offset 16
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
 	je	.LBB21_19
-# %bb.16:                               # %b3802
+# %bb.16:                               # %b3827
 	leal	1(%esi), %edi
 	.p2align	4, 0x90
-.LBB21_17:                              # %b3639
+.LBB21_17:                              # %b3664
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %eax
 	testl	%eax, %eax
 	je	.LBB21_19
-# %bb.18:                               # %b3637
+# %bb.18:                               # %b3662
                                         #   in Loop: Header=BB21_17 Depth=1
 	incl	%edi
 	jmp	.LBB21_17
-.LBB21_19:                              # %b3626
+.LBB21_19:                              # %b3651
 	movzbl	str19, %ebx
 	testl	%ebx, %ebx
 	je	.LBB21_24
-# %bb.20:                               # %b3628
+# %bb.20:                               # %b3653
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -3762,12 +3727,12 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB21_26
-# %bb.21:                               # %b3632
+# %bb.21:                               # %b3657
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -3782,27 +3747,27 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB21_27
-.LBB21_22:                              # %b3658
+.LBB21_22:                              # %b3683
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB21_23:                              # %b3658
+.LBB21_23:                              # %b3683
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3476
+	calll	func_b3501
 	jmp	.LBB21_28
-.LBB21_24:                              # %b2042
+.LBB21_24:                              # %b2051
 	.cfi_def_cfa_offset 16
 	movl	%esi, %eax
 	andl	$15, %eax
@@ -3812,7 +3777,7 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -3828,48 +3793,48 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
 	je	.LBB21_29
-# %bb.25:                               # %b3617
+# %bb.25:                               # %b3642
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	jmp	.LBB21_28
-.LBB21_26:                              # %b3634
+.LBB21_26:                              # %b3659
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB21_27:                              # %b3634
+.LBB21_27:                              # %b3659
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3436
-.LBB21_28:                              # %b1977
+	calll	func_b3461
+.LBB21_28:                              # %b1986
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB21_29:                              # %b1977
+.LBB21_29:                              # %b1986
 	movl	4108, %esi
 	movzbl	str17, %edi
 	testl	%edi, %edi
 	je	.LBB21_36
-# %bb.30:                               # %b3669
+# %bb.30:                               # %b3694
 	movl	$str17+1, %ebx
 	.p2align	4, 0x90
-.LBB21_31:                              # %b3518
+.LBB21_31:                              # %b3543
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3885,12 +3850,12 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB21_33
-# %bb.32:                               # %b3521
+# %bb.32:                               # %b3546
                                         #   in Loop: Header=BB21_31 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3906,52 +3871,52 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB21_34
 	.p2align	4, 0x90
-.LBB21_33:                              # %b3523
+.LBB21_33:                              # %b3548
                                         #   in Loop: Header=BB21_31 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB21_34:                              # %b3514
+.LBB21_34:                              # %b3539
                                         #   in Loop: Header=BB21_31 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %edi
 	testl	%edi, %edi
 	je	.LBB21_36
-# %bb.35:                               # %b3516
+# %bb.35:                               # %b3541
                                         #   in Loop: Header=BB21_31 Depth=1
 	incl	%ebx
 	jmp	.LBB21_31
-.LBB21_36:                              # %b3509
+.LBB21_36:                              # %b3534
 	movzbl	str16, %eax
 	testl	%eax, %eax
 	je	.LBB21_38
-# %bb.37:                               # %b3511
+# %bb.37:                               # %b3536
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str16+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB21_38:                              # %b3503
+.LBB21_38:                              # %b3528
 	movzbl	str18, %edi
 	testl	%edi, %edi
 	je	.LBB21_45
-# %bb.39:                               # %b3508
+# %bb.39:                               # %b3533
 	movl	$str18+1, %ebx
 	.p2align	4, 0x90
-.LBB21_40:                              # %b3480
+.LBB21_40:                              # %b3505
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3967,12 +3932,12 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB21_42
-# %bb.41:                               # %b3483
+# %bb.41:                               # %b3508
                                         #   in Loop: Header=BB21_40 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -3988,61 +3953,61 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB21_43
 	.p2align	4, 0x90
-.LBB21_42:                              # %b3485
+.LBB21_42:                              # %b3510
                                         #   in Loop: Header=BB21_40 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB21_43:                              # %b3476
+.LBB21_43:                              # %b3501
                                         #   in Loop: Header=BB21_40 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %edi
 	testl	%edi, %edi
 	je	.LBB21_45
-# %bb.44:                               # %b3478
+# %bb.44:                               # %b3503
                                         #   in Loop: Header=BB21_40 Depth=1
 	incl	%ebx
 	jmp	.LBB21_40
-.LBB21_45:                              # %b3475
+.LBB21_45:                              # %b3500
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
 	je	.LBB21_49
-# %bb.46:                               # %b3799
+# %bb.46:                               # %b3824
 	leal	1(%esi), %edi
 	.p2align	4, 0x90
-.LBB21_47:                              # %b3471
+.LBB21_47:                              # %b3496
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %eax
 	testl	%eax, %eax
 	je	.LBB21_49
-# %bb.48:                               # %b3469
+# %bb.48:                               # %b3494
                                         #   in Loop: Header=BB21_47 Depth=1
 	incl	%edi
 	jmp	.LBB21_47
-.LBB21_49:                              # %b3464
+.LBB21_49:                              # %b3489
 	movzbl	str19, %ebx
 	testl	%ebx, %ebx
 	je	.LBB21_56
-# %bb.50:                               # %b3466
+# %bb.50:                               # %b3491
 	movl	$str19+1, %edi
 	.p2align	4, 0x90
-.LBB21_51:                              # %b3440
+.LBB21_51:                              # %b3465
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4058,12 +4023,12 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB21_53
-# %bb.52:                               # %b3443
+# %bb.52:                               # %b3468
                                         #   in Loop: Header=BB21_51 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4079,31 +4044,31 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB21_54
 	.p2align	4, 0x90
-.LBB21_53:                              # %b3445
+.LBB21_53:                              # %b3470
                                         #   in Loop: Header=BB21_51 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB21_54:                              # %b3436
+.LBB21_54:                              # %b3461
                                         #   in Loop: Header=BB21_51 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB21_56
-# %bb.55:                               # %b3438
+# %bb.55:                               # %b3463
                                         #   in Loop: Header=BB21_51 Depth=1
 	incl	%edi
 	jmp	.LBB21_51
-.LBB21_56:                              # %b1379
+.LBB21_56:                              # %b1388
 	movl	%esi, %eax
 	andl	$15, %eax
 	subl	$8, %esp
@@ -4112,7 +4077,7 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -4128,20 +4093,20 @@ func_b3702:                             # @func_b3702
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
 	je	.LBB21_59
-# %bb.57:                               # %b3435
+# %bb.57:                               # %b3460
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 .LBB21_58:                              # %b295
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
@@ -4154,12 +4119,12 @@ func_b3702:                             # @func_b3702
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end21:
-	.size	func_b3702, .Lfunc_end21-func_b3702
+	.size	func_b3727, .Lfunc_end21-func_b3727
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3684
-	.type	func_b3684,@function
-func_b3684:                             # @func_b3684
+	.p2align	4, 0x90                         # -- Begin function func_b3709
+	.type	func_b3709,@function
+func_b3709:                             # @func_b3709
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -4174,7 +4139,7 @@ func_b3684:                             # @func_b3684
 	movl	20(%esp), %esi
 	movl	16(%esp), %edi
 	.p2align	4, 0x90
-.LBB22_1:                               # %b3684
+.LBB22_1:                               # %b3709
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4190,12 +4155,12 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB22_3
-# %bb.2:                                # %b3803
+# %bb.2:                                # %b3828
                                         #   in Loop: Header=BB22_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4211,36 +4176,36 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB22_4
 	.p2align	4, 0x90
-.LBB22_3:                               # %b3804
+.LBB22_3:                               # %b3829
                                         #   in Loop: Header=BB22_1 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB22_4:                               # %b3804
+.LBB22_4:                               # %b3829
                                         #   in Loop: Header=BB22_1 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%esi), %edi
 	testl	%edi, %edi
 	je	.LBB22_6
-# %bb.5:                                # %b3677
+# %bb.5:                                # %b3702
                                         #   in Loop: Header=BB22_1 Depth=1
 	incl	%esi
 	jmp	.LBB22_1
-.LBB22_6:                               # %b1385
+.LBB22_6:                               # %b1394
 	movl	4104, %esi
 	movzbl	str17, %eax
 	testl	%eax, %eax
 	je	.LBB22_8
-# %bb.7:                                # %b3672
+# %bb.7:                                # %b3697
 	subl	$4, %esp
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
@@ -4249,28 +4214,28 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3600
+	calll	func_b3625
 	jmp	.LBB22_26
-.LBB22_8:                               # %b3662
+.LBB22_8:                               # %b3687
 	.cfi_def_cfa_offset 16
 	movzbl	str15, %eax
 	testl	%eax, %eax
 	je	.LBB22_10
-# %bb.9:                                # %b3664
+# %bb.9:                                # %b3689
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str15+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB22_10:                              # %b3650
+.LBB22_10:                              # %b3675
 	movzbl	str18, %edi
 	testl	%edi, %edi
 	je	.LBB22_13
-# %bb.11:                               # %b3661
+# %bb.11:                               # %b3686
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -4286,12 +4251,12 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB22_20
-# %bb.12:                               # %b3656
+# %bb.12:                               # %b3681
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -4306,39 +4271,39 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB22_21
-.LBB22_13:                              # %b3643
+.LBB22_13:                              # %b3668
 	.cfi_def_cfa_offset 16
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
 	je	.LBB22_17
-# %bb.14:                               # %b3802
+# %bb.14:                               # %b3827
 	leal	1(%esi), %edi
 	.p2align	4, 0x90
-.LBB22_15:                              # %b3639
+.LBB22_15:                              # %b3664
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %eax
 	testl	%eax, %eax
 	je	.LBB22_17
-# %bb.16:                               # %b3637
+# %bb.16:                               # %b3662
                                         #   in Loop: Header=BB22_15 Depth=1
 	incl	%edi
 	jmp	.LBB22_15
-.LBB22_17:                              # %b3626
+.LBB22_17:                              # %b3651
 	movzbl	str19, %ebx
 	testl	%ebx, %ebx
 	je	.LBB22_22
-# %bb.18:                               # %b3628
+# %bb.18:                               # %b3653
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -4354,12 +4319,12 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB22_24
-# %bb.19:                               # %b3632
+# %bb.19:                               # %b3657
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -4374,27 +4339,27 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB22_25
-.LBB22_20:                              # %b3658
+.LBB22_20:                              # %b3683
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB22_21:                              # %b3658
+.LBB22_21:                              # %b3683
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3476
+	calll	func_b3501
 	jmp	.LBB22_26
-.LBB22_22:                              # %b2042
+.LBB22_22:                              # %b2051
 	.cfi_def_cfa_offset 16
 	movl	%esi, %eax
 	andl	$15, %eax
@@ -4404,7 +4369,7 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -4420,48 +4385,48 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
 	je	.LBB22_27
-# %bb.23:                               # %b3617
+# %bb.23:                               # %b3642
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	jmp	.LBB22_26
-.LBB22_24:                              # %b3634
+.LBB22_24:                              # %b3659
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB22_25:                              # %b3634
+.LBB22_25:                              # %b3659
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3436
-.LBB22_26:                              # %b1977
+	calll	func_b3461
+.LBB22_26:                              # %b1986
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB22_27:                              # %b1977
+.LBB22_27:                              # %b1986
 	movl	4108, %esi
 	movzbl	str17, %edi
 	testl	%edi, %edi
 	je	.LBB22_34
-# %bb.28:                               # %b3669
+# %bb.28:                               # %b3694
 	movl	$str17+1, %ebx
 	.p2align	4, 0x90
-.LBB22_29:                              # %b3518
+.LBB22_29:                              # %b3543
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4477,12 +4442,12 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB22_31
-# %bb.30:                               # %b3521
+# %bb.30:                               # %b3546
                                         #   in Loop: Header=BB22_29 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4498,52 +4463,52 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB22_32
 	.p2align	4, 0x90
-.LBB22_31:                              # %b3523
+.LBB22_31:                              # %b3548
                                         #   in Loop: Header=BB22_29 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB22_32:                              # %b3514
+.LBB22_32:                              # %b3539
                                         #   in Loop: Header=BB22_29 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %edi
 	testl	%edi, %edi
 	je	.LBB22_34
-# %bb.33:                               # %b3516
+# %bb.33:                               # %b3541
                                         #   in Loop: Header=BB22_29 Depth=1
 	incl	%ebx
 	jmp	.LBB22_29
-.LBB22_34:                              # %b3509
+.LBB22_34:                              # %b3534
 	movzbl	str16, %eax
 	testl	%eax, %eax
 	je	.LBB22_36
-# %bb.35:                               # %b3511
+# %bb.35:                               # %b3536
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str16+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB22_36:                              # %b3503
+.LBB22_36:                              # %b3528
 	movzbl	str18, %edi
 	testl	%edi, %edi
 	je	.LBB22_43
-# %bb.37:                               # %b3508
+# %bb.37:                               # %b3533
 	movl	$str18+1, %ebx
 	.p2align	4, 0x90
-.LBB22_38:                              # %b3480
+.LBB22_38:                              # %b3505
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4559,12 +4524,12 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB22_40
-# %bb.39:                               # %b3483
+# %bb.39:                               # %b3508
                                         #   in Loop: Header=BB22_38 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4580,61 +4545,61 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB22_41
 	.p2align	4, 0x90
-.LBB22_40:                              # %b3485
+.LBB22_40:                              # %b3510
                                         #   in Loop: Header=BB22_38 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB22_41:                              # %b3476
+.LBB22_41:                              # %b3501
                                         #   in Loop: Header=BB22_38 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %edi
 	testl	%edi, %edi
 	je	.LBB22_43
-# %bb.42:                               # %b3478
+# %bb.42:                               # %b3503
                                         #   in Loop: Header=BB22_38 Depth=1
 	incl	%ebx
 	jmp	.LBB22_38
-.LBB22_43:                              # %b3475
+.LBB22_43:                              # %b3500
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
 	je	.LBB22_47
-# %bb.44:                               # %b3799
+# %bb.44:                               # %b3824
 	leal	1(%esi), %edi
 	.p2align	4, 0x90
-.LBB22_45:                              # %b3471
+.LBB22_45:                              # %b3496
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %eax
 	testl	%eax, %eax
 	je	.LBB22_47
-# %bb.46:                               # %b3469
+# %bb.46:                               # %b3494
                                         #   in Loop: Header=BB22_45 Depth=1
 	incl	%edi
 	jmp	.LBB22_45
-.LBB22_47:                              # %b3464
+.LBB22_47:                              # %b3489
 	movzbl	str19, %ebx
 	testl	%ebx, %ebx
 	je	.LBB22_54
-# %bb.48:                               # %b3466
+# %bb.48:                               # %b3491
 	movl	$str19+1, %edi
 	.p2align	4, 0x90
-.LBB22_49:                              # %b3440
+.LBB22_49:                              # %b3465
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4650,12 +4615,12 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB22_51
-# %bb.50:                               # %b3443
+# %bb.50:                               # %b3468
                                         #   in Loop: Header=BB22_49 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4671,31 +4636,31 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB22_52
 	.p2align	4, 0x90
-.LBB22_51:                              # %b3445
+.LBB22_51:                              # %b3470
                                         #   in Loop: Header=BB22_49 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB22_52:                              # %b3436
+.LBB22_52:                              # %b3461
                                         #   in Loop: Header=BB22_49 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB22_54
-# %bb.53:                               # %b3438
+# %bb.53:                               # %b3463
                                         #   in Loop: Header=BB22_49 Depth=1
 	incl	%edi
 	jmp	.LBB22_49
-.LBB22_54:                              # %b1379
+.LBB22_54:                              # %b1388
 	movl	%esi, %eax
 	andl	$15, %eax
 	subl	$8, %esp
@@ -4704,7 +4669,7 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -4720,20 +4685,20 @@ func_b3684:                             # @func_b3684
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
 	je	.LBB22_56
-# %bb.55:                               # %b3435
+# %bb.55:                               # %b3460
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 .LBB22_56:                              # %b295
@@ -4745,12 +4710,12 @@ func_b3684:                             # @func_b3684
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end22:
-	.size	func_b3684, .Lfunc_end22-func_b3684
+	.size	func_b3709, .Lfunc_end22-func_b3709
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3600
-	.type	func_b3600,@function
-func_b3600:                             # @func_b3600
+	.p2align	4, 0x90                         # -- Begin function func_b3625
+	.type	func_b3625,@function
+func_b3625:                             # @func_b3625
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -4766,7 +4731,7 @@ func_b3600:                             # @func_b3600
 	movl	20(%esp), %edi
 	movl	16(%esp), %ebx
 	.p2align	4, 0x90
-.LBB23_1:                               # %b3600
+.LBB23_1:                               # %b3625
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4782,12 +4747,12 @@ func_b3600:                             # @func_b3600
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB23_3
-# %bb.2:                                # %b3800
+# %bb.2:                                # %b3825
                                         #   in Loop: Header=BB23_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4803,52 +4768,52 @@ func_b3600:                             # @func_b3600
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB23_4
 	.p2align	4, 0x90
-.LBB23_3:                               # %b3801
+.LBB23_3:                               # %b3826
                                         #   in Loop: Header=BB23_1 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB23_4:                               # %b3591
+.LBB23_4:                               # %b3616
                                         #   in Loop: Header=BB23_1 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB23_5
-# %bb.28:                               # %b3593
+# %bb.28:                               # %b3618
                                         #   in Loop: Header=BB23_1 Depth=1
 	incl	%edi
 	jmp	.LBB23_1
-.LBB23_5:                               # %b3588
+.LBB23_5:                               # %b3613
 	movzbl	str15, %eax
 	testl	%eax, %eax
 	je	.LBB23_7
-# %bb.6:                                # %b3590
+# %bb.6:                                # %b3615
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str15+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB23_7:                               # %b3590
+.LBB23_7:                               # %b3615
 	movzbl	str18, %edi
 	testl	%edi, %edi
 	je	.LBB23_8
-# %bb.12:                               # %b3508
+# %bb.12:                               # %b3533
 	movl	$str18+1, %ebx
 	.p2align	4, 0x90
-.LBB23_13:                              # %b3480
+.LBB23_13:                              # %b3505
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4864,12 +4829,12 @@ func_b3600:                             # @func_b3600
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB23_18
-# %bb.14:                               # %b3483
+# %bb.14:                               # %b3508
                                         #   in Loop: Header=BB23_13 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4885,61 +4850,61 @@ func_b3600:                             # @func_b3600
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB23_19
 	.p2align	4, 0x90
-.LBB23_18:                              # %b3485
+.LBB23_18:                              # %b3510
                                         #   in Loop: Header=BB23_13 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB23_19:                              # %b3476
+.LBB23_19:                              # %b3501
                                         #   in Loop: Header=BB23_13 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %edi
 	testl	%edi, %edi
 	je	.LBB23_8
-# %bb.20:                               # %b3478
+# %bb.20:                               # %b3503
                                         #   in Loop: Header=BB23_13 Depth=1
 	incl	%ebx
 	jmp	.LBB23_13
-.LBB23_8:                               # %b3475
+.LBB23_8:                               # %b3500
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
 	je	.LBB23_9
-# %bb.15:                               # %b3799
+# %bb.15:                               # %b3824
 	leal	1(%esi), %edi
 	.p2align	4, 0x90
-.LBB23_16:                              # %b3471
+.LBB23_16:                              # %b3496
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %eax
 	testl	%eax, %eax
 	je	.LBB23_9
-# %bb.17:                               # %b3469
+# %bb.17:                               # %b3494
                                         #   in Loop: Header=BB23_16 Depth=1
 	incl	%edi
 	jmp	.LBB23_16
-.LBB23_9:                               # %b3464
+.LBB23_9:                               # %b3489
 	movzbl	str19, %ebx
 	testl	%ebx, %ebx
 	je	.LBB23_10
-# %bb.22:                               # %b3466
+# %bb.22:                               # %b3491
 	movl	$str19+1, %edi
 	.p2align	4, 0x90
-.LBB23_23:                              # %b3440
+.LBB23_23:                              # %b3465
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4955,12 +4920,12 @@ func_b3600:                             # @func_b3600
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB23_25
-# %bb.24:                               # %b3443
+# %bb.24:                               # %b3468
                                         #   in Loop: Header=BB23_23 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -4976,31 +4941,31 @@ func_b3600:                             # @func_b3600
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB23_26
 	.p2align	4, 0x90
-.LBB23_25:                              # %b3445
+.LBB23_25:                              # %b3470
                                         #   in Loop: Header=BB23_23 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB23_26:                              # %b3436
+.LBB23_26:                              # %b3461
                                         #   in Loop: Header=BB23_23 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB23_10
-# %bb.27:                               # %b3438
+# %bb.27:                               # %b3463
                                         #   in Loop: Header=BB23_23 Depth=1
 	incl	%edi
 	jmp	.LBB23_23
-.LBB23_10:                              # %b1379
+.LBB23_10:                              # %b1388
 	movl	%esi, %eax
 	andl	$15, %eax
 	subl	$8, %esp
@@ -5009,7 +4974,7 @@ func_b3600:                             # @func_b3600
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -5025,20 +4990,20 @@ func_b3600:                             # @func_b3600
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
 	je	.LBB23_11
-# %bb.21:                               # %b3435
+# %bb.21:                               # %b3460
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 .LBB23_11:                              # %b295
@@ -5050,14 +5015,14 @@ func_b3600:                             # @func_b3600
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end23:
-	.size	func_b3600, .Lfunc_end23-func_b3600
+	.size	func_b3625, .Lfunc_end23-func_b3625
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b2994
-	.type	func_b2994,@function
-func_b2994:                             # @func_b2994
+	.p2align	4, 0x90                         # -- Begin function func_b3019
+	.type	func_b3019,@function
+func_b3019:                             # @func_b3019
 	.cfi_startproc
-# %bb.0:                                # %b2994
+# %bb.0:                                # %b3019
 	pushl	%ebx
 	.cfi_def_cfa_offset 8
 	pushl	%edi
@@ -5071,10 +5036,10 @@ func_b2994:                             # @func_b2994
 	movzbl	str4, %ebx
 	testl	%ebx, %ebx
 	je	.LBB24_1
-# %bb.10:                               # %b2996
+# %bb.10:                               # %b3021
 	movl	$str4+1, %edi
 	.p2align	4, 0x90
-.LBB24_11:                              # %b2978
+.LBB24_11:                              # %b3003
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5090,12 +5055,12 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB24_16
-# %bb.12:                               # %b2981
+# %bb.12:                               # %b3006
                                         #   in Loop: Header=BB24_11 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5111,31 +5076,31 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB24_17
 	.p2align	4, 0x90
-.LBB24_16:                              # %b2983
+.LBB24_16:                              # %b3008
                                         #   in Loop: Header=BB24_11 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB24_17:                              # %b2974
+.LBB24_17:                              # %b2999
                                         #   in Loop: Header=BB24_11 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB24_1
-# %bb.18:                               # %b2976
+# %bb.18:                               # %b3001
                                         #   in Loop: Header=BB24_11 Depth=1
 	incl	%edi
 	jmp	.LBB24_11
-.LBB24_1:                               # %b1361
+.LBB24_1:                               # %b1370
 	movl	(%esi), %edi
 	movl	%edi, %eax
 	andl	$15, %eax
@@ -5145,7 +5110,7 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -5161,16 +5126,16 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str5, %ebx
 	testl	%ebx, %ebx
 	je	.LBB24_2
-# %bb.13:                               # %b2973
+# %bb.13:                               # %b2998
 	movl	$str5+1, %edi
 	.p2align	4, 0x90
-.LBB24_14:                              # %b2965
+.LBB24_14:                              # %b2990
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5186,12 +5151,12 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB24_22
-# %bb.15:                               # %b2968
+# %bb.15:                               # %b2993
                                         #   in Loop: Header=BB24_14 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5207,31 +5172,31 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB24_23
 	.p2align	4, 0x90
-.LBB24_22:                              # %b2970
+.LBB24_22:                              # %b2995
                                         #   in Loop: Header=BB24_14 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB24_23:                              # %b2961
+.LBB24_23:                              # %b2986
                                         #   in Loop: Header=BB24_14 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB24_2
-# %bb.24:                               # %b2963
+# %bb.24:                               # %b2988
                                         #   in Loop: Header=BB24_14 Depth=1
 	incl	%edi
 	jmp	.LBB24_14
-.LBB24_2:                               # %b1359
+.LBB24_2:                               # %b1368
 	movl	4(%esi), %edi
 	movl	%edi, %eax
 	andl	$15, %eax
@@ -5241,7 +5206,7 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -5257,16 +5222,16 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str6, %ebx
 	testl	%ebx, %ebx
 	je	.LBB24_3
-# %bb.19:                               # %b2960
+# %bb.19:                               # %b2985
 	movl	$str6+1, %edi
 	.p2align	4, 0x90
-.LBB24_20:                              # %b2952
+.LBB24_20:                              # %b2977
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5282,12 +5247,12 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB24_28
-# %bb.21:                               # %b2955
+# %bb.21:                               # %b2980
                                         #   in Loop: Header=BB24_20 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5303,31 +5268,31 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB24_29
 	.p2align	4, 0x90
-.LBB24_28:                              # %b2957
+.LBB24_28:                              # %b2982
                                         #   in Loop: Header=BB24_20 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB24_29:                              # %b2948
+.LBB24_29:                              # %b2973
                                         #   in Loop: Header=BB24_20 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB24_3
-# %bb.30:                               # %b2950
+# %bb.30:                               # %b2975
                                         #   in Loop: Header=BB24_20 Depth=1
 	incl	%edi
 	jmp	.LBB24_20
-.LBB24_3:                               # %b1357
+.LBB24_3:                               # %b1366
 	movl	8(%esi), %edi
 	movl	%edi, %eax
 	andl	$15, %eax
@@ -5337,16 +5302,16 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
 	shrl	$4, %edi
 	je	.LBB24_25
-# %bb.4:                                # %b2003.preheader
+# %bb.4:                                # %b2012.preheader
 	movl	$1, %eax
 	.p2align	4, 0x90
-.LBB24_5:                               # %b2003
+.LBB24_5:                               # %b2012
                                         # =>This Inner Loop Header: Depth=1
 	movl	%eax, %esi
 	movl	%edi, %eax
@@ -5357,18 +5322,18 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf(%esi)
 	leal	1(%esi), %eax
 	cmpl	$32, %eax
 	jae	.LBB24_7
-# %bb.6:                                # %b3931
+# %bb.6:                                # %b3956
                                         #   in Loop: Header=BB24_5 Depth=1
 	shrl	$4, %edi
 	jne	.LBB24_5
-.LBB24_7:                               # %b2004
+.LBB24_7:                               # %b2013
 	pushl	$32
 	.cfi_adjust_cfa_offset 4
 	pushl	$0
@@ -5377,34 +5342,34 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3918
+	calll	func_b3943
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	.p2align	4, 0x90
-.LBB24_8:                               # %b2001
+.LBB24_8:                               # %b2010
                                         # =>This Inner Loop Header: Depth=1
 	movzbl	itoaBuf(%esi), %eax
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	decl	%esi
 	jns	.LBB24_8
 	jmp	.LBB24_9
-.LBB24_25:                              # %b3925
+.LBB24_25:                              # %b3950
 	xorl	%eax, %eax
 	testb	%al, %al
 	je	.LBB24_27
-# %bb.26:                               # %b3927
+# %bb.26:                               # %b3952
 	movl	$1, %esi
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	$32
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	pushl	$32
@@ -5415,16 +5380,16 @@ func_b2994:                             # @func_b2994
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3918
+	calll	func_b3943
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB24_27:                              # %b2061
+.LBB24_27:                              # %b2070
 	movzbl	itoaBuf, %eax
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 .LBB24_9:                               # %b295
@@ -5436,12 +5401,12 @@ func_b2994:                             # @func_b2994
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end24:
-	.size	func_b2994, .Lfunc_end24-func_b2994
+	.size	func_b3019, .Lfunc_end24-func_b3019
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3514
-	.type	func_b3514,@function
-func_b3514:                             # @func_b3514
+	.p2align	4, 0x90                         # -- Begin function func_b3539
+	.type	func_b3539,@function
+func_b3539:                             # @func_b3539
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -5457,23 +5422,23 @@ func_b3514:                             # @func_b3514
 	movl	16(%esp), %edi
 	jmp	.LBB25_1
 	.p2align	4, 0x90
-.LBB25_11:                              # %b3523
+.LBB25_11:                              # %b3548
                                         #   in Loop: Header=BB25_1 Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB25_12:                              # %b3514
+.LBB25_12:                              # %b3539
                                         #   in Loop: Header=BB25_1 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB25_1:                               # %b3514
+.LBB25_1:                               # %b3539
                                         # =>This Inner Loop Header: Depth=1
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB25_2
-# %bb.10:                               # %b3516
+# %bb.10:                               # %b3541
                                         #   in Loop: Header=BB25_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5490,12 +5455,12 @@ func_b3514:                             # @func_b3514
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB25_11
-# %bb.9:                                # %b3521
+# %bb.9:                                # %b3546
                                         #   in Loop: Header=BB25_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5511,33 +5476,33 @@ func_b3514:                             # @func_b3514
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB25_12
-.LBB25_2:                               # %b3509
+.LBB25_2:                               # %b3534
 	.cfi_def_cfa_offset 16
 	movzbl	str16, %eax
 	testl	%eax, %eax
 	je	.LBB25_4
-# %bb.3:                                # %b3511
+# %bb.3:                                # %b3536
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str16+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB25_4:                               # %b3511
+.LBB25_4:                               # %b3536
 	movzbl	str18, %edi
 	testl	%edi, %edi
 	je	.LBB25_5
-# %bb.13:                               # %b3508
+# %bb.13:                               # %b3533
 	movl	$str18+1, %ebx
 	.p2align	4, 0x90
-.LBB25_14:                              # %b3480
+.LBB25_14:                              # %b3505
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5553,12 +5518,12 @@ func_b3514:                             # @func_b3514
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB25_19
-# %bb.15:                               # %b3483
+# %bb.15:                               # %b3508
                                         #   in Loop: Header=BB25_14 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5574,61 +5539,61 @@ func_b3514:                             # @func_b3514
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB25_20
 	.p2align	4, 0x90
-.LBB25_19:                              # %b3485
+.LBB25_19:                              # %b3510
                                         #   in Loop: Header=BB25_14 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB25_20:                              # %b3476
+.LBB25_20:                              # %b3501
                                         #   in Loop: Header=BB25_14 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %edi
 	testl	%edi, %edi
 	je	.LBB25_5
-# %bb.21:                               # %b3478
+# %bb.21:                               # %b3503
                                         #   in Loop: Header=BB25_14 Depth=1
 	incl	%ebx
 	jmp	.LBB25_14
-.LBB25_5:                               # %b3475
+.LBB25_5:                               # %b3500
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
 	je	.LBB25_6
-# %bb.16:                               # %b3799
+# %bb.16:                               # %b3824
 	leal	1(%esi), %edi
 	.p2align	4, 0x90
-.LBB25_17:                              # %b3471
+.LBB25_17:                              # %b3496
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %eax
 	testl	%eax, %eax
 	je	.LBB25_6
-# %bb.18:                               # %b3469
+# %bb.18:                               # %b3494
                                         #   in Loop: Header=BB25_17 Depth=1
 	incl	%edi
 	jmp	.LBB25_17
-.LBB25_6:                               # %b3464
+.LBB25_6:                               # %b3489
 	movzbl	str19, %ebx
 	testl	%ebx, %ebx
 	je	.LBB25_7
-# %bb.23:                               # %b3466
+# %bb.23:                               # %b3491
 	movl	$str19+1, %edi
 	.p2align	4, 0x90
-.LBB25_24:                              # %b3440
+.LBB25_24:                              # %b3465
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5644,12 +5609,12 @@ func_b3514:                             # @func_b3514
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB25_26
-# %bb.25:                               # %b3443
+# %bb.25:                               # %b3468
                                         #   in Loop: Header=BB25_24 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5665,31 +5630,31 @@ func_b3514:                             # @func_b3514
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB25_27
 	.p2align	4, 0x90
-.LBB25_26:                              # %b3445
+.LBB25_26:                              # %b3470
                                         #   in Loop: Header=BB25_24 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB25_27:                              # %b3436
+.LBB25_27:                              # %b3461
                                         #   in Loop: Header=BB25_24 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB25_7
-# %bb.28:                               # %b3438
+# %bb.28:                               # %b3463
                                         #   in Loop: Header=BB25_24 Depth=1
 	incl	%edi
 	jmp	.LBB25_24
-.LBB25_7:                               # %b1379
+.LBB25_7:                               # %b1388
 	movl	%esi, %eax
 	andl	$15, %eax
 	subl	$8, %esp
@@ -5698,7 +5663,7 @@ func_b3514:                             # @func_b3514
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -5714,20 +5679,20 @@ func_b3514:                             # @func_b3514
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
 	je	.LBB25_8
-# %bb.22:                               # %b3435
+# %bb.22:                               # %b3460
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 .LBB25_8:                               # %b295
@@ -5739,12 +5704,12 @@ func_b3514:                             # @func_b3514
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end25:
-	.size	func_b3514, .Lfunc_end25-func_b3514
+	.size	func_b3539, .Lfunc_end25-func_b3539
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3476
-	.type	func_b3476,@function
-func_b3476:                             # @func_b3476
+	.p2align	4, 0x90                         # -- Begin function func_b3501
+	.type	func_b3501,@function
+func_b3501:                             # @func_b3501
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -5760,23 +5725,23 @@ func_b3476:                             # @func_b3476
 	movl	16(%esp), %edi
 	jmp	.LBB26_1
 	.p2align	4, 0x90
-.LBB26_11:                              # %b3485
+.LBB26_11:                              # %b3510
                                         #   in Loop: Header=BB26_1 Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB26_12:                              # %b3476
+.LBB26_12:                              # %b3501
                                         #   in Loop: Header=BB26_1 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB26_1:                               # %b3476
+.LBB26_1:                               # %b3501
                                         # =>This Inner Loop Header: Depth=1
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB26_2
-# %bb.10:                               # %b3478
+# %bb.10:                               # %b3503
                                         #   in Loop: Header=BB26_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5793,12 +5758,12 @@ func_b3476:                             # @func_b3476
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB26_11
-# %bb.9:                                # %b3483
+# %bb.9:                                # %b3508
                                         #   in Loop: Header=BB26_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5814,42 +5779,42 @@ func_b3476:                             # @func_b3476
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB26_12
-.LBB26_2:                               # %b3475
+.LBB26_2:                               # %b3500
 	.cfi_def_cfa_offset 16
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
 	je	.LBB26_3
-# %bb.6:                                # %b3799
+# %bb.6:                                # %b3824
 	leal	1(%esi), %edi
 	.p2align	4, 0x90
-.LBB26_7:                               # %b3471
+.LBB26_7:                               # %b3496
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %eax
 	testl	%eax, %eax
 	je	.LBB26_3
-# %bb.8:                                # %b3469
+# %bb.8:                                # %b3494
                                         #   in Loop: Header=BB26_7 Depth=1
 	incl	%edi
 	jmp	.LBB26_7
-.LBB26_3:                               # %b3464
+.LBB26_3:                               # %b3489
 	movzbl	str19, %ebx
 	testl	%ebx, %ebx
 	je	.LBB26_4
-# %bb.14:                               # %b3466
+# %bb.14:                               # %b3491
 	movl	$str19+1, %edi
 	.p2align	4, 0x90
-.LBB26_15:                              # %b3440
+.LBB26_15:                              # %b3465
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5865,12 +5830,12 @@ func_b3476:                             # @func_b3476
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB26_17
-# %bb.16:                               # %b3443
+# %bb.16:                               # %b3468
                                         #   in Loop: Header=BB26_15 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -5886,31 +5851,31 @@ func_b3476:                             # @func_b3476
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB26_18
 	.p2align	4, 0x90
-.LBB26_17:                              # %b3445
+.LBB26_17:                              # %b3470
                                         #   in Loop: Header=BB26_15 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB26_18:                              # %b3436
+.LBB26_18:                              # %b3461
                                         #   in Loop: Header=BB26_15 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB26_4
-# %bb.19:                               # %b3438
+# %bb.19:                               # %b3463
                                         #   in Loop: Header=BB26_15 Depth=1
 	incl	%edi
 	jmp	.LBB26_15
-.LBB26_4:                               # %b1379
+.LBB26_4:                               # %b1388
 	movl	%esi, %eax
 	andl	$15, %eax
 	subl	$8, %esp
@@ -5919,7 +5884,7 @@ func_b3476:                             # @func_b3476
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -5935,20 +5900,20 @@ func_b3476:                             # @func_b3476
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
 	je	.LBB26_5
-# %bb.13:                               # %b3435
+# %bb.13:                               # %b3460
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 .LBB26_5:                               # %b295
@@ -5960,12 +5925,12 @@ func_b3476:                             # @func_b3476
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end26:
-	.size	func_b3476, .Lfunc_end26-func_b3476
+	.size	func_b3501, .Lfunc_end26-func_b3501
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3436
-	.type	func_b3436,@function
-func_b3436:                             # @func_b3436
+	.p2align	4, 0x90                         # -- Begin function func_b3461
+	.type	func_b3461,@function
+func_b3461:                             # @func_b3461
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -5981,23 +5946,23 @@ func_b3436:                             # @func_b3436
 	movl	16(%esp), %edi
 	jmp	.LBB27_1
 	.p2align	4, 0x90
-.LBB27_7:                               # %b3445
+.LBB27_7:                               # %b3470
                                         #   in Loop: Header=BB27_1 Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB27_8:                               # %b3436
+.LBB27_8:                               # %b3461
                                         #   in Loop: Header=BB27_1 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB27_1:                               # %b3436
+.LBB27_1:                               # %b3461
                                         # =>This Inner Loop Header: Depth=1
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB27_2
-# %bb.6:                                # %b3438
+# %bb.6:                                # %b3463
                                         #   in Loop: Header=BB27_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6014,12 +5979,12 @@ func_b3436:                             # @func_b3436
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB27_7
-# %bb.5:                                # %b3443
+# %bb.5:                                # %b3468
                                         #   in Loop: Header=BB27_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6035,11 +6000,11 @@ func_b3436:                             # @func_b3436
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB27_8
-.LBB27_2:                               # %b1379
+.LBB27_2:                               # %b1388
 	.cfi_def_cfa_offset 16
 	movl	%esi, %eax
 	andl	$15, %eax
@@ -6049,7 +6014,7 @@ func_b3436:                             # @func_b3436
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -6065,20 +6030,20 @@ func_b3436:                             # @func_b3436
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str20, %eax
 	testl	%eax, %eax
 	je	.LBB27_4
-# %bb.3:                                # %b3435
+# %bb.3:                                # %b3460
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str20+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 .LBB27_4:                               # %b295
@@ -6090,12 +6055,12 @@ func_b3436:                             # @func_b3436
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end27:
-	.size	func_b3436, .Lfunc_end27-func_b3436
+	.size	func_b3461, .Lfunc_end27-func_b3461
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3281
-	.type	func_b3281,@function
-func_b3281:                             # @func_b3281
+	.p2align	4, 0x90                         # -- Begin function func_b3306
+	.type	func_b3306,@function
+func_b3306:                             # @func_b3306
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -6111,7 +6076,7 @@ func_b3281:                             # @func_b3281
 	movl	20(%esp), %edi
 	movl	16(%esp), %ebx
 	.p2align	4, 0x90
-.LBB28_1:                               # %b3281
+.LBB28_1:                               # %b3306
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6127,12 +6092,12 @@ func_b3281:                             # @func_b3281
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB28_3
-# %bb.2:                                # %b3809
+# %bb.2:                                # %b3834
                                         #   in Loop: Header=BB28_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6148,31 +6113,31 @@ func_b3281:                             # @func_b3281
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB28_4
 	.p2align	4, 0x90
-.LBB28_3:                               # %b3810
+.LBB28_3:                               # %b3835
                                         #   in Loop: Header=BB28_1 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB28_4:                               # %b3272
+.LBB28_4:                               # %b3297
                                         #   in Loop: Header=BB28_1 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB28_5
-# %bb.9:                                # %b3274
+# %bb.9:                                # %b3299
                                         #   in Loop: Header=BB28_1 Depth=1
 	incl	%edi
 	jmp	.LBB28_1
-.LBB28_5:                               # %b1561
+.LBB28_5:                               # %b1570
 	movl	%esi, %eax
 	andl	$15, %eax
 	subl	$8, %esp
@@ -6181,7 +6146,7 @@ func_b3281:                             # @func_b3281
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -6197,13 +6162,13 @@ func_b3281:                             # @func_b3281
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str53, %eax
 	testl	%eax, %eax
 	je	.LBB28_6
-# %bb.8:                                # %b3266
+# %bb.8:                                # %b3291
 	subl	$4, %esp
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
@@ -6212,13 +6177,13 @@ func_b3281:                             # @func_b3281
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3232
+	calll	func_b3257
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	jmp	.LBB28_7
-.LBB28_6:                               # %b1565
+.LBB28_6:                               # %b1574
 	movl	%esi, users+52
-.LBB28_7:                               # %b1565
+.LBB28_7:                               # %b1574
 	popl	%esi
 	.cfi_def_cfa_offset 12
 	popl	%edi
@@ -6227,12 +6192,12 @@ func_b3281:                             # @func_b3281
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end28:
-	.size	func_b3281, .Lfunc_end28-func_b3281
+	.size	func_b3306, .Lfunc_end28-func_b3306
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3232
-	.type	func_b3232,@function
-func_b3232:                             # @func_b3232
+	.p2align	4, 0x90                         # -- Begin function func_b3257
+	.type	func_b3257,@function
+func_b3257:                             # @func_b3257
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -6248,7 +6213,7 @@ func_b3232:                             # @func_b3232
 	movl	20(%esp), %edi
 	movl	16(%esp), %ebx
 	.p2align	4, 0x90
-.LBB29_1:                               # %b3232
+.LBB29_1:                               # %b3257
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6264,12 +6229,12 @@ func_b3232:                             # @func_b3232
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB29_3
-# %bb.2:                                # %b3235
+# %bb.2:                                # %b3260
                                         #   in Loop: Header=BB29_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6285,31 +6250,31 @@ func_b3232:                             # @func_b3232
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB29_4
 	.p2align	4, 0x90
-.LBB29_3:                               # %b3237
+.LBB29_3:                               # %b3262
                                         #   in Loop: Header=BB29_1 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB29_4:                               # %b3228
+.LBB29_4:                               # %b3253
                                         #   in Loop: Header=BB29_1 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB29_5
-# %bb.6:                                # %b3230
+# %bb.6:                                # %b3255
                                         #   in Loop: Header=BB29_1 Depth=1
 	incl	%edi
 	jmp	.LBB29_1
-.LBB29_5:                               # %b1565
+.LBB29_5:                               # %b1574
 	movl	%esi, users+52
 	popl	%esi
 	.cfi_def_cfa_offset 12
@@ -6319,12 +6284,12 @@ func_b3232:                             # @func_b3232
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end29:
-	.size	func_b3232, .Lfunc_end29-func_b3232
+	.size	func_b3257, .Lfunc_end29-func_b3257
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3263
-	.type	func_b3263,@function
-func_b3263:                             # @func_b3263
+	.p2align	4, 0x90                         # -- Begin function func_b3288
+	.type	func_b3288,@function
+func_b3288:                             # @func_b3288
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -6340,7 +6305,7 @@ func_b3263:                             # @func_b3263
 	movl	20(%esp), %edi
 	movl	16(%esp), %ebx
 	.p2align	4, 0x90
-.LBB30_1:                               # %b3263
+.LBB30_1:                               # %b3288
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6356,12 +6321,12 @@ func_b3263:                             # @func_b3263
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB30_3
-# %bb.2:                                # %b3811
+# %bb.2:                                # %b3836
                                         #   in Loop: Header=BB30_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6377,31 +6342,31 @@ func_b3263:                             # @func_b3263
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB30_4
 	.p2align	4, 0x90
-.LBB30_3:                               # %b3812
+.LBB30_3:                               # %b3837
                                         #   in Loop: Header=BB30_1 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB30_4:                               # %b3254
+.LBB30_4:                               # %b3279
                                         #   in Loop: Header=BB30_1 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB30_5
-# %bb.9:                                # %b3256
+# %bb.9:                                # %b3281
                                         #   in Loop: Header=BB30_1 Depth=1
 	incl	%edi
 	jmp	.LBB30_1
-.LBB30_5:                               # %b1572
+.LBB30_5:                               # %b1581
 	movl	%esi, %eax
 	andl	$15, %eax
 	subl	$8, %esp
@@ -6410,7 +6375,7 @@ func_b3263:                             # @func_b3263
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -6426,13 +6391,13 @@ func_b3263:                             # @func_b3263
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str53, %eax
 	testl	%eax, %eax
 	je	.LBB30_6
-# %bb.8:                                # %b3253
+# %bb.8:                                # %b3278
 	subl	$4, %esp
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
@@ -6441,13 +6406,13 @@ func_b3263:                             # @func_b3263
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3242
+	calll	func_b3267
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	jmp	.LBB30_7
-.LBB30_6:                               # %b1576
+.LBB30_6:                               # %b1585
 	movl	%esi, users+124
-.LBB30_7:                               # %b1576
+.LBB30_7:                               # %b1585
 	popl	%esi
 	.cfi_def_cfa_offset 12
 	popl	%edi
@@ -6456,12 +6421,12 @@ func_b3263:                             # @func_b3263
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end30:
-	.size	func_b3263, .Lfunc_end30-func_b3263
+	.size	func_b3288, .Lfunc_end30-func_b3288
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3242
-	.type	func_b3242,@function
-func_b3242:                             # @func_b3242
+	.p2align	4, 0x90                         # -- Begin function func_b3267
+	.type	func_b3267,@function
+func_b3267:                             # @func_b3267
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -6477,7 +6442,7 @@ func_b3242:                             # @func_b3242
 	movl	20(%esp), %edi
 	movl	16(%esp), %ebx
 	.p2align	4, 0x90
-.LBB31_1:                               # %b3242
+.LBB31_1:                               # %b3267
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6493,12 +6458,12 @@ func_b3242:                             # @func_b3242
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB31_3
-# %bb.2:                                # %b3245
+# %bb.2:                                # %b3270
                                         #   in Loop: Header=BB31_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6514,31 +6479,31 @@ func_b3242:                             # @func_b3242
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB31_4
 	.p2align	4, 0x90
-.LBB31_3:                               # %b3247
+.LBB31_3:                               # %b3272
                                         #   in Loop: Header=BB31_1 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB31_4:                               # %b3238
+.LBB31_4:                               # %b3263
                                         #   in Loop: Header=BB31_1 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB31_5
-# %bb.6:                                # %b3240
+# %bb.6:                                # %b3265
                                         #   in Loop: Header=BB31_1 Depth=1
 	incl	%edi
 	jmp	.LBB31_1
-.LBB31_5:                               # %b1576
+.LBB31_5:                               # %b1585
 	movl	%esi, users+124
 	popl	%esi
 	.cfi_def_cfa_offset 12
@@ -6548,14 +6513,14 @@ func_b3242:                             # @func_b3242
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end31:
-	.size	func_b3242, .Lfunc_end31-func_b3242
+	.size	func_b3267, .Lfunc_end31-func_b3267
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3169
-	.type	func_b3169,@function
-func_b3169:                             # @func_b3169
+	.p2align	4, 0x90                         # -- Begin function func_b3194
+	.type	func_b3194,@function
+func_b3194:                             # @func_b3194
 	.cfi_startproc
-# %bb.0:                                # %b3169
+# %bb.0:                                # %b3194
 	pushl	%ebp
 	.cfi_def_cfa_offset 8
 	pushl	%ebx
@@ -6573,34 +6538,34 @@ func_b3169:                             # @func_b3169
 	movzbl	str13, %eax
 	testl	%eax, %eax
 	je	.LBB32_1
-# %bb.7:                                # %b3171
+# %bb.7:                                # %b3196
 	movl	$str13+1, %esi
 	.p2align	4, 0x90
-.LBB32_8:                               # %b3168
+.LBB32_8:                               # %b3193
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
 	je	.LBB32_1
-# %bb.9:                                # %b3166
+# %bb.9:                                # %b3191
                                         #   in Loop: Header=BB32_8 Depth=1
 	incl	%esi
 	jmp	.LBB32_8
-.LBB32_1:                               # %b3161
+.LBB32_1:                               # %b3186
 	movl	32(%esp), %esi
 	movzbl	str1, %ebx
 	testl	%ebx, %ebx
 	je	.LBB32_2
-# %bb.10:                               # %b3163
+# %bb.10:                               # %b3188
 	movl	$str1+1, %edi
 	.p2align	4, 0x90
-.LBB32_11:                              # %b3155
+.LBB32_11:                              # %b3180
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6616,12 +6581,12 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB32_16
-# %bb.12:                               # %b3158
+# %bb.12:                               # %b3183
                                         #   in Loop: Header=BB32_11 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6637,31 +6602,31 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB32_17
 	.p2align	4, 0x90
-.LBB32_16:                              # %b3160
+.LBB32_16:                              # %b3185
                                         #   in Loop: Header=BB32_11 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB32_17:                              # %b3151
+.LBB32_17:                              # %b3176
                                         #   in Loop: Header=BB32_11 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB32_2
-# %bb.18:                               # %b3153
+# %bb.18:                               # %b3178
                                         #   in Loop: Header=BB32_11 Depth=1
 	incl	%edi
 	jmp	.LBB32_11
-.LBB32_2:                               # %b1896
+.LBB32_2:                               # %b1905
 	movl	$-858993459, %ecx               # imm = 0xCCCCCCCD
 	movl	%esi, %eax
 	mull	%ecx
@@ -6676,7 +6641,7 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%ecx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -6692,16 +6657,16 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3981
+	calll	func_b4006
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str2, %ebx
 	testl	%ebx, %ebx
 	je	.LBB32_3
-# %bb.13:                               # %b3150
+# %bb.13:                               # %b3175
 	movl	$str2+1, %edi
 	.p2align	4, 0x90
-.LBB32_14:                              # %b3142
+.LBB32_14:                              # %b3167
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6717,12 +6682,12 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB32_23
-# %bb.15:                               # %b3145
+# %bb.15:                               # %b3170
                                         #   in Loop: Header=BB32_14 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6738,36 +6703,36 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB32_24
 	.p2align	4, 0x90
-.LBB32_23:                              # %b3147
+.LBB32_23:                              # %b3172
                                         #   in Loop: Header=BB32_14 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB32_24:                              # %b3138
+.LBB32_24:                              # %b3163
                                         #   in Loop: Header=BB32_14 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB32_3
-# %bb.25:                               # %b3140
+# %bb.25:                               # %b3165
                                         #   in Loop: Header=BB32_14 Depth=1
 	incl	%edi
 	jmp	.LBB32_14
-.LBB32_3:                               # %b3129
+.LBB32_3:                               # %b3154
 	movl	36(%esp), %edi
 	movzbl	str7, %ebp
 	testl	%ebp, %ebp
 	je	.LBB32_4
-# %bb.20:                               # %b3131
+# %bb.20:                               # %b3156
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -6783,12 +6748,12 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebp
 	jne	.LBB32_21
-# %bb.19:                               # %b3135
+# %bb.19:                               # %b3160
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -6803,11 +6768,11 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB32_22
-.LBB32_4:                               # %b2114
+.LBB32_4:                               # %b2123
 	.cfi_def_cfa_offset 32
 	movl	(%edi), %ebx
 	movl	%ebx, %eax
@@ -6818,7 +6783,7 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -6834,13 +6799,13 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str8, %ebp
 	testl	%ebp, %ebp
 	je	.LBB32_5
-# %bb.27:                               # %b3103
+# %bb.27:                               # %b3128
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -6856,12 +6821,12 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebp
 	jne	.LBB32_28
-# %bb.26:                               # %b3107
+# %bb.26:                               # %b3132
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
 	inb	%dx, %al
@@ -6876,27 +6841,27 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB32_29
-.LBB32_21:                              # %b3137
+.LBB32_21:                              # %b3162
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB32_22:                              # %b3137
+.LBB32_22:                              # %b3162
 	pushl	%ebp
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3113
+	calll	func_b3138
 	jmp	.LBB32_30
-.LBB32_5:                               # %b2115
+.LBB32_5:                               # %b2124
 	.cfi_def_cfa_offset 32
 	movl	4(%edi), %edi
 	movl	%edi, %eax
@@ -6907,7 +6872,7 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -6923,47 +6888,47 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str9, %eax
 	testl	%eax, %eax
 	je	.LBB32_31
-# %bb.6:                                # %b3079
+# %bb.6:                                # %b3104
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str9+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	jmp	.LBB32_30
-.LBB32_28:                              # %b3109
+.LBB32_28:                              # %b3134
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB32_29:                              # %b3109
+.LBB32_29:                              # %b3134
 	pushl	%ebp
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$8, %esp
 	.cfi_adjust_cfa_offset -8
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3085
-.LBB32_30:                              # %b3109
+	calll	func_b3110
+.LBB32_30:                              # %b3134
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB32_31:                              # %b3109
+.LBB32_31:                              # %b3134
 	movzbl	str3, %edi
 	testl	%edi, %edi
 	je	.LBB32_38
-# %bb.32:                               # %b3125
+# %bb.32:                               # %b3150
 	movl	$str3+1, %ebx
 	.p2align	4, 0x90
-.LBB32_33:                              # %b3065
+.LBB32_33:                              # %b3090
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -6979,12 +6944,12 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %edi
 	jne	.LBB32_35
-# %bb.34:                               # %b3068
+# %bb.34:                               # %b3093
                                         #   in Loop: Header=BB32_33 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7000,31 +6965,31 @@ func_b3169:                             # @func_b3169
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB32_36
 	.p2align	4, 0x90
-.LBB32_35:                              # %b3070
+.LBB32_35:                              # %b3095
                                         #   in Loop: Header=BB32_33 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB32_36:                              # %b3061
+.LBB32_36:                              # %b3086
                                         #   in Loop: Header=BB32_33 Depth=1
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %edi
 	testl	%edi, %edi
 	je	.LBB32_38
-# %bb.37:                               # %b3063
+# %bb.37:                               # %b3088
                                         #   in Loop: Header=BB32_33 Depth=1
 	incl	%ebx
 	jmp	.LBB32_33
-.LBB32_38:                              # %b1363
+.LBB32_38:                              # %b1372
 	incl	%esi
 	movl	%esi, %eax
 	addl	$12, %esp
@@ -7039,12 +7004,12 @@ func_b3169:                             # @func_b3169
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end32:
-	.size	func_b3169, .Lfunc_end32-func_b3169
+	.size	func_b3194, .Lfunc_end32-func_b3194
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3181
-	.type	func_b3181,@function
-func_b3181:                             # @func_b3181
+	.p2align	4, 0x90                         # -- Begin function func_b3206
+	.type	func_b3206,@function
+func_b3206:                             # @func_b3206
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebp
@@ -7066,7 +7031,7 @@ func_b3181:                             # @func_b3181
 	movl	36(%esp), %ebx
 	movl	32(%esp), %ebp
 	.p2align	4, 0x90
-.LBB33_1:                               # %b3181
+.LBB33_1:                               # %b3206
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7082,12 +7047,12 @@ func_b3181:                             # @func_b3181
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebp
 	jne	.LBB33_3
-# %bb.2:                                # %b3793
+# %bb.2:                                # %b3818
                                         #   in Loop: Header=BB33_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7103,38 +7068,38 @@ func_b3181:                             # @func_b3181
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB33_4
 	.p2align	4, 0x90
-.LBB33_3:                               # %b3794
+.LBB33_3:                               # %b3819
                                         #   in Loop: Header=BB33_1 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB33_4:                               # %b3172
+.LBB33_4:                               # %b3197
                                         #   in Loop: Header=BB33_1 Depth=1
 	pushl	%ebp
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %ebp
 	testl	%ebp, %ebp
 	je	.LBB33_5
-# %bb.6:                                # %b3174
+# %bb.6:                                # %b3199
                                         #   in Loop: Header=BB33_1 Depth=1
 	incl	%ebx
 	jmp	.LBB33_1
-.LBB33_5:                               # %c267
+.LBB33_5:                               # %c269
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3169
+	calll	func_b3194
 	addl	$28, %esp
 	.cfi_adjust_cfa_offset -28
 	popl	%esi
@@ -7147,14 +7112,14 @@ func_b3181:                             # @func_b3181
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end33:
-	.size	func_b3181, .Lfunc_end33-func_b3181
+	.size	func_b3206, .Lfunc_end33-func_b3206
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3981
-	.type	func_b3981,@function
-func_b3981:                             # @func_b3981
+	.p2align	4, 0x90                         # -- Begin function func_b4006
+	.type	func_b4006,@function
+func_b4006:                             # @func_b4006
 	.cfi_startproc
-# %bb.0:                                # %b3981
+# %bb.0:                                # %b4006
 	pushl	%ebp
 	.cfi_def_cfa_offset 8
 	pushl	%ebx
@@ -7174,7 +7139,7 @@ func_b3981:                             # @func_b3981
 	addl	32(%esp), %ecx
 	cmpl	40(%esp), %ecx
 	ja	.LBB34_2
-# %bb.1:                                # %b3983
+# %bb.1:                                # %b4008
 	movl	44(%esp), %eax
 	movl	$-858993459, %ebp               # imm = 0xCCCCCCCD
 	mull	%ebp
@@ -7182,7 +7147,7 @@ func_b3981:                             # @func_b3981
 	shrl	$3, %esi
 	je	.LBB34_2
 	.p2align	4, 0x90
-.LBB34_5:                               # %b2010
+.LBB34_5:                               # %b2019
                                         # =>This Inner Loop Header: Depth=1
 	movl	%ecx, %ebx
 	movl	%esi, %eax
@@ -7198,21 +7163,21 @@ func_b3981:                             # @func_b3981
 	.cfi_adjust_cfa_offset 4
 	pushl	%ecx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf(%ebx)
 	leal	1(%ebx), %ecx
 	cmpl	$32, %ecx
 	jae	.LBB34_7
-# %bb.6:                                # %b3975
+# %bb.6:                                # %b4000
                                         #   in Loop: Header=BB34_5 Depth=1
 	movl	%esi, %eax
 	mull	%ebp
 	movl	%edx, %esi
 	shrl	$3, %esi
 	jne	.LBB34_5
-.LBB34_7:                               # %b2004
+.LBB34_7:                               # %b2013
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
 	pushl	$0
@@ -7221,18 +7186,18 @@ func_b3981:                             # @func_b3981
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3918
+	calll	func_b3943
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	.p2align	4, 0x90
-.LBB34_8:                               # %b2001
+.LBB34_8:                               # %b2010
                                         # =>This Inner Loop Header: Depth=1
 	movzbl	itoaBuf(%ebx), %eax
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	decl	%ebx
@@ -7241,18 +7206,18 @@ func_b3981:                             # @func_b3981
 	addl	$12, %esp
 	.cfi_def_cfa_offset 20
 	jmp	.LBB34_10
-.LBB34_2:                               # %b3925
+.LBB34_2:                               # %b3950
 	.cfi_def_cfa_offset 32
 	xorl	%eax, %eax
 	testb	%al, %al
 	je	.LBB34_4
-# %bb.3:                                # %b3927
+# %bb.3:                                # %b3952
 	movl	$1, %esi
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	pushl	%edi
@@ -7263,16 +7228,16 @@ func_b3981:                             # @func_b3981
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3918
+	calll	func_b3943
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB34_4:                               # %b2061
+.LBB34_4:                               # %b2070
 	movzbl	itoaBuf, %eax
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$28, %esp
 	.cfi_adjust_cfa_offset -28
 .LBB34_10:                              # %b295
@@ -7286,12 +7251,12 @@ func_b3981:                             # @func_b3981
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end34:
-	.size	func_b3981, .Lfunc_end34-func_b3981
+	.size	func_b4006, .Lfunc_end34-func_b4006
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3113
-	.type	func_b3113,@function
-func_b3113:                             # @func_b3113
+	.p2align	4, 0x90                         # -- Begin function func_b3138
+	.type	func_b3138,@function
+func_b3138:                             # @func_b3138
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -7307,23 +7272,23 @@ func_b3113:                             # @func_b3113
 	movl	16(%esp), %edi
 	jmp	.LBB35_1
 	.p2align	4, 0x90
-.LBB35_7:                               # %b3122
+.LBB35_7:                               # %b3147
                                         #   in Loop: Header=BB35_1 Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB35_8:                               # %b3113
+.LBB35_8:                               # %b3138
                                         #   in Loop: Header=BB35_1 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB35_1:                               # %b3113
+.LBB35_1:                               # %b3138
                                         # =>This Inner Loop Header: Depth=1
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB35_2
-# %bb.6:                                # %b3115
+# %bb.6:                                # %b3140
                                         #   in Loop: Header=BB35_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7340,12 +7305,12 @@ func_b3113:                             # @func_b3113
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB35_7
-# %bb.5:                                # %b3120
+# %bb.5:                                # %b3145
                                         #   in Loop: Header=BB35_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7361,11 +7326,11 @@ func_b3113:                             # @func_b3113
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB35_8
-.LBB35_2:                               # %b1373
+.LBB35_2:                               # %b1382
 	.cfi_def_cfa_offset 16
 	movl	(%esi), %edi
 	movl	%edi, %eax
@@ -7376,7 +7341,7 @@ func_b3113:                             # @func_b3113
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -7392,16 +7357,16 @@ func_b3113:                             # @func_b3113
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str8, %ebx
 	testl	%ebx, %ebx
 	je	.LBB35_3
-# %bb.10:                               # %b3112
+# %bb.10:                               # %b3137
 	movl	$str8+1, %edi
 	.p2align	4, 0x90
-.LBB35_11:                              # %b3089
+.LBB35_11:                              # %b3114
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7417,12 +7382,12 @@ func_b3113:                             # @func_b3113
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB35_13
-# %bb.12:                               # %b3092
+# %bb.12:                               # %b3117
                                         #   in Loop: Header=BB35_11 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7438,31 +7403,31 @@ func_b3113:                             # @func_b3113
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB35_14
 	.p2align	4, 0x90
-.LBB35_13:                              # %b3094
+.LBB35_13:                              # %b3119
                                         #   in Loop: Header=BB35_11 Depth=1
 	.cfi_def_cfa_offset 16
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB35_14:                              # %b3085
+.LBB35_14:                              # %b3110
                                         #   in Loop: Header=BB35_11 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB35_3
-# %bb.15:                               # %b3087
+# %bb.15:                               # %b3112
                                         #   in Loop: Header=BB35_11 Depth=1
 	incl	%edi
 	jmp	.LBB35_11
-.LBB35_3:                               # %b1371
+.LBB35_3:                               # %b1380
 	movl	4(%esi), %esi
 	movl	%esi, %eax
 	andl	$15, %eax
@@ -7472,7 +7437,7 @@ func_b3113:                             # @func_b3113
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -7488,20 +7453,20 @@ func_b3113:                             # @func_b3113
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str9, %eax
 	testl	%eax, %eax
 	je	.LBB35_4
-# %bb.9:                                # %b3084
+# %bb.9:                                # %b3109
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str9+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 .LBB35_4:                               # %b295
@@ -7513,12 +7478,12 @@ func_b3113:                             # @func_b3113
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end35:
-	.size	func_b3113, .Lfunc_end35-func_b3113
+	.size	func_b3138, .Lfunc_end35-func_b3138
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3085
-	.type	func_b3085,@function
-func_b3085:                             # @func_b3085
+	.p2align	4, 0x90                         # -- Begin function func_b3110
+	.type	func_b3110,@function
+func_b3110:                             # @func_b3110
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebx
@@ -7534,23 +7499,23 @@ func_b3085:                             # @func_b3085
 	movl	16(%esp), %edi
 	jmp	.LBB36_1
 	.p2align	4, 0x90
-.LBB36_7:                               # %b3094
+.LBB36_7:                               # %b3119
                                         #   in Loop: Header=BB36_1 Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB36_8:                               # %b3085
+.LBB36_8:                               # %b3110
                                         #   in Loop: Header=BB36_1 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
-.LBB36_1:                               # %b3085
+.LBB36_1:                               # %b3110
                                         # =>This Inner Loop Header: Depth=1
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB36_2
-# %bb.6:                                # %b3087
+# %bb.6:                                # %b3112
                                         #   in Loop: Header=BB36_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7567,12 +7532,12 @@ func_b3085:                             # @func_b3085
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB36_7
-# %bb.5:                                # %b3092
+# %bb.5:                                # %b3117
                                         #   in Loop: Header=BB36_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7588,11 +7553,11 @@ func_b3085:                             # @func_b3085
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB36_8
-.LBB36_2:                               # %b1371
+.LBB36_2:                               # %b1380
 	.cfi_def_cfa_offset 16
 	movl	4(%esi), %esi
 	movl	%esi, %eax
@@ -7603,7 +7568,7 @@ func_b3085:                             # @func_b3085
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -7619,20 +7584,20 @@ func_b3085:                             # @func_b3085
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3934
+	calll	func_b3959
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str9, %eax
 	testl	%eax, %eax
 	je	.LBB36_4
-# %bb.3:                                # %b3084
+# %bb.3:                                # %b3109
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	$str9+1
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2915
+	calll	func_b2940
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 .LBB36_4:                               # %b295
@@ -7644,14 +7609,14 @@ func_b3085:                             # @func_b3085
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end36:
-	.size	func_b3085, .Lfunc_end36-func_b3085
+	.size	func_b3110, .Lfunc_end36-func_b3110
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3031
-	.type	func_b3031,@function
-func_b3031:                             # @func_b3031
+	.p2align	4, 0x90                         # -- Begin function func_b3056
+	.type	func_b3056,@function
+func_b3056:                             # @func_b3056
 	.cfi_startproc
-# %bb.0:                                # %b3031
+# %bb.0:                                # %b3056
 	pushl	%ebp
 	.cfi_def_cfa_offset 8
 	pushl	%ebx
@@ -7669,34 +7634,34 @@ func_b3031:                             # @func_b3031
 	movzbl	str11, %eax
 	testl	%eax, %eax
 	je	.LBB37_1
-# %bb.5:                                # %b3033
+# %bb.5:                                # %b3058
 	movl	$str11+1, %esi
 	.p2align	4, 0x90
-.LBB37_6:                               # %b3030
+.LBB37_6:                               # %b3055
                                         # =>This Inner Loop Header: Depth=1
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1436
+	calll	func_b1445
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%esi), %eax
 	testl	%eax, %eax
 	je	.LBB37_1
-# %bb.7:                                # %b3028
+# %bb.7:                                # %b3053
                                         #   in Loop: Header=BB37_6 Depth=1
 	incl	%esi
 	jmp	.LBB37_6
-.LBB37_1:                               # %b3023
+.LBB37_1:                               # %b3048
 	movl	32(%esp), %esi
 	movzbl	str1, %ebx
 	testl	%ebx, %ebx
 	je	.LBB37_2
-# %bb.8:                                # %b3025
+# %bb.8:                                # %b3050
 	movl	$str1+1, %edi
 	.p2align	4, 0x90
-.LBB37_9:                               # %b3017
+.LBB37_9:                               # %b3042
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7712,12 +7677,12 @@ func_b3031:                             # @func_b3031
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB37_14
-# %bb.10:                               # %b3020
+# %bb.10:                               # %b3045
                                         #   in Loop: Header=BB37_9 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7733,31 +7698,31 @@ func_b3031:                             # @func_b3031
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB37_15
 	.p2align	4, 0x90
-.LBB37_14:                              # %b3022
+.LBB37_14:                              # %b3047
                                         #   in Loop: Header=BB37_9 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB37_15:                              # %b3013
+.LBB37_15:                              # %b3038
                                         #   in Loop: Header=BB37_9 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB37_2
-# %bb.16:                               # %b3015
+# %bb.16:                               # %b3040
                                         #   in Loop: Header=BB37_9 Depth=1
 	incl	%edi
 	jmp	.LBB37_9
-.LBB37_2:                               # %b1832
+.LBB37_2:                               # %b1841
 	movl	36(%esp), %edi
 	movl	$-858993459, %ecx               # imm = 0xCCCCCCCD
 	movl	%esi, %eax
@@ -7773,7 +7738,7 @@ func_b3031:                             # @func_b3031
 	.cfi_adjust_cfa_offset 4
 	pushl	%ecx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1242
+	calll	func_b1248
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movb	%al, itoaBuf
@@ -7789,16 +7754,16 @@ func_b3031:                             # @func_b3031
 	.cfi_adjust_cfa_offset 4
 	pushl	$1
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3981
+	calll	func_b4006
 	addl	$32, %esp
 	.cfi_adjust_cfa_offset -32
 	movzbl	str2, %ebp
 	testl	%ebp, %ebp
 	je	.LBB37_3
-# %bb.11:                               # %b3012
+# %bb.11:                               # %b3037
 	movl	$str2+1, %ebx
 	.p2align	4, 0x90
-.LBB37_12:                              # %b3004
+.LBB37_12:                              # %b3029
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7814,12 +7779,12 @@ func_b3031:                             # @func_b3031
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebp
 	jne	.LBB37_20
-# %bb.13:                               # %b3007
+# %bb.13:                               # %b3032
                                         #   in Loop: Header=BB37_12 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7835,45 +7800,45 @@ func_b3031:                             # @func_b3031
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB37_21
 	.p2align	4, 0x90
-.LBB37_20:                              # %b3009
+.LBB37_20:                              # %b3034
                                         #   in Loop: Header=BB37_12 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB37_21:                              # %b3000
+.LBB37_21:                              # %b3025
                                         #   in Loop: Header=BB37_12 Depth=1
 	pushl	%ebp
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %ebp
 	testl	%ebp, %ebp
 	je	.LBB37_3
-# %bb.22:                               # %b3002
+# %bb.22:                               # %b3027
                                         #   in Loop: Header=BB37_12 Depth=1
 	incl	%ebx
 	jmp	.LBB37_12
-.LBB37_3:                               # %b1833
+.LBB37_3:                               # %b1842
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b2994
+	calll	func_b3019
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	str3, %ebx
 	testl	%ebx, %ebx
 	je	.LBB37_4
-# %bb.17:                               # %b2999
+# %bb.17:                               # %b3024
 	movl	$str3+1, %edi
 	.p2align	4, 0x90
-.LBB37_18:                              # %b2988
+.LBB37_18:                              # %b3013
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7889,12 +7854,12 @@ func_b3031:                             # @func_b3031
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebx
 	jne	.LBB37_23
-# %bb.19:                               # %b2991
+# %bb.19:                               # %b3016
                                         #   in Loop: Header=BB37_18 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7910,31 +7875,31 @@ func_b3031:                             # @func_b3031
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB37_24
 	.p2align	4, 0x90
-.LBB37_23:                              # %b2993
+.LBB37_23:                              # %b3018
                                         #   in Loop: Header=BB37_18 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB37_24:                              # %b2984
+.LBB37_24:                              # %b3009
                                         #   in Loop: Header=BB37_18 Depth=1
 	pushl	%ebx
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%edi), %ebx
 	testl	%ebx, %ebx
 	je	.LBB37_4
-# %bb.25:                               # %b2986
+# %bb.25:                               # %b3011
                                         #   in Loop: Header=BB37_18 Depth=1
 	incl	%edi
 	jmp	.LBB37_18
-.LBB37_4:                               # %b1363
+.LBB37_4:                               # %b1372
 	incl	%esi
 	movl	%esi, %eax
 	addl	$12, %esp
@@ -7949,12 +7914,12 @@ func_b3031:                             # @func_b3031
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end37:
-	.size	func_b3031, .Lfunc_end37-func_b3031
+	.size	func_b3056, .Lfunc_end37-func_b3056
 	.cfi_endproc
                                         # -- End function
-	.p2align	4, 0x90                         # -- Begin function func_b3043
-	.type	func_b3043,@function
-func_b3043:                             # @func_b3043
+	.p2align	4, 0x90                         # -- Begin function func_b3068
+	.type	func_b3068,@function
+func_b3068:                             # @func_b3068
 	.cfi_startproc
 # %bb.0:
 	pushl	%ebp
@@ -7976,7 +7941,7 @@ func_b3043:                             # @func_b3043
 	movl	36(%esp), %ebx
 	movl	32(%esp), %ebp
 	.p2align	4, 0x90
-.LBB38_1:                               # %b3043
+.LBB38_1:                               # %b3068
                                         # =>This Inner Loop Header: Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -7992,12 +7957,12 @@ func_b3043:                             # @func_b3043
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	cmpl	$10, %ebp
 	jne	.LBB38_3
-# %bb.2:                                # %b3787
+# %bb.2:                                # %b3812
                                         #   in Loop: Header=BB38_1 Depth=1
 	movw	$1021, %dx                      # imm = 0x3FD
 	#APP
@@ -8013,38 +7978,38 @@ func_b3043:                             # @func_b3043
 	.cfi_adjust_cfa_offset 4
 	pushl	%eax
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1206
+	calll	func_b1212
 	addl	$4, %esp
 	.cfi_adjust_cfa_offset -4
 	jmp	.LBB38_4
 	.p2align	4, 0x90
-.LBB38_3:                               # %b3788
+.LBB38_3:                               # %b3813
                                         #   in Loop: Header=BB38_1 Depth=1
 	.cfi_def_cfa_offset 32
 	subl	$12, %esp
 	.cfi_adjust_cfa_offset 12
-.LBB38_4:                               # %b3034
+.LBB38_4:                               # %b3059
                                         #   in Loop: Header=BB38_1 Depth=1
 	pushl	%ebp
 	.cfi_adjust_cfa_offset 4
-	calll	func_b1427
+	calll	func_b1436
 	addl	$16, %esp
 	.cfi_adjust_cfa_offset -16
 	movzbl	(%ebx), %ebp
 	testl	%ebp, %ebp
 	je	.LBB38_5
-# %bb.6:                                # %b3036
+# %bb.6:                                # %b3061
                                         #   in Loop: Header=BB38_1 Depth=1
 	incl	%ebx
 	jmp	.LBB38_1
-.LBB38_5:                               # %c191
+.LBB38_5:                               # %c193
 	subl	$8, %esp
 	.cfi_adjust_cfa_offset 8
 	pushl	%edi
 	.cfi_adjust_cfa_offset 4
 	pushl	%esi
 	.cfi_adjust_cfa_offset 4
-	calll	func_b3031
+	calll	func_b3056
 	addl	$28, %esp
 	.cfi_adjust_cfa_offset -28
 	popl	%esi
@@ -8057,7 +8022,7 @@ func_b3043:                             # @func_b3043
 	.cfi_def_cfa_offset 4
 	retl
 .Lfunc_end38:
-	.size	func_b3043, .Lfunc_end38-func_b3043
+	.size	func_b3068, .Lfunc_end38-func_b3068
 	.cfi_endproc
                                         # -- End function
 	.type	raw.1,@object                   # @raw.1
@@ -8072,289 +8037,297 @@ func_b3043:                             # @func_b3043
 	.type	raw.3,@object                   # @raw.3
 	.local	raw.3
 	.comm	raw.3,1,1
-	.type	raw.5,@object                   # @raw.5
-	.local	raw.5
-	.comm	raw.5,4,1
-	.type	raw.6,@object                   # @raw.6
-	.local	raw.6
-	.comm	raw.6,1,1
+	.type	raw.4,@object                   # @raw.4
+	.local	raw.4
+	.comm	raw.4,1,1
+	.type	raw.7,@object                   # @raw.7
+	.local	raw.7
+	.comm	raw.7,4,1
 	.type	raw.8,@object                   # @raw.8
 	.local	raw.8
 	.comm	raw.8,1,1
-	.type	raw.7,@object                   # @raw.7
-	.local	raw.7
-	.comm	raw.7,1,1
-	.type	raw.4,@object                   # @raw.4
-	.local	raw.4
-	.comm	raw.4,4,4
-	.type	.Lstr.12,@object                # @str.12
-	.section	.rodata.str1.1,"aMS",@progbits,1
-.Lstr.12:
-	.asciz	"\n"
-	.size	.Lstr.12, 2
-
-	.type	.Lstr.11,@object                # @str.11
-.Lstr.11:
-	.asciz	", frame=0x"
-	.size	.Lstr.11, 11
-
 	.type	raw.10,@object                  # @raw.10
 	.local	raw.10
-	.comm	raw.10,32,1
-	.type	.Lstr.9,@object                 # @str.9
-.Lstr.9:
+	.comm	raw.10,1,1
+	.type	raw.9,@object                   # @raw.9
+	.local	raw.9
+	.comm	raw.9,1,1
+	.type	raw.6,@object                   # @raw.6
+	.local	raw.6
+	.comm	raw.6,10,4
+	.type	raw.5,@object                   # @raw.5
+	.local	raw.5
+	.comm	raw.5,4,4
+	.type	.Lstr.14,@object                # @str.14
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.Lstr.14:
+	.asciz	"\n"
+	.size	.Lstr.14, 2
+
+	.type	.Lstr.13,@object                # @str.13
+.Lstr.13:
+	.asciz	", frame=0x"
+	.size	.Lstr.13, 11
+
+	.type	raw.12,@object                  # @raw.12
+	.local	raw.12
+	.comm	raw.12,32,1
+	.type	.Lstr.11,@object                # @str.11
+.Lstr.11:
 	.asciz	"Exception 0x"
-	.size	.Lstr.9, 13
+	.size	.Lstr.11, 13
+
+	.type	.Lstr.44,@object                # @str.44
+.Lstr.44:
+	.asciz	"\n"
+	.size	.Lstr.44, 2
+
+	.type	.Lstr.43,@object                # @str.43
+	.section	.rodata.str1.16,"aMS",@progbits,1
+	.p2align	4
+.Lstr.43:
+	.asciz	"user code is at 0x"
+	.size	.Lstr.43, 19
 
 	.type	.Lstr.42,@object                # @str.42
+	.section	.rodata.str1.1,"aMS",@progbits,1
 .Lstr.42:
 	.asciz	"\n"
 	.size	.Lstr.42, 2
+
+	.type	.Lstr.35,@object                # @str.35
+.Lstr.35:
+	.asciz	"]\n"
+	.size	.Lstr.35, 3
 
 	.type	.Lstr.41,@object                # @str.41
 	.section	.rodata.str1.16,"aMS",@progbits,1
 	.p2align	4
 .Lstr.41:
-	.asciz	"user code is at 0x"
-	.size	.Lstr.41, 19
+	.asciz	"Found header for second user program:\n"
+	.size	.Lstr.41, 39
+
+	.type	.Lstr.45,@object                # @str.45
+	.p2align	4
+.Lstr.45:
+	.asciz	"Did not find second user program\n"
+	.size	.Lstr.45, 34
+
+	.type	.Lstr.34,@object                # @str.34
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.Lstr.34:
+	.asciz	" ["
+	.size	.Lstr.34, 3
 
 	.type	.Lstr.40,@object                # @str.40
-	.section	.rodata.str1.1,"aMS",@progbits,1
 .Lstr.40:
 	.asciz	"\n"
 	.size	.Lstr.40, 2
 
+	.type	.Lstr.23,@object                # @str.23
+.Lstr.23:
+	.asciz	"], entry 0x"
+	.size	.Lstr.23, 12
+
+	.type	.Lstr.22,@object                # @str.22
+.Lstr.22:
+	.asciz	"-0x"
+	.size	.Lstr.22, 4
+
+	.type	.Lstr.21,@object                # @str.21
+.Lstr.21:
+	.asciz	"[0x"
+	.size	.Lstr.21, 4
+
+	.type	.Lstr.36,@object                # @str.36
+.Lstr.36:
+	.asciz	"imgline"
+	.size	.Lstr.36, 8
+
 	.type	.Lstr.33,@object                # @str.33
 .Lstr.33:
-	.asciz	"]\n"
+	.asciz	": "
 	.size	.Lstr.33, 3
 
 	.type	.Lstr.39,@object                # @str.39
 	.section	.rodata.str1.16,"aMS",@progbits,1
 	.p2align	4
 .Lstr.39:
-	.asciz	"Found header for second user program:\n"
-	.size	.Lstr.39, 39
-
-	.type	.Lstr.43,@object                # @str.43
-	.p2align	4
-.Lstr.43:
-	.asciz	"Did not find second user program\n"
-	.size	.Lstr.43, 34
+	.asciz	"Found header for first user program:\n"
+	.size	.Lstr.39, 38
 
 	.type	.Lstr.32,@object                # @str.32
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .Lstr.32:
-	.asciz	" ["
-	.size	.Lstr.32, 3
+	.asciz	"cmdline"
+	.size	.Lstr.32, 8
 
 	.type	.Lstr.38,@object                # @str.38
+	.section	.rodata.str1.16,"aMS",@progbits,1
+	.p2align	4
 .Lstr.38:
-	.asciz	"\n"
-	.size	.Lstr.38, 2
-
-	.type	.Lstr.21,@object                # @str.21
-.Lstr.21:
-	.asciz	"], entry 0x"
-	.size	.Lstr.21, 12
-
-	.type	.Lstr.20,@object                # @str.20
-.Lstr.20:
-	.asciz	"-0x"
-	.size	.Lstr.20, 4
-
-	.type	.Lstr.19,@object                # @str.19
-.Lstr.19:
-	.asciz	"[0x"
-	.size	.Lstr.19, 4
-
-	.type	.Lstr.34,@object                # @str.34
-.Lstr.34:
-	.asciz	"imgline"
-	.size	.Lstr.34, 8
+	.asciz	"\nHalting kernel, returning to mimgload\n"
+	.size	.Lstr.38, 40
 
 	.type	.Lstr.31,@object                # @str.31
+	.section	.rodata.str1.1,"aMS",@progbits,1
 .Lstr.31:
-	.asciz	": "
-	.size	.Lstr.31, 3
+	.asciz	" "
+	.size	.Lstr.31, 2
 
 	.type	.Lstr.37,@object                # @str.37
 	.section	.rodata.str1.16,"aMS",@progbits,1
 	.p2align	4
 .Lstr.37:
-	.asciz	"Found header for first user program:\n"
-	.size	.Lstr.37, 38
+	.asciz	"Did not find first user program\n"
+	.size	.Lstr.37, 33
 
 	.type	.Lstr.30,@object                # @str.30
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .Lstr.30:
-	.asciz	"cmdline"
-	.size	.Lstr.30, 8
-
-	.type	.Lstr.36,@object                # @str.36
-	.section	.rodata.str1.16,"aMS",@progbits,1
-	.p2align	4
-.Lstr.36:
-	.asciz	"\nHalting kernel, returning to mimgload\n"
-	.size	.Lstr.36, 40
-
-	.type	.Lstr.29,@object                # @str.29
-	.section	.rodata.str1.1,"aMS",@progbits,1
-.Lstr.29:
-	.asciz	" "
-	.size	.Lstr.29, 2
-
-	.type	.Lstr.35,@object                # @str.35
-	.section	.rodata.str1.16,"aMS",@progbits,1
-	.p2align	4
-.Lstr.35:
-	.asciz	"Did not find first user program\n"
-	.size	.Lstr.35, 33
-
-	.type	.Lstr.28,@object                # @str.28
-	.section	.rodata.str1.1,"aMS",@progbits,1
-.Lstr.28:
 	.asciz	"Strings:\n"
-	.size	.Lstr.28, 10
-
-	.type	.Lstr.22,@object                # @str.22
-.Lstr.22:
-	.asciz	"\n"
-	.size	.Lstr.22, 2
-
-	.type	.Lstr.27,@object                # @str.27
-.Lstr.27:
-	.asciz	"]"
-	.size	.Lstr.27, 2
-
-	.type	.Lstr.26,@object                # @str.26
-.Lstr.26:
-	.asciz	"-0x"
-	.size	.Lstr.26, 4
-
-	.type	.Lstr.25,@object                # @str.25
-.Lstr.25:
-	.asciz	"[0x"
-	.size	.Lstr.25, 4
-
-	.type	.Lstr.18,@object                # @str.18
-.Lstr.18:
-	.asciz	"]: "
-	.size	.Lstr.18, 4
-
-	.type	.Lstr.17,@object                # @str.17
-.Lstr.17:
-	.asciz	"["
-	.size	.Lstr.17, 2
+	.size	.Lstr.30, 10
 
 	.type	.Lstr.24,@object                # @str.24
 .Lstr.24:
+	.asciz	"\n"
+	.size	.Lstr.24, 2
+
+	.type	.Lstr.29,@object                # @str.29
+.Lstr.29:
+	.asciz	"]"
+	.size	.Lstr.29, 2
+
+	.type	.Lstr.28,@object                # @str.28
+.Lstr.28:
+	.asciz	"-0x"
+	.size	.Lstr.28, 4
+
+	.type	.Lstr.27,@object                # @str.27
+.Lstr.27:
+	.asciz	"[0x"
+	.size	.Lstr.27, 4
+
+	.type	.Lstr.20,@object                # @str.20
+.Lstr.20:
+	.asciz	"]: "
+	.size	.Lstr.20, 4
+
+	.type	.Lstr.19,@object                # @str.19
+.Lstr.19:
+	.asciz	"["
+	.size	.Lstr.19, 2
+
+	.type	.Lstr.26,@object                # @str.26
+.Lstr.26:
 	.asciz	"mmap"
-	.size	.Lstr.24, 5
+	.size	.Lstr.26, 5
 
-	.type	.Lstr.15,@object                # @str.15
-.Lstr.15:
+	.type	.Lstr.17,@object                # @str.17
+.Lstr.17:
 	.asciz	" "
-	.size	.Lstr.15, 2
+	.size	.Lstr.17, 2
 
-	.type	.Lstr.23,@object                # @str.23
-.Lstr.23:
+	.type	.Lstr.25,@object                # @str.25
+.Lstr.25:
 	.asciz	"Memory map:\n"
-	.size	.Lstr.23, 13
+	.size	.Lstr.25, 13
+
+	.type	.Lstr.18,@object                # @str.18
+.Lstr.18:
+	.asciz	"header"
+	.size	.Lstr.18, 7
 
 	.type	.Lstr.16,@object                # @str.16
 .Lstr.16:
-	.asciz	"header"
-	.size	.Lstr.16, 7
-
-	.type	.Lstr.14,@object                # @str.14
-.Lstr.14:
 	.asciz	"Headers:\n"
-	.size	.Lstr.14, 10
+	.size	.Lstr.16, 10
 
-	.type	.Lstr.13,@object                # @str.13
+	.type	.Lstr.15,@object                # @str.15
 	.section	.rodata.str1.16,"aMS",@progbits,1
 	.p2align	4
-.Lstr.13:
+.Lstr.15:
 	.asciz	" Last key pressed:"
-	.size	.Lstr.13, 19
+	.size	.Lstr.15, 19
 
 .set current, raw.0
 .set users, raw.1
 .set console, raw.2
-.set keyDown, raw.3
-.set ticks, raw.4
-.set pos, raw.7
-.set dir, raw.8
-.set spinpos, raw.6
-.set spinner, raw.5
-.set str54, .Lstr.9
+.set keyDown, raw.4
+.set keyUp, raw.3
+.set ticks, raw.5
+.set ball, raw.6
+.set pos, raw.9
+.set dir, raw.10
+.set spinpos, raw.8
+.set spinner, raw.7
+.set str54, .Lstr.11
 	.size	str54, 1
-.set itoaBuf, raw.10
-.set str55, .Lstr.11
+.set itoaBuf, raw.12
+.set str55, .Lstr.13
 	.size	str55, 1
-.set str56, .Lstr.12
+.set str56, .Lstr.14
 	.size	str56, 1
-.set str44, .Lstr.13
+.set str44, .Lstr.15
 	.size	str44, 1
-.set str10, .Lstr.14
+.set str10, .Lstr.16
 	.size	str10, 1
-.set str12, .Lstr.23
+.set str12, .Lstr.25
 	.size	str12, 1
-.set str14, .Lstr.28
+.set str14, .Lstr.30
 	.size	str14, 1
-.set str51, .Lstr.35
+.set str51, .Lstr.37
 	.size	str51, 1
-.set str17, .Lstr.29
+.set str17, .Lstr.31
 	.size	str17, 1
-.set str45, .Lstr.36
+.set str45, .Lstr.38
 	.size	str45, 1
-.set str15, .Lstr.30
+.set str15, .Lstr.32
 	.size	str15, 1
-.set str46, .Lstr.37
+.set str46, .Lstr.39
 	.size	str46, 1
-.set str18, .Lstr.31
+.set str18, .Lstr.33
 	.size	str18, 1
-.set str16, .Lstr.34
+.set str16, .Lstr.36
 	.size	str16, 1
-.set str47, .Lstr.38
+.set str47, .Lstr.40
 	.size	str47, 1
-.set str19, .Lstr.32
+.set str19, .Lstr.34
 	.size	str19, 1
-.set str50, .Lstr.43
+.set str50, .Lstr.45
 	.size	str50, 1
-.set str48, .Lstr.39
+.set str48, .Lstr.41
 	.size	str48, 1
-.set str20, .Lstr.33
+.set str20, .Lstr.35
 	.size	str20, 1
-.set str49, .Lstr.40
+.set str49, .Lstr.42
 	.size	str49, 1
-.set str52, .Lstr.41
+.set str52, .Lstr.43
 	.size	str52, 1
-.set str53, .Lstr.42
+.set str53, .Lstr.44
 	.size	str53, 1
-.set str4, .Lstr.19
+.set str4, .Lstr.21
 	.size	str4, 1
-.set str5, .Lstr.20
+.set str5, .Lstr.22
 	.size	str5, 1
-.set str6, .Lstr.21
+.set str6, .Lstr.23
 	.size	str6, 1
-.set str0, .Lstr.15
+.set str0, .Lstr.17
 	.size	str0, 1
-.set str13, .Lstr.24
+.set str13, .Lstr.26
 	.size	str13, 1
-.set str1, .Lstr.17
+.set str1, .Lstr.19
 	.size	str1, 1
-.set str2, .Lstr.18
+.set str2, .Lstr.20
 	.size	str2, 1
-.set str7, .Lstr.25
+.set str7, .Lstr.27
 	.size	str7, 1
-.set str8, .Lstr.26
+.set str8, .Lstr.28
 	.size	str8, 1
-.set str9, .Lstr.27
+.set str9, .Lstr.29
 	.size	str9, 1
-.set str3, .Lstr.22
+.set str3, .Lstr.24
 	.size	str3, 1
-.set str11, .Lstr.16
+.set str11, .Lstr.18
 	.size	str11, 1
 	.section	".note.GNU-stack","",@progbits

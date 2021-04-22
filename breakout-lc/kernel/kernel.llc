@@ -91,7 +91,7 @@ the two user programs.
 >        t <- get ticks
 >        set ticks (t+1)
 >        clock t
->  --    tickBreakout console
+>        tickBreakout console
 >        if (t `and` 3)==0
 >          then bar
 >        if (t `and` 15)==0
@@ -99,7 +99,7 @@ the two user programs.
 >               spin
 >        returnToCurrent
 
-> -- area keyUp <- initStored 0 :: Ref (Stored Word) -- Uncomment whenever we need this
+> area keyUp   <- initStored bit0 :: Ref (Stored Byte)
 > area keyDown <- initStored bit0 :: Ref (Stored Byte)
 
 > entrypoint keyboardInterrupt :: Proc Unit
@@ -107,12 +107,19 @@ the two user programs.
 >   = do maskAckIRQ keyboardIRQ
 >        enableIRQ  keyboardIRQ
 >        key <- readKey
->        if ((key `lshr` 7) == 0)     -- For now, only consider keyDown (ones with top bit set to 0)
+>        if ((key `lshr` 7) == 0)
 >          then mappedkey <- get (keyb_layout @ modIx(key))
-> --            puts "got keyboard interrupt of char: 0x \n"
+> --            puts "got keyboard interrupt of char: 0x"
 > --            putHex (bitsToWord mappedkey)
->		updateKeyDisplay mappedkey
+> --            puts "\n"
+>               updateKeyDisplay mappedkey
 >               set keyDown mappedkey
+>        if ((key `lshr` 7) == 1)
+>          then mappedkey <- get (keyb_layout @ modIx(key `and` 0x7F))
+> --            puts "got keyboard interrupt of char: 0x"
+> --            putHex (bitsToWord mappedkey)
+> --            puts "\n"
+>               set keyUp mappedkey
 >        returnToCurrent
 
 > roundRobin  :: Ix N -> Ix N
