@@ -17,7 +17,7 @@ void cmain() {
   cls();
   puts("in user2 code\n");
   for (i=0; i<400; i++) {
-    kputs("hello, kernel console2\n");
+//    kputs("hello, kernel console2\n");
     puts("hello, user console2\n");
 //    yield();
   }

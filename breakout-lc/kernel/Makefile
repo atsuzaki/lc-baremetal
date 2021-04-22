@@ -6,7 +6,7 @@ all: kernel
 # A simple protected mode kernel that context switches between a kernel and
 # two user mode programs.
 
-KOBJS   = init.o opt-combined.o
+KOBJS   = init.o opt-combined.o keymapping.o
 
 kernel: ${KOBJS} kernel.ld
 	$(LD) -T kernel.ld -o kernel ${KOBJS} ${LIBPATH} --print-map > kernel.map
@@ -32,6 +32,11 @@ opt-combined.bc: combined.bc
 opt-combined.o: opt-combined.bc
 	clang -c -m32 ${CCOPTS} -o opt-combined.o opt-combined.bc
 	llc -O2 -march=x86 opt-combined.bc  # for debugging/inspection of .s
+
+#----------------------------------------------------------------------------
+# Keymap
+keymapping.o:	keymapping.c
+	$(CC) ${CCOPTS} ${INCPATH} -o keymapping.o -c keymapping.c
 
 #----------------------------------------------------------------------------
 # tidy up after ourselves ...

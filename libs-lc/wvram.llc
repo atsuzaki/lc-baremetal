@@ -78,7 +78,7 @@ printed in the window:
 >   [ row :: Stored (Ix NumRows)
 >   | col :: Stored (Ix NumCols) ]
 
-> initCoord    :: Ix NumRows -> Ix NumCols -> Init Coord
+> export initCoord    :: Ix NumRows -> Ix NumCols -> Init Coord
 > initCoord r c = Coord [ row <- initStored r | col <- initStored c ]
 
 We can initialize a window with a given set of coordinates by
@@ -177,6 +177,20 @@ number:
 >               case col `ltInc` right of
 >                 Just newcol -> set w.current.col newcol
 >                 Nothing     -> newline w row
+
+As opposed to printing char on the current cursor, place
+it at the select location. Without scrolling, without any of
+that fancy stuff
+
+> export wputpixel :: Ref Window -> Word -> Byte -> Ref Coord -> Proc Unit
+> wputpixel w c attr atPos
+>   = do row <- get atPos.row
+>        col  <- get atPos.col
+>        set (pos row col) (char c)[attr]
+>   --   right <- get w.bottomright.col
+>   --   case col `ltInc` right of
+>   --     Just newcol -> set w.current.col newcol
+>   --     Nothing     -> newline w row
 
 If incrementing `col` succeeds, then we can just save the new
 column number and return.  Otherwise, however, we have reached

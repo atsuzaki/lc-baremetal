@@ -64,3 +64,59 @@ The "Knight Rider Bar":
 >              oc <- get r
 >              set r oc[char=wordToByte c]
 
+Last key pressed display:
+
+> keyRow = modIx 0
+> keyCol = modIx 19
+
+> export updateKeyDisplay :: Byte -> Proc Unit
+
+> updateKeyDisplay key = do
+>                         let r = (vram @ keyRow) @ keyCol
+>                         o <- get r
+>                         set r o[char=key]
+
+The breakout game:
+
+> type NumMaxGO         = 50           -- Just an arbitrary number
+> type MaxGameObjects   = Ix NumMaxGO
+
+TODO: I couldn't specify this type
+
+> -- type GOArray         =  Array MaxGameObjects (Stored (Maybe GameObject))
+
+TODO: Couldn't get these arrays to init either
+
+> -- area activeObjects   <- initArrayAll Nothing  :: Ref (Array MaxGameObjects (Stored (Maybe GameObject)))
+> -- area inactiveObjects <- initArrayAll Nothing  :: Ref (Array MaxGameObjects (Stored (Maybe GameObject)))
+
+> struct GameObject
+>   [ width       :: Stored Word
+>   | height      :: Stored Word
+>   | currentPos  :: Coord       ] -- TODO: don't use Coord, pos could be off screen
+>                                  -- TODO: remember to treat it as relative pos
+
+> gameObject :: Word -> Word -> Ix NumRows -> Ix NumCols -> Init GameObject
+> gameObject w h currentPosX currentPosY
+>   = let currentPos = initCoord currentPosX currentPosY
+>     in GameObject [ width  <- initStored w 
+>                   | height <- initStored h
+>                   | currentPos ]
+
+> area ball <- gameObject 1 1 (modIx 10) (modIx 10) :: Ref GameObject
+
+> export tickBreakout :: Ref Window -> Proc Unit
+> tickBreakout w = do clearScreen
+>                     renderBall w
+> --                  renderSystem w -- For when things are working the normal way later
+
+> renderBall :: Ref Window -> Proc Unit
+> renderBall w = -- do curPos <- get ball.currentPos
+>                   wputpixel w ' ' (wordToByte 0x70) ball.currentPos
+
+> -- renderSystem w = do let b = get ball
+> --                     wputpixel w (digitToByte 254) (wordToByte 0x70) b.currentPos
+
+> --  movePaddleSystem :: Proc Unit
+> --  movePaddleSystem  = do
+

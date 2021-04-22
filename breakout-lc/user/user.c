@@ -19,7 +19,7 @@ void cmain() {
   cls();
   puts("in user code\n");
   for (i=0; i<200; i++) {
-    kputs("hello, kernel console\n");
+//    kputs("hello, kernel console\n");
     puts("hello, user console\n");
 //  yield();
   }

@@ -1,4 +1,4 @@
-This file contains an LC solution to the LLP context switching lab.
+  is file contains an LC solution to the LLP context switching lab.
   
 > require "serial.llc"
 > require "wvram.llc"
@@ -9,6 +9,8 @@ This file contains an LC solution to the LLP context switching lab.
 > require "widgets.llc"
 
 > external bootdata = 0x1000 :: Ref MimgBootData
+
+> external keyb_layout :: Ref (Array 128 (Stored Byte))
 
 The program sets up a window for kernel output on the left of
 the screen (with a surrounding border), displays the bootdata,
@@ -23,7 +25,7 @@ the two user programs.
 > kernel
 >   = do wsetAttr console (wordToByte 0x20)
 >        clearScreen
->        puts " Context switching kernel has booted!"
+>        puts " Last key pressed:"
 >        console `reInit` window (modIx 1)  (modIx 1)
 >                                (modIx 23) (modIx 45)
 >                                (wordToByte 0x0f)
@@ -89,6 +91,7 @@ the two user programs.
 >        t <- get ticks
 >        set ticks (t+1)
 >        clock t
+>  --    tickBreakout console
 >        if (t `and` 3)==0
 >          then bar
 >        if (t `and` 15)==0
@@ -96,13 +99,20 @@ the two user programs.
 >               spin
 >        returnToCurrent
 
+> -- area keyUp <- initStored 0 :: Ref (Stored Word) -- Uncomment whenever we need this
+> area keyDown <- initStored bit0 :: Ref (Stored Byte)
+
 > entrypoint keyboardInterrupt :: Proc Unit
 > keyboardInterrupt
 >   = do maskAckIRQ keyboardIRQ
 >        enableIRQ  keyboardIRQ
 >        key <- readKey
->        puts "got keyboard interrupt, key: 0x"
->        putHex key
+>        if ((key `lshr` 7) == 0)     -- For now, only consider keyDown (ones with top bit set to 0)
+>          then mappedkey <- get (keyb_layout @ modIx(key))
+> --            puts "got keyboard interrupt of char: 0x \n"
+> --            putHex (bitsToWord mappedkey)
+>		updateKeyDisplay mappedkey
+>               set keyDown mappedkey
 >        returnToCurrent
 
 > roundRobin  :: Ix N -> Ix N
