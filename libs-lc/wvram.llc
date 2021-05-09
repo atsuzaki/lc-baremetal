@@ -74,6 +74,28 @@ printed in the window:
 >   | current     :: Coord   -- current coordinate (varies)
 >   | attr        :: Stored Byte ] aligned 8
 
+> export getwidth :: Ref Window -> Proc (Ix NumCols)
+> getwidth w = do xMin <- get w.topleft.col
+>                 xMax <- get w.bottomright.col
+>        --       putUnsigned (ixToBit xMin) 
+>        --       puts "\n"
+>        --       putUnsigned (ixToBit xMax) 
+>        --       puts "\n"
+>        --       puts "width is "
+>        --       putUnsigned ((ixToBit xMax) - (ixToBit xMin)) 
+>        --       puts "\n"
+>	          case ((ixToBit xMax) - (ixToBit xMin)) <=? (maxBound :: Ix NumCols) of
+>                    Nothing     -> do puts "nothing\n"
+>                                   return ix0 -- TODO: should assert false/panic instead?
+>                    Just width  -> return width
+
+> export getheight :: Ref Window -> Proc (Ix NumRows)
+> getheight w = do yMin <- get w.topleft.row 
+>                  yMax <- get w.bottomright.row
+>	           case ((ixToBit yMax) - (ixToBit yMin)) <=? (maxBound :: Ix NumRows) of
+>                    Nothing     -> return ix0 -- TODO: should assert false/panic instead?
+>                    Just height -> return height
+
 > struct Coord
 >   [ row :: Stored (Ix NumRows)
 >   | col :: Stored (Ix NumCols) ]
@@ -182,15 +204,9 @@ As opposed to printing char on the current cursor, place
 it at the select location. Without scrolling, without any of
 that fancy stuff
 
-> export wputpixel :: Ref Window -> Word -> Byte -> Ref Coord -> Proc Unit
-> wputpixel w c attr atPos
->   = do row <- get atPos.row
->        col  <- get atPos.col
->        set (pos row col) (char c)[attr]
->   --   right <- get w.bottomright.col
->   --   case col `ltInc` right of
->   --     Just newcol -> set w.current.col newcol
->   --     Nothing     -> newline w row
+> export wputpixel :: Ref Window -> Word -> Byte -> Ix NumRows -> Ix NumCols -> Proc Unit
+> wputpixel w c attr row col
+>   = do set (pos row col) (char c)[attr]
 
 If incrementing `col` succeeds, then we can just save the new
 column number and return.  Otherwise, however, we have reached

@@ -15,7 +15,7 @@ kernel: ${KOBJS} kernel.ld
 init.o: init.s
 	$(CC) -c -o init.o init.s
 
-kernel.ll: kernel.llc widgets.llc
+kernel.ll: kernel.llc widgets.llc keyboard.llc
 	milc $(MILOPTS) kernel.llc -lkernel.ll -i../../libs-lc \
 		-mkernel.mil \
 		--llvm-main=kernel --mil-main=kernel

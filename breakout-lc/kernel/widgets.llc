@@ -1,6 +1,7 @@
 > require "core.llc"
 > require "ix.llc"
 > require "wvram.llc"
+> require "keyboard.llc"
 
 A clock display:
 
@@ -93,30 +94,89 @@ TODO: Couldn't get these arrays to init either
 > struct GameObject
 >   [ width       :: Stored Word
 >   | height      :: Stored Word
->   | currentPos  :: Coord       ] -- TODO: don't use Coord, pos could be off screen
->                                  -- TODO: remember to treat it as relative pos
+>   | xPos        :: Stored Word
+>   | yPos        :: Stored Word ]
 
-> gameObject :: Word -> Word -> Ix NumRows -> Ix NumCols -> Init GameObject
+> gameObject :: Word -> Word -> Word -> Word -> Init GameObject
 > gameObject w h currentPosX currentPosY
->   = let currentPos = initCoord currentPosX currentPosY
->     in GameObject [ width  <- initStored w 
->                   | height <- initStored h
->                   | currentPos ]
+>   = GameObject [ width  <- initStored w 
+>                | height <- initStored h
+>                | xPos   <- initStored currentPosX 
+>                | yPos   <- initStored currentPosY ]
 
-> area ball <- gameObject 1 1 (modIx 10) (modIx 10) :: Ref GameObject
+> area paddle <- gameObject 8 1 18 22 :: Ref GameObject
+> area ball   <- gameObject 1 1 10 10 :: Ref GameObject
 
 > export tickBreakout :: Ref Window -> Proc Unit
 > tickBreakout w = do clearScreen
->                     renderBall w
-> --                  renderSystem w -- For when things are working the normal way later
+>                     drawGameObject ball w
+>                     drawGameObject paddle w
+>                     movePaddleSystem 
 
-> renderBall :: Ref Window -> Proc Unit
-> renderBall w = -- do curPos <- get ball.currentPos
->                   wputpixel w ' ' (wordToByte 0x70) ball.currentPos
+> drawGameObject :: Ref GameObject -> Ref Window -> Proc Unit
+> drawGameObject go window
+>  = do xPos   <- get go.xPos
+>       wWidth <- getwidth window
+> --    putUnsigned xPos
+> --    puts "\n"
+> --    putUnsigned (ixToBit wWidth)
+> --    puts "\n"
+>       case xPos <=? wWidth of
+>         Nothing -> return Unit
+>         Just x0 -> do yPos    <- get go.yPos
+>                       wHeight <- getheight window
+>                       case yPos <=? wHeight of
+>                         Nothing -> return Unit
+>                         Just y0 -> do width  <- get go.width
+>                                       height <- get go.height
+>                                       let x1 = minIx (xPos+width-1) wWidth     -- The -1 is needed here, else it renders 2 pixels instead of 1
+>                                           y1 = minIx (yPos+height-1) wHeight
+>                                       render x0 y0 x1 y1 window
+
+> render            :: Ix 80 -> Ix 25 -> Ix 80 -> Ix 25 -> Ref Window -> Proc Unit
+> render x0 y0 x1 y1 w = loop y0 y1 (\y ->
+>                        loop x0 x1 (\x ->
+>                        wputpixel w ' ' (wordToByte 0x70) y x))
 
 > -- renderSystem w = do let b = get ball
 > --                     wputpixel w (digitToByte 254) (wordToByte 0x70) b.currentPos
 
-> --  movePaddleSystem :: Proc Unit
-> --  movePaddleSystem  = do
+Manually inlined `isKeyDown` logic into here I guess since for the love of god
+I couldn't get this to work with that method
+
+> movePaddleSystem :: Proc Unit
+> movePaddleSystem = do kd <- get keyDown 
+>                       ku <- get keyUp
+>                       if (('6' == (bitsToWord kd)) && ('6' /= (bitsToWord ku)))
+>                         then xPos <- get paddle.xPos
+>                              set paddle.xPos (xPos + 1)
+>                       if (('4' == (bitsToWord kd)) && ('4' /= (bitsToWord ku)))
+>                         then xPos <- get paddle.xPos
+>                              set paddle.xPos (xPos - 1)
+
+
+> -- movePaddleSystem = do if (isKeyDown '6')
+> --                         then xPos <- get paddle.xPos
+> --                              set paddle.xPos (xPos + 1)
+>                       -- if (isKeyDown '4')
+>                       --   then xPos <- get paddle.xPos
+>                       --        set paddle.xPos (xPos - 1)
+
+---
+Utility functions
+---
+
+> loop :: Ix n -> Ix n -> (Ix n -> Proc Unit) -> Proc Unit  -- library function?
+> loop x0 x1 f
+>       = do f x0
+>            case x0 `ltInc` x1 of
+>              Nothing -> return Unit
+>              Just nx -> loop nx x1 f
+
+
+> minIx    :: Word -> Ix n -> Ix n  -- library function?
+> minIx w i = case w <=? i of
+>               Nothing -> i
+>               Just j  -> j
+
 

@@ -1,6 +1,7 @@
   is file contains an LC solution to the LLP context switching lab.
   
 > require "serial.llc"
+> require "keyboard.llc"
 > require "wvram.llc"
 > require "mimg.llc"
 > require "cursor.llc"
@@ -99,9 +100,6 @@ the two user programs.
 >               spin
 >        returnToCurrent
 
-> area keyUp   <- initStored bit0 :: Ref (Stored Byte)
-> area keyDown <- initStored bit0 :: Ref (Stored Byte)
-
 > entrypoint keyboardInterrupt :: Proc Unit
 > keyboardInterrupt
 >   = do maskAckIRQ keyboardIRQ
@@ -110,6 +108,7 @@ the two user programs.
 >        if ((key `lshr` 7) == 0)
 >          then mappedkey <- get (keyb_layout @ modIx(key))
 > --            puts "got keyboard interrupt of char: 0x"
+> --            putHex key
 > --            putHex (bitsToWord mappedkey)
 > --            puts "\n"
 >               updateKeyDisplay mappedkey

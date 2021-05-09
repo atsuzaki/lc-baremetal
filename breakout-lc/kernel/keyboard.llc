@@ -1,0 +1,17 @@
+> require "core.llc"
+> require "ix.llc"
+
+Keyboard-related utilities
+
+> area keyUp   <- initStored bit0 :: Ref (Stored Byte)
+> area keyDown <- initStored bit0 :: Ref (Stored Byte)
+
+TODO:
+Normally you'd have a polling method that goes isKeyDown<T> where T = KeyCode.
+which is way safer than passing in a char, but this will do for now:
+
+> export isKeyDown :: Word -> Proc Bool 
+> isKeyDown c = do kd <- get keyDown 
+>                  ku <- get keyUp
+>                  return ((c == (bitsToWord kd)) && (c /= (bitsToWord ku)))  -- If keyUp == c, that means it's no longer pressed
+
