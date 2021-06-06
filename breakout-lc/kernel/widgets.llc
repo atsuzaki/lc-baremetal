@@ -178,7 +178,7 @@ hard specify the ix type inline:
 > modIxCol w = modIx w
 
 > generateBrick :: Word -> Init GameObject
-> generateBrick idx = let trueIdx = idx - 5 in -- TODO: HACKY, idx minus # of reserved indexes for paddle, ball, walls. etc so we can use it as a counter for bricks
+> generateBrick idx = let trueIdx = idx - 6 in -- TODO: HACKY, idx minus # of reserved indexes for paddle, ball, walls. etc so we can use it as a counter for bricks
 >                     let row = trueIdx / bricksPerRow in
 >                     -- let col = modIx trueIdx :: Ix BricksPerRow in <-- generates a weird error!
 >                     let col = modIxCol trueIdx in
@@ -299,7 +299,25 @@ destroyBricksSystem = do foreachGO getBricks
                                                         set o.typemask (got [ active=False ])
                                                    else return Unit)
 
-It doesn't seem to work passing an anonymous function like this in, the type won't seem to line up:
+
+Passing an anonymous function, the type won't seem to line up unless we specify a type annotation
+when trying to access o, like here on the second line here:
+
+destroyBricksSystem :: Proc Unit
+destroyBricksSystem = foreachGO (\o -> do got <- get (o :: Ref GameObject).typemask
+                                                return (got.active && got.breakable)
+                                (\o -> if o `refEq` ball  
+                                             then return Unit
+                                             else if <- testCollision o ball
+                                                    then got <- get o.typemask
+                                                         set o.typemask (got [ active=False ])
+                                                    else return Unit)
+
+We tried something like this:
+
+destroyBricksSystem = foreachGO (\o :: Ref GameObject -> do got <- get o.typemask
+
+Which doesn't produce a compile-time error, but does nothing either.
 
 > destroyBricksSystem :: Proc Unit
 > destroyBricksSystem = foreachGO getBricks destroyBrick
