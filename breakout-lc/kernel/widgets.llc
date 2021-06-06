@@ -79,48 +79,144 @@ Last key pressed display:
 
 The breakout game:
 
-> type NumMaxGO         = 50           -- Just an arbitrary number
-> type MaxGameObjects   = Ix NumMaxGO
+This is intended to be a bitmask
 
-TODO: I couldn't specify this type
+> bitdata GameObjectTypes/32 = GameObjectTypes [ 0 | active :: Bool | ball :: Bool | paddle :: Bool  | bouncable :: Bool | breakable :: Bool ]
 
-> -- type GOArray         =  Array MaxGameObjects (Stored (Maybe GameObject))
+> defgot :: GameObjectTypes
+> defgot =  GameObjectTypes [ active=True | ball=False | paddle=False | bouncable=True | breakable=False ]
 
-TODO: Couldn't get these arrays to init either
+The initial GameObjectTypes comparison code, works suboptimally:
 
-> -- area activeObjects   <- initArrayAll Nothing  :: Ref (Array MaxGameObjects (Stored (Maybe GameObject)))
-> -- area inactiveObjects <- initArrayAll Nothing  :: Ref (Array MaxGameObjects (Stored (Maybe GameObject)))
+> boolEq :: Bool -> Bool -> Bool
+> boolEq b1 b2 = if b1 then b2 else negb b2
 
-> struct GameObject
+> gotEq :: GameObjectTypes -> GameObjectTypes -> Bool
+> gotEq got1 got2 = (got1.active `boolEq` got2.active) &&
+>                   (got1.ball `boolEq` got2.ball) &&
+>                   (got1.paddle `boolEq` got2.paddle) &&
+>                   (got1.bouncable `boolEq` got2.bouncable)
+
+Better GameObjectTypes comparison code, but involves using a hacky
+pattern:
+
+> external gotToWord = gotToWordImp :: GameObjectTypes -> Word
+
+> gotToWordImp :: Word -> Word
+> gotToWordImp got = got
+
+> gotEq2 :: GameObjectTypes -> GameObjectTypes -> Bool
+> gotEq2 got1 got2 = gotToWord got1 == gotToWord got2
+
+
+> struct GameObject/24
 >   [ width       :: Stored Word
 >   | height      :: Stored Word
 >   | xPos        :: Stored Word
->   | yPos        :: Stored Word ]
+>   | yPos        :: Stored Word 
+>   | attribute   :: Stored Word -- TODO: this should just be a byte, but misalignes the struct
+>   | typemask    :: Stored GameObjectTypes ]
 
-> gameObject :: Word -> Word -> Word -> Word -> Init GameObject
-> gameObject w h currentPosX currentPosY
->   = GameObject [ width  <- initStored w 
->                | height <- initStored h
->                | xPos   <- initStored currentPosX 
->                | yPos   <- initStored currentPosY ]
+> gameObject :: Word -> Word -> Word -> Word -> Word -> GameObjectTypes -> Init GameObject
+> gameObject w h currentPosX currentPosY attr typemask
+>   = GameObject [ width     <- initStored w 
+>                | height    <- initStored h
+>                | xPos      <- initStored currentPosX 
+>                | yPos      <- initStored currentPosY 
+>                | attribute <- initStored attr
+>                | typemask  <- initStored typemask    ]
 
-> area paddle <- gameObject 8 1 18 22 :: Ref GameObject
-> area ball   <- gameObject 1 1 10 10 :: Ref GameObject
+> type MaxGameObjects   = 20
+> area objects <- initArray initGOs :: Ref (Array MaxGameObjects GameObject)
 
-> export tickBreakout :: Ref Window -> Proc Unit
-> tickBreakout w = do clearScreen
->                     drawGameObject ball w
->                     drawGameObject paddle w
->                     movePaddleSystem 
+Would be more elegant to be written with case as such but alas it is unsupported with ix/word at the moment:
+
+initGOs index = case index of
+                  ix0 -> gameObject 8 1 18 21 defgot [ paddle = True ]   -- Paddle
+                  ix1 -> gameObject 1 1 10 10 defgot [ ball = True ]     -- Ball
+                  ix2 -> gameObject 1 25 0 0 defgot                      -- Left wall
+                  ix3 -> gameObject 1 25 44 0 defgot                     -- Right wall
+                  ix4 -> gameObject 44 1 0 0 defgot :: Ref GameObject    -- Top Wall
+                  _ -> generateBrick (ixToBit index)
+
+
+> initGOs :: Ix MaxGameObjects -> Init GameObject
+> initGOs index = if (index `eqIx` ix0)
+>                    then gameObject 8 1 18 21 0x30 defgot [ paddle = True ]       -- Paddle
+>                 else if (index `eqIx` ix1)
+>                    then gameObject 1 1 18 20 0xe0 defgot [ ball = True ]         -- Ball
+>                 else if (index `eqIx` ix2)
+>                    then gameObject 1 25 0 0 0x70 defgot                          -- Left wall
+>                 else if (index `eqIx` ix3)
+>                    then gameObject 1 25 44 0 0x70 defgot                         -- Right wall
+>                 else if (index `eqIx` ix4)
+>                    then gameObject 44 1 0 0 0x70 defgot                          -- Top Wall
+>                 else generateBrick (ixToBit index)
+
+Stuffs to aid the generation of bricks, there is probably very likely a better way to do this:
+How would I use these values as a constant?
+
+> type MaxBricks = 20
+> type BricksPerRow = 5
+
+> bricksPerRow = 5
+> brickHeight = 1
+> brickWidth = 6
+> brickPadding = 2
+
+> getBrickColor :: Word -> Word
+> getBrickColor row = if (row `and` 1)==1
+>                       then 0x50
+>                     else if (row `and` 2)==2
+>                       then 0xC0
+>                     else 0xD0
+
+milc isn't able to infer the ix type if I don't do this, and I'm not aware on how to
+hard specify the ix type inline:
+
+> modIxCol :: Word -> Ix BricksPerRow
+> modIxCol w = modIx w
+
+> generateBrick :: Word -> Init GameObject
+> generateBrick idx = let trueIdx = idx - 5 in -- TODO: HACKY, idx minus # of reserved indexes for paddle, ball, walls. etc so we can use it as a counter for bricks
+>                     let row = trueIdx / bricksPerRow in
+>                     -- let col = modIx trueIdx :: Ix BricksPerRow in <-- generates a weird error!
+>                     let col = modIxCol trueIdx in
+>                     (gameObject 6 1 (((ixToBit col) * (brickWidth + brickPadding)) + 3) 
+>                                     ((row * (brickHeight + brickPadding)) + 2) 
+>       			      (getBrickColor trueIdx) 
+>       			      defgot [ breakable=True ])
+
+> paddle :: Ref GameObject 
+> paddle = objects @ ix0
+
+> ball :: Ref GameObject 
+> ball = objects @ ix1
+
+TODO: Temp, put them in perhaps EC components? Is doing EC too much? (where to store too? we can't store ptr to heap!) Or do ECS? (definitely too much)
+
+> area headingLeft <- initStored True :: Ref (Stored Bool)
+> area headingTop <- initStored True :: Ref (Stored Bool)
+
+> export tickBreakout :: Ref Window -> Word -> Proc Unit
+> tickBreakout w tick = do clearScreen
+>                          movePaddleSystem 
+>                          if (tick `and` 15)==0 then moveBallSystem   -- Can't be called every frame since it'd move too fast.
+>                          destroyBricksSystem
+>                          foreach (\x -> do let obj = objects @ x
+>                                            got <- get obj.typemask
+>                                            if got.active
+>                                               then drawGameObject obj w
+>                                               else return Unit)
+
+----
+Rendering
+----
 
 > drawGameObject :: Ref GameObject -> Ref Window -> Proc Unit
 > drawGameObject go window
 >  = do xPos   <- get go.xPos
 >       wWidth <- getwidth window
-> --    putUnsigned xPos
-> --    puts "\n"
-> --    putUnsigned (ixToBit wWidth)
-> --    puts "\n"
 >       case xPos <=? wWidth of
 >         Nothing -> return Unit
 >         Just x0 -> do yPos    <- get go.yPos
@@ -129,42 +225,127 @@ TODO: Couldn't get these arrays to init either
 >                         Nothing -> return Unit
 >                         Just y0 -> do width  <- get go.width
 >                                       height <- get go.height
->                                       let x1 = minIx (xPos+width-1) wWidth     -- The -1 is needed here, else it renders 2 pixels instead of 1
+>                                       attr   <- get go.attribute
+>                                       let x1 = minIx (xPos+width-1) wWidth     -- The -1 is needed here, else it renders 2 pixels instead of 1 for some reason
 >                                           y1 = minIx (yPos+height-1) wHeight
->                                       render x0 y0 x1 y1 window
+>                                       render x0 y0 x1 y1 attr window
 
-> render            :: Ix 80 -> Ix 25 -> Ix 80 -> Ix 25 -> Ref Window -> Proc Unit
-> render x0 y0 x1 y1 w = loop y0 y1 (\y ->
->                        loop x0 x1 (\x ->
->                        wputpixel w ' ' (wordToByte 0x70) y x))
+> render            :: Ix 80 -> Ix 25 -> Ix 80 -> Ix 25 -> Word -> Ref Window -> Proc Unit
+> render x0 y0 x1 y1 attr w = do wx <- get w.topleft.col
+>                                wy <- get w.topleft.row
+>                                loop y0 y1 (\y ->
+>                                  loop x0 x1 (\x ->
+>                                  case (ltIncBy wx x maxBound) of
+>                                    Nothing -> return Unit
+>                                    Just xx -> case (ltIncBy wy y maxBound) of
+>                                                 Nothing -> return Unit
+>                                                 Just yy -> wputpixel w ' ' (wordToByte attr) yy xx))
 
-> -- renderSystem w = do let b = get ball
-> --                     wputpixel w (digitToByte 254) (wordToByte 0x70) b.currentPos
+----
+Systems
+----
 
-Manually inlined `isKeyDown` logic into here I guess since for the love of god
-I couldn't get this to work with that method
-
-> movePaddleSystem :: Proc Unit
-> movePaddleSystem = do kd <- get keyDown 
->                       ku <- get keyUp
->                       if (('6' == (bitsToWord kd)) && ('6' /= (bitsToWord ku)))
+> movePaddleSystem = do if <- isKeyDown '6'
 >                         then xPos <- get paddle.xPos
 >                              set paddle.xPos (xPos + 1)
->                       if (('4' == (bitsToWord kd)) && ('4' /= (bitsToWord ku)))
+>                       if <- isKeyDown '4'
 >                         then xPos <- get paddle.xPos
 >                              set paddle.xPos (xPos - 1)
 
+> moveBallSystem = do l <- get headingLeft
+>                     t <- get headingTop
+>                     xPos <- get ball.xPos
+>                     yPos <- get ball.yPos
+>                     let newX = if l 
+>                                  then xPos - 1   -- Going left
+>                                  else xPos + 1   -- Going right
+>                     let newY = if t 
+>                                  then yPos - 1   -- Going top
+>                                  else yPos + 1   -- Going bottom
+>                     set ball.xPos newX
+>                     set ball.yPos newY
+>                     foreach (\x -> do let obj = objects @ x
+>                                       if obj `refEq` ball  
+>                                         then return Unit
+>                                         else got <- get obj.typemask   -- Without this else, execution fell through in here even when it found itself despite the return Unit. Rather unintuitive from what I'm used to
+>                                              if got.active && got.bouncable
+>                                                then if <- testCollision obj ball
+>                                                       then bheight  <- get ball.height
+>                                                            oheight  <- get obj.height
+>                                                            oYPos  <- get obj.yPos
+>                                                            let bMinY = yPos
+>                                                            let bMaxY = yPos + bheight
+>                                                            let oMinY = oYPos 
+>                                                            let oMaxY = oYPos + oheight
+>
+>                                                            if (bMinY <= oMinY) || (bMaxY >= oMaxY) 
+>                                                              then do -- puts "\nvertical collision"
+>                                                                      set headingTop  (negb t)
+>                                                              else do -- puts "\nhorizontal collision"
+>                                                                      set headingLeft (negb l)
+>                                                       else return Unit)
+>                     
 
-> -- movePaddleSystem = do if (isKeyDown '6')
-> --                         then xPos <- get paddle.xPos
-> --                              set paddle.xPos (xPos + 1)
->                       -- if (isKeyDown '4')
->                       --   then xPos <- get paddle.xPos
->                       --        set paddle.xPos (xPos - 1)
+getBricks :: Ref GameObject -> Proc Bool
+getBricks o = do got <- get o.typemask
+                 return (got.active && got.breakable)
+
+destroyBricksSystem :: Proc Unit
+destroyBricksSystem = do foreachGO getBricks
+                                   (\o -> if o `refEq` ball  
+                                            then return Unit
+                                            else if <- testCollision o ball
+                                                   then got <- get o.typemask
+                                                        set o.typemask (got [ active=False ])
+                                                   else return Unit)
+
+It doesn't seem to work passing an anonymous function like this in, the type won't seem to line up:
+
+> destroyBricksSystem :: Proc Unit
+> destroyBricksSystem = foreachGO getBricks destroyBrick
+>                          where getBricks :: Ref GameObject -> Proc Bool 
+>                                getBricks o = do got <- get (o :: Ref GameObject).typemask
+>                                                 return (got.active && got.breakable)
+>                                destroyBrick :: Ref GameObject -> Proc Unit
+>                                destroyBrick o = if o `refEq` ball  
+>                                                 then return Unit
+>                                                 else if <- testCollision o ball
+>                                                        then got <- get o.typemask
+>                                                             set o.typemask (got [ active=False ])
+>                                                        else return Unit
+
+> export foreachGO :: (Ref GameObject -> Proc Bool) -> (Ref GameObject -> Proc Unit) -> Proc Unit
+> foreachGO pred body = foreach (\i -> do let obj = objects @ i
+>                                         if <- pred obj then body obj)
+
+export foreachGO :: (Ref GameObject -> Proc Unit) -> GameObjectTypes -> Proc Unit
+foreachGO f typemask = foreach (\i -> do let obj = objects @ i
+                                         got <- get obj.typemask
+                                         if (got `gotEq` typemask) then f obj)
+                                         return Unit)
+
+Direct AABB collision test algorithm
+
+> testCollision :: Ref GameObject -> Ref GameObject -> Proc Bool
+> testCollision go1 go2 = do x1 <- get go1.xPos
+>                            x2 <- get go2.xPos
+>                            y1 <- get go1.yPos
+>                            y2 <- get go2.yPos
+>                            width1  <- get go1.width
+>                            height1 <- get go1.height
+>                            width2  <- get go2.width
+>                            height2 <- get go2.height
+>                            return ((x1 < (x2 + width2)) &&
+>                                    ((x1 + width1) > x2) &&
+>                                    (y1 < (y2 + height2)) &&
+>                                    ((y1 + height1) > y2))
 
 ---
 Utility functions
 ---
+
+> negb :: Bool -> Bool
+> negb b = if b then False else True
 
 > loop :: Ix n -> Ix n -> (Ix n -> Proc Unit) -> Proc Unit  -- library function?
 > loop x0 x1 f
