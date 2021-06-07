@@ -114,7 +114,7 @@ pattern:
 >   | height      :: Stored Word
 >   | xPos        :: Stored Word
 >   | yPos        :: Stored Word 
->   | attribute   :: Stored Word -- TODO: this should just be a byte, but misalignes the struct
+>   | attribute   :: Stored Word -- TODO: this should just be a byte, but misalignes the struct. How to pad?
 >   | typemask    :: Stored GameObjectTypes ]
 
 > gameObject :: Word -> Word -> Word -> Word -> Word -> GameObjectTypes -> Init GameObject
@@ -126,7 +126,7 @@ pattern:
 >                | attribute <- initStored attr
 >                | typemask  <- initStored typemask    ]
 
-> type MaxGameObjects   = 20
+> type MaxGameObjects   = 21
 > area objects <- initArray initGOs :: Ref (Array MaxGameObjects GameObject)
 
 Would be more elegant to be written with case as such but alas it is unsupported with ix/word at the moment:
@@ -151,6 +151,8 @@ initGOs index = case index of
 >                    then gameObject 1 25 44 0 0x70 defgot                         -- Right wall
 >                 else if (index `eqIx` ix4)
 >                    then gameObject 44 1 0 0 0x70 defgot                          -- Top Wall
+>                 else if (index `eqIx` ix5)
+>                    then gameObject 44 1 0 24 0x00 defgot [ bouncable = False ]   -- Bottom wall (gameover zone)
 >                 else generateBrick (ixToBit index)
 
 Stuffs to aid the generation of bricks, there is probably very likely a better way to do this:
@@ -193,21 +195,46 @@ hard specify the ix type inline:
 > ball :: Ref GameObject 
 > ball = objects @ ix1
 
-TODO: Temp, put them in perhaps EC components? Is doing EC too much? (where to store too? we can't store ptr to heap!) Or do ECS? (definitely too much)
+> gameoverZone :: Ref GameObject 
+> gameoverZone = objects @ ix5
+
+> area bricksLeft <- initStored 15   :: Ref (Stored Word)
+> area isPlaying  <- initStored True :: Ref (Stored Bool)
+
+
+TODO: make this better
+Heading info for the single ball we have.
+Ideally in a general game engine architecture, object-specific fields like this would be stored
+in either
+
+1. As a member variable in derived class (i.e. class Ball extends GameObject)
+2. As a "component" attached to the particular gameobject (with EC/ECS model)
+
+Option 1 is obviously out due to LC not having classes (though it perhaps could be emulated with
+typeclass derive shenanigans in Habit?), and option 2 is massive overengineering. 
+There ought to still be a better way though 
 
 > area headingLeft <- initStored True :: Ref (Stored Bool)
-> area headingTop <- initStored True :: Ref (Stored Bool)
+> area headingTop  <- initStored True :: Ref (Stored Bool)
+
+
+----
+Update loop:
+----
 
 > export tickBreakout :: Ref Window -> Word -> Proc Unit
-> tickBreakout w tick = do clearScreen
->                          movePaddleSystem 
->                          if (tick `and` 15)==0 then moveBallSystem   -- Can't be called every frame since it'd move too fast.
->                          destroyBricksSystem
->                          foreach (\x -> do let obj = objects @ x
->                                            got <- get obj.typemask
->                                            if got.active
->                                               then drawGameObject obj w
->                                               else return Unit)
+> tickBreakout w tick = do playing <- get isPlaying 
+>                          if playing
+>                          then clearScreen
+>                               movePaddleSystem 
+>                               if (tick `and` 15)==0 then moveBallSystem   -- Can't be called every frame since it'd move too fast.
+>                               destroyBricksSystem
+>                               foreach (\x -> do let obj = objects @ x
+>                                                 got <- get obj.typemask
+>                                                 if got.active
+>                                                    then drawGameObject obj w
+>                                                    else return Unit)
+>                               gameoverSystem 
 
 ----
 Rendering
@@ -330,19 +357,29 @@ Which doesn't produce a compile-time error, but does nothing either.
 >                                                 else if <- testCollision o ball
 >                                                        then got <- get o.typemask
 >                                                             set o.typemask (got [ active=False ])
+>                                                             update bricksLeft (\b -> b - 1)
 >                                                        else return Unit
+
+TODO: fancy game end scene
+
+> gameoverSystem :: Proc Unit
+> gameoverSystem = do if <- testCollision ball gameoverZone
+>                       then clearScreen
+>                            puts "Game Over"
+>                            set isPlaying False
+
+> checkVictorySystem :: Proc Unit
+> checkVictorySystem = do counter <- get bricksLeft
+>                         if counter == 0
+>                           then clearScreen
+>                                puts "You win!"
+>                                set isPlaying False
 
 > export foreachGO :: (Ref GameObject -> Proc Bool) -> (Ref GameObject -> Proc Unit) -> Proc Unit
 > foreachGO pred body = foreach (\i -> do let obj = objects @ i
 >                                         if <- pred obj then body obj)
 
-export foreachGO :: (Ref GameObject -> Proc Unit) -> GameObjectTypes -> Proc Unit
-foreachGO f typemask = foreach (\i -> do let obj = objects @ i
-                                         got <- get obj.typemask
-                                         if (got `gotEq` typemask) then f obj)
-                                         return Unit)
-
-Direct AABB collision test algorithm
+Direct AABB (Axis-aligned bounding box) collision test algorithm
 
 > testCollision :: Ref GameObject -> Ref GameObject -> Proc Bool
 > testCollision go1 go2 = do x1 <- get go1.xPos
