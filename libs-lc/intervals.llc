@@ -199,7 +199,7 @@ capacity that is specified by the constant `NumIntervals`:
 >   [ array <- initIntervalArray :: Array NumIntervals (Stored Interval)
 >   | last  <- initStored Empty  :: Stored Last ]
 
-> initIntervalArray = initArrayAll Interval[ lo=0 | hi=0 ]
+> initIntervalArray = initAll (initStored Interval[ lo=0 | hi=0 ])
 
 > type NumIntervals  = 8  -- maximum number of intervals
 
